@@ -243,14 +243,20 @@ export default function ListOrder() {
                 >
                   <td className="h-[60px]">{index + 1}</td>
                   <td>{item.id}</td>
-                  <td>{item.paid_at ? item.paid_at : ''}</td>
+                  <td>
+                    {' '}
+                    {dayjs(item.paid_at)?.format('YYYY-MM-DD')}
+                    {'    '}
+                    <span className="ml-2"></span>
+                    {dayjs(item.paid_at)?.format('HH:mm')}
+                  </td>
                   <td>
                     {item.quantity === 1
                       ? item.quantity + ' item'
                       : item.quantity + ' items'}
                   </td>
                   <td>{`${item.first_name} ${item.last_name}`}</td>
-                  <td>{item.total + ' $'}</td>
+                  <td>{Number(item.total).toFixed(2) + ' $'}</td>
 
                   <td
                     style={{
@@ -521,7 +527,7 @@ export default function ListOrder() {
                 <div className="flex flex-col">
                   <div className="text-[#603813] text-[16px] font-bold mb-1">
                     {'$ '}
-                    {item.total}
+                    {Number(item.total).toFixed(2)}
                   </div>
                 </div>
               </div>
@@ -534,7 +540,7 @@ export default function ListOrder() {
               Sub-total
             </div>
             <div className="text-[#603813] text-[16px] font-semibold">
-              $ {orderDetail?.total_price_items}
+              $ {Number(orderDetail?.total_price_items).toFixed(2)}
             </div>
           </div>
           <div className="flex justify-between mb-1">
@@ -542,7 +548,7 @@ export default function ListOrder() {
               Shipping
             </div>
             <div className="text-[#603813] text-[16px] font-semibold">
-              $ {orderDetail.shipping_fee}
+              $ {Number(orderDetail.shipping_fee).toFixed(2)}
             </div>
           </div>
           <div className="text-[12px] font-normal text-[#ABABAB] mb-6">
@@ -557,7 +563,10 @@ export default function ListOrder() {
               Discount
             </div>
             <div className="text-[#603813] text-[16px] font-semibold">
-              $ {orderDetail.discount !== null ? orderDetail.discount : 0}
+              ${' '}
+              {orderDetail.discount !== null
+                ? Number(orderDetail.discount).toFixed(2)
+                : 0.0}
             </div>
           </div>
           <div
@@ -567,14 +576,14 @@ export default function ListOrder() {
             <div className="text-[16px] text-[#374151] font-medium">VAT</div>
             <div className="text-[#603813] text-[16px] font-semibold">
               <span className="mr-3 font-semibold">(5%)</span>${' '}
-              {orderDetail?.tax_fee}
+              {Number(orderDetail?.tax_fee).toFixed(2)}
             </div>
           </div>
           <div className="flex justify-between mb-8">
             <div className="text-[16px] text-[#374151] font-bold">Total</div>
             <div className="flex flex-row gap-8">
               <div className="text-[#603813] text-[20px] font-bold">
-                $ {orderDetail?.total}
+                $ {Number(orderDetail?.total).toFixed(2)}
               </div>
             </div>
           </div>
