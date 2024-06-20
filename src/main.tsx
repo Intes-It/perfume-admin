@@ -24,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         ],
       },
       primaryColor: 'brand',
-      fontFamily: 'Montserrat, sans serif',
+      fontFamily: 'Manrope, sans serif',
     }}
   >
     <Notifications position="top-right" />
