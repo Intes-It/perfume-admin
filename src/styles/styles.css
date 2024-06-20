@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,7 +6,7 @@
 :root body {
   line-height: 1.5;
   font-weight: 400;
-
+  font-family: 'Manrope', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -156,6 +156,7 @@ tbody tr td {
   padding-left: 12px;
   font-weight: 500;
 }
+
 .mantine-j3jbtx {
   top: 50%;
   transform: translate(0, -50%);
