@@ -158,24 +158,23 @@ tbody tr td {
   height: fit-content;
 }
 
-.mantine-dat7mn .mantine-1n7zxp {
-  padding-left: 24px;
+.mantine-3wqyw5 {
+  margin-left: 0;
 }
+.mantine-hclwis {
+  margin-left: 12px;
+}
+
 .mantine-1v7s5f8 {
   font-weight: 500;
 }
-.mantine-17ts0d3 .mantine-bkyer9 {
-  padding-left: 12px;
-}
+
 .mantine-j3jbtx {
   top: 50%;
   transform: translate(0, -50%);
   height: fit-content;
 }
-.mantine-1laou7w[data-active] {
-  border-color: #b62a65;
-}
 
-.mantine-1laou7w[data-active]:hover {
-  border-color: #b62a65;
+thead td {
+  padding: 0.4375rem 0.625rem;
 }

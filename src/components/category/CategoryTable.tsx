@@ -32,10 +32,12 @@ const CategoryTable = ({
                 <td style={{ width: 100 }}>Order</td>
                 {optionSelected === 'category' && <td>Image</td>}
                 {optionSelected === 'sub-subcategory' && (
-                  <td>Sub-sub-category</td>
+                  <td className="text-left">Sub-sub-category</td>
                 )}
-                {optionSelected !== 'category' && <td>Sub-category</td>}
-                <td>Category</td>
+                {optionSelected !== 'category' && (
+                  <td className="text-left">Sub-category</td>
+                )}
+                <td className="text-left">Category</td>
                 <td>Status</td>
                 <td>Update</td>
                 <td>Delete</td>
@@ -48,7 +50,7 @@ const CategoryTable = ({
                   style={{
                     background: index % 2 !== 0 ? '#FFE2EC80' : '',
                   }}
-                  className="h-[60px] hover:bg-[#FFE2EC80]"
+                  className="h-[60px] "
                 >
                   <td
                     style={{
@@ -70,12 +72,12 @@ const CategoryTable = ({
                     </td>
                   )}
                   {optionSelected === 'sub-subcategory' && (
-                    <td className="text-center">Sub-sub-category</td>
+                    <td>Sub-sub-category</td>
                   )}
                   <td>{item.name}</td>
 
                   {optionSelected !== 'category' && (
-                    <td className="text-center">{item?.category?.name}</td>
+                    <td>{item?.category?.name}</td>
                   )}
                   <td className="text-center">123</td>
                   <td className="text-center">

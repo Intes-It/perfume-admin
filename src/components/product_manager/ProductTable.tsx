@@ -113,7 +113,6 @@ const ProductTable = ({
                       background: index % 2 !== 0 ? '#FFE2EC80' : '',
                       height: 60,
                     }}
-                    className={'hover_table'}
                   >
                     <td>
                       <img

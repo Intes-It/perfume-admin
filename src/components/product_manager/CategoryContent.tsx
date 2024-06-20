@@ -67,6 +67,7 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
 
       if (res.status === 200) {
         setProductData(res.data?.results);
+        setState((prev) => ({ ...prev, total: res.data?.results?.length }));
       }
       setIsLoading(false);
     } catch (error) {
@@ -123,14 +124,15 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
   }, [categorySelected]) as any;
 
   const subSubCategory = useMemo(() => {
+    let list = [] as any;
     if (subCategory && subCategory?.length > 0) {
-      const list = subCategory?.find(
-        (item: any) =>
-          subCategorySelected && item?.value === +subCategorySelected,
-      ) as any;
-
+      subCategory?.forEach((item: any) => {
+        if (subCategorySelected?.includes(item?.id)) {
+          list = [...list, ...item?.sub_subcategories];
+        }
+      });
       return (
-        list?.sub_subcategories.map((item: any) => ({
+        list?.map((item: any) => ({
           value: item.id,
           label: item.name,
         })) || []
@@ -142,20 +144,22 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
   useEffect(() => {
     categorySelected && getProduct();
   }, []);
+
   return (
     <div>
       <div style={{ padding: '0 30px' }}>
         <Tabs
           value={categorySelected}
           onTabChange={(tab: string) => {
+            if (tab === categorySelected) return;
             setCategorySelected(tab);
             getProduct({
               category: tab,
               subCategory: null,
               subSubCategory: null,
             });
-            if (subCategorySelected) setSubCategorySelected(null);
-            if (subSubCategorySelected) setSubSubCategorySelected(null);
+            if (subCategorySelected) setSubCategorySelected([]);
+            if (subSubCategorySelected) setSubSubCategorySelected([]);
             if (search) setSearch('');
           }}
         >
@@ -216,7 +220,7 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
           onCreateNew={open}
           onSelectSubCategories={(v) => {
             setSubCategorySelected(v);
-            setSubSubCategorySelected(null);
+            setSubSubCategorySelected([]);
             getProduct({
               category: categorySelected,
               subCategory: v,
@@ -242,6 +246,9 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
           handleSearch={handleSearch}
           searchValue={search}
         />
+        <div className="text-[#B82C67] font-medium text-xl pt-5">
+          Total product ({total})
+        </div>
         {isLoading ? (
           <div
             style={{
