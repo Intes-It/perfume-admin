@@ -529,28 +529,36 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
 
           <Group spacing={'xl'}>
             <div>
-              <h4 style={{ color: '#B82C67', fontSize: 16 }}>Product image</h4>
+              <h4
+                style={{
+                  color: '#B82C67',
+                  fontSize: 16,
+                  paddingBottom: 12,
+                  paddingTop: 20,
+                }}
+              >
+                Product image
+              </h4>
               {url_image ? (
-                <>
-                  <ImagePreview
-                    imageWidth={174}
-                    imageHeight={174}
-                    remove={false}
-                    image={url_image}
-                    onReplace={(file) => {
-                      if (file) {
-                        setState((p) => ({
-                          ...p,
-                          url_image: URL.createObjectURL(file),
-                        }));
-                        form.setFieldValue('image', file);
-                      }
-                    }}
-                  />
-                </>
+                <ImagePreview
+                  imageWidth={174}
+                  imageHeight={174}
+                  remove={false}
+                  image={url_image}
+                  onReplace={(file) => {
+                    if (file) {
+                      setState((p) => ({
+                        ...p,
+                        url_image: URL.createObjectURL(file),
+                      }));
+                      form.setFieldValue('image', file);
+                    }
+                  }}
+                />
               ) : (
                 <Dropzone
                   loading={isLoading}
+                  style={{ borderColor: form.errors?.image ? '#ff0000' : '' }}
                   onDrop={(file) => {
                     file?.[0] &&
                       setState((p) => ({
@@ -643,7 +651,11 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
               <Grid.Col span={6}>
                 <h4 style={{ color: '#E7639A', fontSize: 16 }}>Quantity </h4>
                 <div
-                  style={{ display: 'flex', justifyContent: 'space-between' }}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    gap: 16,
+                  }}
                 >
                   <div>
                     <span style={{ color: '#707070' }}>
@@ -694,15 +706,34 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                 handleChangeTab(tab);
               }}
             >
-              <div style={{ width: '18.75rem' }}>
-                <Tabs.List>
-                  <Tabs.Tab value={'1'}>Color</Tabs.Tab>
-                  <Tabs.Tab value={'2'}>Capacity</Tabs.Tab>
-                  <Tabs.Tab value={'3'}>Package</Tabs.Tab>
-                </Tabs.List>
-              </div>
+              <Tabs.List className="grid grid-cols-3 font-semibold w-[300px]">
+                <Tabs.Tab
+                  value={'1'}
+                  style={{
+                    color: tabSelected === '1' ? '#B82C67' : '#7C7C7C',
+                  }}
+                >
+                  Color
+                </Tabs.Tab>
+                <Tabs.Tab
+                  value={'2'}
+                  style={{
+                    color: tabSelected === '2' ? '#B82C67' : '#7C7C7C',
+                  }}
+                >
+                  Capacity
+                </Tabs.Tab>
+                <Tabs.Tab
+                  value={'3'}
+                  style={{
+                    color: tabSelected === '3' ? '#B82C67' : '#7C7C7C',
+                  }}
+                >
+                  Package
+                </Tabs.Tab>
+              </Tabs.List>
               <Tabs.Panel value={'1'}>
-                <div style={{ display: 'flex' }}>
+                <div className="flex py-4">
                   <img src={'/warning.svg'} alt={'icon'} />
                   <p
                     style={{
@@ -737,6 +768,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                     {colorAttribute?.map((item: IAttribute, index: number) => (
                       <div key={index}>
                         <AttributeCards
+                          defaultColor={item?.color}
                           onReplaceImage={async (file) => {
                             const currentIndex = colorAttribute.findIndex(
                               (i) => i === colorAttribute[index],
@@ -767,6 +799,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                               ...colorAttribute[currentIndex],
                               image: '',
                               imageFile: null,
+                              image_id: null,
                             };
                             const emptyImage = [
                               ...colorAttribute.slice(0, currentIndex),
@@ -880,7 +913,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                 </Box>
               </Tabs.Panel>{' '}
               <Tabs.Panel value={'2'}>
-                <div style={{ display: 'flex' }}>
+                <div className="flex py-4">
                   <img src={'/warning.svg'} alt={'icon'} />
                   <p
                     style={{
@@ -945,6 +978,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                                 ...capacityAttribute[currentIndex],
                                 image: '',
                                 imageFile: null,
+                                image_id: null,
                               };
 
                               const newPrice = [
@@ -1037,7 +1071,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                 </Box>
               </Tabs.Panel>{' '}
               <Tabs.Panel value={'3'}>
-                <div style={{ display: 'flex' }}>
+                <div className="flex py-4">
                   <img src={'/warning.svg'} alt={'icon'} />
                   <p
                     style={{

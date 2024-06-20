@@ -165,15 +165,20 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
                 <Tabs.Tab
                   key={item.id}
                   value={item?.id ? item?.id.toString() : '0'}
+                  style={{
+                    padding: '16px 32px',
+                  }}
                 >
                   <Title
-                    c={'pink'}
-                    order={4}
                     style={{
-                      width: '100%',
-                      display: 'block',
-                      textAlign: 'center',
+                      color:
+                        item?.id && +categorySelected === +item?.id
+                          ? '#B72C68'
+                          : '#909090',
                     }}
+                    order={4}
+                    size={16}
+                    weight={600}
                   >
                     {item?.name}
                   </Title>
@@ -190,7 +195,7 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
             alignItems: 'center',
           }}
         >
-          <Title c="#B82C67" mb={4}>
+          <Title c="#B82C67" mb={4} size={24}>
             Product management
           </Title>
           <Button
@@ -198,7 +203,9 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
             bg={' #B82C67'}
             onClick={open}
             rightIcon={<img src="/plus.svg" alt="icon" />}
-            sx={{ fontWeight: 500 }}
+            sx={{ fontWeight: 500, fontSize: 16 }}
+            w={211}
+            h={42}
           >
             Add new product
           </Button>

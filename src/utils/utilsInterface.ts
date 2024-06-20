@@ -120,7 +120,7 @@ export interface IAttribute {
   name: string;
   color?: string;
   imageFile?: File | null;
-  image_id?: number;
+  image_id?: number | null;
 }
 export type subsub = {
   name: string;

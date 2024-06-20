@@ -76,8 +76,8 @@ const ProductTable = ({
                   fontWeight: 600,
                 }}
               >
-                <td>Image</td>
-                <td>
+                <td className="mx-auto">Image</td>
+                <td className="mx-auto">
                   <UnstyledButton>
                     <span
                       style={{
@@ -90,42 +90,46 @@ const ProductTable = ({
                     </span>{' '}
                   </UnstyledButton>
                 </td>
-                <td>
+                <td className="mx-auto">
                   <UnstyledButton>
                     <span style={{ color: '#B82C67', fontWeight: 600 }}>
                       Price
                     </span>{' '}
                   </UnstyledButton>
                 </td>
-                <td>Sub-category</td>
-                <td>Sub-sub-category</td>
-                <td>Status</td>
-                <td>Update</td>
-                <td>Delete</td>
+                <td className="mx-auto">Sub-category</td>
+                <td className="mx-auto">Sub-sub-category</td>
+                <td className="mx-auto">Status</td>
+                <td className="mx-auto">Update</td>
+                <td className="mx-auto">Delete</td>
               </tr>
             </thead>
             <tbody>
               {productData &&
-                productData?.map((item: productType) => (
+                productData?.map((item: productType, index) => (
                   <tr
                     key={item.id}
-                    style={{ textAlign: 'center', height: '60px' }}
+                    style={{
+                      background: index % 2 !== 0 ? '#FFE2EC80' : '',
+                      height: 60,
+                    }}
                     className={'hover_table'}
                   >
                     <td>
                       <img
                         src={item?.thumbnail?.url}
-                        width="52px"
-                        height="36px"
                         alt="image"
+                        className="mx-auto h-[40px]"
                         loading="lazy"
                       />
                     </td>
-                    <td>{item.name}</td>
-                    <td>€{item.price}</td>
-                    <td>{item?.subcategory?.name}</td>
-                    <td>{item?.sub_subcategory?.name}</td>
-                    <td style={{ textTransform: 'capitalize' }}>
+                    <td className="text-center">{item.name}</td>
+                    <td className="text-center">€{item.price}</td>
+                    <td className="text-center">{item?.subcategory?.name}</td>
+                    <td className="text-center">
+                      {item?.sub_subcategory?.name}
+                    </td>
+                    <td className="text-center">
                       <span
                         style={{
                           background:
@@ -146,12 +150,12 @@ const ProductTable = ({
                         {/* {item.status} */}
                       </span>
                     </td>
-                    <td>
+                    <td className="text-center">
                       <UnstyledButton onClick={() => openEditModal(item.id)}>
                         <img src="/pen.svg" alt="icon" />
                       </UnstyledButton>
                     </td>
-                    <td>
+                    <td className="text-center">
                       <UnstyledButton
                         onClick={function () {
                           setState((p: any) => ({

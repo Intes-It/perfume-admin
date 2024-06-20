@@ -43,6 +43,7 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
                 rightSection={<img alt="icon" src="/down_arrow.svg" />}
                 onChange={props.onSelectSubCategories}
                 value={props?.subCategorySelected}
+                placeholder="Select an element"
                 bg={'#FFE7EF'}
                 w={'200px'}
                 h={'3.625rem'}
@@ -72,6 +73,7 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
                 rightSection={<img alt="icon" src="/down_arrow.svg" />}
                 onChange={props.onSelectSubSubCategories}
                 value={props?.subSubCategorySelected}
+                placeholder="Select an element"
                 bg={'#FFE7EF'}
                 w={'200px'}
                 h={'3.625rem'}
@@ -106,6 +108,7 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
             rightSection={<img alt="icon" src="/down_arrow.svg" />}
             variant="unstyled"
             label="Status"
+            placeholder="Select an element"
             bg={'#FFE7EF'}
             w={'200px'}
             h={'3.625rem'}

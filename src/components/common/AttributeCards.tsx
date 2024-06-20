@@ -56,7 +56,7 @@ const AttributeCards: React.FC<attributeCardProps> = ({
     >
       {productImage ? (
         <ImagePreview
-          remove={false}
+          remove
           image={productImage}
           onRemove={onRemoveImage}
           onReplace={onReplaceImage}
@@ -72,7 +72,13 @@ const AttributeCards: React.FC<attributeCardProps> = ({
           accept={IMAGE_MIME_TYPE}
         >
           <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-            <img src={'/add_image_ic.svg'} width={32} height={32} alt={'img'} />
+            <img
+              src={'/add_image_ic.svg'}
+              className="pb-1.5 mx-auto"
+              width={32}
+              height={32}
+              alt={'img'}
+            />
             <p style={{ fontSize: '13px' }}>Add image</p>
           </div>
         </Dropzone>
@@ -127,17 +133,35 @@ const AttributeCards: React.FC<attributeCardProps> = ({
             </span>
 
             {attributeTitle.toLowerCase() === 'color' ? (
-              <ColorInput
-                withEyeDropper={false}
-                variant="unstyled"
-                onChange={onColorChange}
-                defaultValue={defaultColor}
-              />
+              <div className="relative cursor-pointer">
+                <div
+                  style={{
+                    width: 24,
+                    height: 24,
+                    backgroundColor: defaultColor || 'red',
+                    borderRadius: 2,
+                    cursor: 'pointer',
+                  }}
+                />
+                <ColorInput
+                  style={{
+                    opacity: 0,
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                  }}
+                  withEyeDropper={false}
+                  variant="unstyled"
+                  onChange={onColorChange}
+                  defaultValue={defaultColor}
+                />
+              </div>
             ) : (
               <TextInput
                 type="text"
                 h={'1.5rem'}
                 w={'6.8125rem'}
+                maxLength={20}
                 mb={'0.85rem'}
                 onChange={onAttributeChange}
                 required

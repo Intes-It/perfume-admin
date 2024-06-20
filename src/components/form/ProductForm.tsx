@@ -171,7 +171,7 @@ const ProductForm = ({
         composition: '',
       },
       category_id: (categorySelected && +categorySelected) as any,
-      quantity: 1,
+      quantity: '',
     },
   });
   const editor = useEditor({
@@ -499,25 +499,32 @@ const ProductForm = ({
 
           <Group spacing={'xl'}>
             <div>
-              <h4 style={{ color: '#B82C67', fontSize: 16 }}>Product image</h4>
+              <h4
+                style={{
+                  color: '#B82C67',
+                  fontSize: 16,
+                  paddingBottom: 12,
+                  paddingTop: 20,
+                }}
+              >
+                Product image
+              </h4>
               {url_image ? (
-                <>
-                  <ImagePreview
-                    imageWidth={174}
-                    imageHeight={174}
-                    remove={false}
-                    image={url_image}
-                    onReplace={(file) => {
-                      if (file) {
-                        setState((p) => ({
-                          ...p,
-                          url_image: URL.createObjectURL(file),
-                        }));
-                        form.setFieldValue('image', file);
-                      }
-                    }}
-                  />
-                </>
+                <ImagePreview
+                  imageWidth={174}
+                  imageHeight={174}
+                  remove={false}
+                  image={url_image}
+                  onReplace={(file) => {
+                    if (file) {
+                      setState((p) => ({
+                        ...p,
+                        url_image: URL.createObjectURL(file),
+                      }));
+                      form.setFieldValue('image', file);
+                    }
+                  }}
+                />
               ) : (
                 <Dropzone
                   onDrop={(file) => {
@@ -531,6 +538,7 @@ const ProductForm = ({
                   w={174}
                   multiple={false}
                   h={174}
+                  style={{ borderColor: form.errors?.image ? '#ff0000' : '' }}
                   pt={'50px'}
                   accept={IMAGE_MIME_TYPE}
                 >
@@ -539,6 +547,10 @@ const ProductForm = ({
                       src={'/add_image_ic.svg'}
                       width={32}
                       height={32}
+                      style={{
+                        margin: 'auto',
+                        paddingBottom: 6,
+                      }}
                       alt={'img'}
                     />
                     <p style={{ fontSize: '13px' }}>Add image</p>
@@ -611,7 +623,11 @@ const ProductForm = ({
               <Grid.Col span={6}>
                 <h4 style={{ color: '#E7639A', fontSize: 16 }}>Quantity </h4>
                 <div
-                  style={{ display: 'flex', justifyContent: 'space-between' }}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    gap: 16,
+                  }}
                 >
                   <div>
                     <span style={{ color: '#707070' }}>
@@ -624,6 +640,7 @@ const ProductForm = ({
                       pl={10}
                       mt={8}
                       variant={'unstyled'}
+                      maxLength={9}
                       precision={2}
                       decimalSeparator="."
                       min={0}
@@ -652,24 +669,44 @@ const ProductForm = ({
             </Grid>
           </div>
           <div>
-            <h4 style={{ color: '#E7639A', marginBottom: '5px', fontSize: 16 }}>
+            <div className="mb-2 text-[#B82C67] font-bold text-base ">
               Attribute
-            </h4>
+            </div>
             <Tabs
               value={tabSelected}
+              style={{ width: 'fit-content' }}
               onTabChange={(tab: string) => {
                 handleChangeTab(tab);
               }}
             >
-              <div style={{ width: '18.75rem' }}>
-                <Tabs.List>
-                  <Tabs.Tab value={'1'}>Color</Tabs.Tab>
-                  <Tabs.Tab value={'2'}>Capacity</Tabs.Tab>
-                  <Tabs.Tab value={'3'}>Package</Tabs.Tab>
-                </Tabs.List>
-              </div>
+              <Tabs.List className="grid grid-cols-3 font-semibold">
+                <Tabs.Tab
+                  value={'1'}
+                  style={{
+                    color: tabSelected === '1' ? '#B82C67' : '#7C7C7C',
+                  }}
+                >
+                  Color
+                </Tabs.Tab>
+                <Tabs.Tab
+                  value={'2'}
+                  style={{
+                    color: tabSelected === '2' ? '#B82C67' : '#7C7C7C',
+                  }}
+                >
+                  Capacity
+                </Tabs.Tab>
+                <Tabs.Tab
+                  value={'3'}
+                  style={{
+                    color: tabSelected === '3' ? '#B82C67' : '#7C7C7C',
+                  }}
+                >
+                  Package
+                </Tabs.Tab>
+              </Tabs.List>
               <Tabs.Panel value={'1'}>
-                <div style={{ display: 'flex' }}>
+                <div className="flex py-4">
                   <img src={'/warning.svg'} alt={'icon'} />
                   <p
                     style={{
@@ -704,6 +741,7 @@ const ProductForm = ({
                     {colorAttribute?.map((item: IAttribute, index: number) => (
                       <div key={index}>
                         <AttributeCards
+                          defaultColor={item?.color}
                           onReplaceImage={(file) => {
                             const currentIndex = colorAttribute.findIndex(
                               (i) => i === colorAttribute[index],
@@ -841,7 +879,7 @@ const ProductForm = ({
                 </Box>
               </Tabs.Panel>{' '}
               <Tabs.Panel value={'2'}>
-                <div style={{ display: 'flex' }}>
+                <div className="flex py-4">
                   <img src={'/warning.svg'} alt={'icon'} />
                   <p
                     style={{
@@ -994,7 +1032,7 @@ const ProductForm = ({
                 </Box>
               </Tabs.Panel>{' '}
               <Tabs.Panel value={'3'}>
-                <div style={{ display: 'flex' }}>
+                <div className="flex py-4">
                   <img src={'/warning.svg'} alt={'icon'} />
                   <p
                     style={{
