@@ -49,12 +49,12 @@ const ProductTable = ({
                 }}
               >
                 <td className="text-center">Image</td>
-                <td>Name</td>
+                <td>Name of product</td>
                 <td>Price</td>
                 <td>Sub-sub-category</td>
                 <td>Sub-category</td>
                 <td className="text-center w-[110px]">Status</td>
-                <td className="text-center">Update</td>
+                <td className="text-center">Modify</td>
                 <td className="text-center">Delete</td>
               </tr>
             </thead>
