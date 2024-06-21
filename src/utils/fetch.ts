@@ -2,6 +2,9 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { deleteCookie, getCookie, setCookie } from './cookies';
 let isRefreshing = false as boolean;
+
+export const BASE_URL = 'http://171.244.64.245:8010';
+
 const instance = axios.create({
   headers: {
     'Content-Type': 'application/json',

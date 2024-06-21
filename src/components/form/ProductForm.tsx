@@ -345,7 +345,7 @@ const ProductForm = ({
     <div>
       <form
         onSubmit={form.onSubmit((v) => createNewProduct(v))}
-        style={{ padding: '32px 64px', fontSize: 12 }}
+        style={{ padding: '16px 48px', fontSize: 12 }}
       >
         <Stack spacing={'lg'}>
           <div
@@ -569,13 +569,21 @@ const ProductForm = ({
             </span>
           )}
           <div>
-            <Title align={'center'} order={2} c={'#B82C67'} mt={'4rem'}>
+            <Title
+              align={'center'}
+              order={2}
+              c={'#B82C67'}
+              mt={'4rem'}
+              mb={'2rem'}
+            >
               Product detail
             </Title>
 
             <Grid gutter={7} gutterXs="md" gutterMd="xl" gutterXl={50}>
               <Grid.Col span={6}>
-                <h4 style={{ color: '#E7639A', fontSize: 16 }}>Price</h4>
+                <div className="text-base font-semibold text-[#B82C67] mb-4">
+                  Price
+                </div>
                 <div style={{ display: 'grid', gap: 16 }}>
                   <div
                     className={'badge'}
@@ -621,7 +629,9 @@ const ProductForm = ({
                 </div>
               </Grid.Col>
               <Grid.Col span={6}>
-                <h4 style={{ color: '#E7639A', fontSize: 16 }}>Quantity </h4>
+                <div className="text-base font-semibold text-[#B82C67] mb-4">
+                  Quantity{' '}
+                </div>
                 <div
                   style={{
                     display: 'flex',
@@ -668,7 +678,7 @@ const ProductForm = ({
               </Grid.Col>
             </Grid>
           </div>
-          <div>
+          <div className="mt-5">
             <div className="mb-2 text-[#B82C67] font-bold text-base ">
               Attribute
             </div>
@@ -684,6 +694,7 @@ const ProductForm = ({
                   value={'1'}
                   style={{
                     color: tabSelected === '1' ? '#B82C67' : '#7C7C7C',
+                    fontSize: 12,
                   }}
                 >
                   Color
@@ -691,6 +702,7 @@ const ProductForm = ({
                 <Tabs.Tab
                   value={'2'}
                   style={{
+                    fontSize: 12,
                     color: tabSelected === '2' ? '#B82C67' : '#7C7C7C',
                   }}
                 >
@@ -699,6 +711,7 @@ const ProductForm = ({
                 <Tabs.Tab
                   value={'3'}
                   style={{
+                    fontSize: 12,
                     color: tabSelected === '3' ? '#B82C67' : '#7C7C7C',
                   }}
                 >
@@ -711,7 +724,7 @@ const ProductForm = ({
                   <p
                     style={{
                       color: '#d72525',
-                      fontSize: '13px',
+                      fontSize: '10px',
                       marginLeft: '5px',
                       fontStyle: 'italic',
                     }}
@@ -884,7 +897,7 @@ const ProductForm = ({
                   <p
                     style={{
                       color: '#d72525',
-                      fontSize: '13px',
+                      fontSize: '10px',
                       marginLeft: '5px',
                       fontStyle: 'italic',
                     }}
@@ -1037,7 +1050,7 @@ const ProductForm = ({
                   <p
                     style={{
                       color: '#d72525',
-                      fontSize: '13px',
+                      fontSize: '10px',
                       marginLeft: '5px',
                       fontStyle: 'italic',
                     }}

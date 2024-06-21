@@ -1,18 +1,19 @@
 import { Select, Space, TextInput, Title } from '@mantine/core';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { CustomSelectMultiple } from '../CustomSelectMultiple';
 
 interface FuntionHeaderProps {
   onCreateNew: () => void;
   title: string;
-  onSelectSubCategories: (v: string) => void;
-  onSelectSubSubCategories?: (v: string) => void;
+  onSelectSubCategories: (v: string[]) => void;
+  onSelectSubSubCategories?: (v: string[]) => void;
   onSelectStatus: (v: string) => void;
   onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   subCategory: { value: string; label: string }[];
   subSubCategory: { value: string; label: string }[];
-  subCategorySelected?: string;
-  subSubCategorySelected?: string;
+  subCategorySelected?: string[];
+  subSubCategorySelected?: string[];
   handleSearch: () => void;
   searchValue: string;
 }
@@ -33,68 +34,23 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
           justifyContent: 'space-between',
         }}
       >
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', gap: 20 }}>
           {currentPath !== '/voucher_manager' && (
             <>
-              <Select
+              <CustomSelectMultiple
                 data={props.subCategory}
                 label="Sub-category"
-                variant="unstyled"
-                rightSection={<img alt="icon" src="/down_arrow.svg" />}
                 onChange={props.onSelectSubCategories}
-                value={props?.subCategorySelected}
-                placeholder="Select an element"
-                bg={'#FFE7EF'}
-                w={'200px'}
-                h={'3.625rem'}
-                sx={{
-                  borderRadius: '5px',
-                  marginRight: '20px',
-                  whiteSpace: 'normal',
-                  '.mantine-bkyer9': {
-                    height: 20,
-                    minHeight: 0,
-                    fontWeight: 500,
-                    paddingLeft: 16,
-                  },
-                  '.mantine-1fzet7j': {
-                    fontSize: 12,
-                    color: '#858585',
-                    paddingLeft: 16,
-                    paddingTop: 8,
-                  },
-                }}
+                value={props?.subCategorySelected as string[]}
               />
-
-              <Select
-                data={props.subSubCategory}
-                label="Sub-sub-category"
-                variant="unstyled"
-                rightSection={<img alt="icon" src="/down_arrow.svg" />}
-                onChange={props.onSelectSubSubCategories}
-                value={props?.subSubCategorySelected}
-                placeholder="Select an element"
-                bg={'#FFE7EF'}
-                w={'200px'}
-                h={'3.625rem'}
-                sx={{
-                  borderRadius: '5px',
-                  marginRight: '20px',
-                  whiteSpace: 'normal',
-                  '.mantine-bkyer9': {
-                    height: 20,
-                    fontWeight: 500,
-                    paddingLeft: 16,
-                    minHeight: 0,
-                  },
-                  '.mantine-1fzet7j': {
-                    fontSize: 12,
-                    color: '#858585',
-                    paddingLeft: 16,
-                    paddingTop: 8,
-                  },
-                }}
-              />
+              {props.onSelectSubSubCategories && (
+                <CustomSelectMultiple
+                  data={props.subSubCategory}
+                  label="Sub-sub-category"
+                  onChange={props.onSelectSubSubCategories}
+                  value={props?.subSubCategorySelected as string[]}
+                />
+              )}
             </>
           )}
           <Select
@@ -125,8 +81,11 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
               '.mantine-1fzet7j': {
                 fontSize: 12,
                 color: '#858585',
-                paddingLeft: 16,
+                paddingLeft: 12,
                 paddingTop: 8,
+              },
+              '.mantine-hclwis': {
+                height: 14,
               },
             }}
           />
@@ -152,13 +111,8 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
               padding: '0 5px',
               borderRadius: '5px',
               width: '347px',
-              height: 32,
-              minHeight: 32,
-              fontSize: 14,
-              '.mantine-1v7s5f8, .mantine-nilrrg': {
-                height: 32,
-              },
             }}
+            height={32}
             onKeyDown={(e) => {
               if (e.key === 'Enter') props.handleSearch();
             }}

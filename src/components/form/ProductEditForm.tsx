@@ -23,6 +23,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { GetColorName } from 'hex-color-to-color-name';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
+import { stripBaseUrl } from '../../hooks/convertImage';
 import { apiRoute } from '../../utils/apiRoute';
 import { GET, PATCH, instance } from '../../utils/fetch';
 import {
@@ -246,7 +247,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
           capacityAttribute: res?.data?.capacity,
           packageAttribute: res?.data?.package,
           colorAttribute: res?.data?.color,
-          url_image: res.data?.images?.[0]?.url,
+          url_image: stripBaseUrl(res.data?.images?.[0]?.url || ''),
           subCategory: listSubCategoryCurr || [],
           subsubCategory: listSubSubCate || [],
           createdDay: res.data?.created_ad,

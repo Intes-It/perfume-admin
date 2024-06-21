@@ -24,8 +24,6 @@ interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
 
 const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
   ({ image, label, description, className, ...others }: ItemProps, ref) => {
-    console.log('others :>> ', others);
-
     return (
       <div
         ref={ref}
@@ -43,7 +41,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
             padding: '12px 16px',
           }}
         >
-          <Checkbox checked={others?.selected} />
+          <Checkbox checked={others?.selected} color="pink" />
           <Text>{label}</Text>
         </Group>
       </div>
@@ -84,11 +82,12 @@ export const CustomSelectMultiple = ({
       rightSection={<img alt="icon" src="/down_arrow.svg" />}
       data={data}
       label={label}
+      placeholder="Select an element"
       maxDropdownHeight={400}
       onChange={(value) => onChange(value)}
       w={'320px'}
       bg={'#FFE7EF'}
-      h={'3.625rem'}
+      h={'58px'}
       sx={{
         borderRadius: '5px',
         whiteSpace: 'normal',
@@ -104,8 +103,10 @@ export const CustomSelectMultiple = ({
           paddingLeft: 16,
           paddingTop: 8,
         },
+
         '.mantine-1n7zxp': {
-          paddingLeft: 12,
+          marginLeft: 16,
+          paddingBottom: 6,
         },
       }}
     />

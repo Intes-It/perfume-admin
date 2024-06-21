@@ -159,8 +159,11 @@ tbody tr td {
   height: fit-content;
 }
 
-.mantine-dat7mn .mantine-1n7zxp {
-  padding-left: 24px;
+.mantine-3wqyw5 {
+  margin-left: 0;
+}
+.mantine-hclwis {
+  margin-left: 12px;
 }
 
 .mantine-1v7s5f8 {
@@ -181,8 +184,8 @@ tbody tr td {
   border-color: #b62a65;
 }
 
-.mantine-1laou7w[data-active]:hover {
-  border-color: #b62a65;
+thead td {
+  padding: 0.4375rem 0.625rem;
 }
 
 .list_order_admin .mantine-Table-root > thead > tr > th {

@@ -67,6 +67,7 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
 
       if (res.status === 200) {
         setProductData(res.data?.results);
+        setState((prev) => ({ ...prev, total: res.data?.results?.length }));
       }
       setIsLoading(false);
     } catch (error) {
@@ -123,14 +124,15 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
   }, [categorySelected]) as any;
 
   const subSubCategory = useMemo(() => {
+    let list = [] as any;
     if (subCategory && subCategory?.length > 0) {
-      const list = subCategory?.find(
-        (item: any) =>
-          subCategorySelected && item?.value === +subCategorySelected,
-      ) as any;
-
+      subCategory?.forEach((item: any) => {
+        if (subCategorySelected?.includes(item?.id)) {
+          list = [...list, ...item?.sub_subcategories];
+        }
+      });
       return (
-        list?.sub_subcategories.map((item: any) => ({
+        list?.map((item: any) => ({
           value: item.id,
           label: item.name,
         })) || []
@@ -142,20 +144,22 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
   useEffect(() => {
     categorySelected && getProduct();
   }, []);
+
   return (
     <div>
       <div style={{ padding: '0 30px' }}>
         <Tabs
           value={categorySelected}
           onTabChange={(tab: string) => {
+            if (tab === categorySelected) return;
             setCategorySelected(tab);
             getProduct({
               category: tab,
               subCategory: null,
               subSubCategory: null,
             });
-            if (subCategorySelected) setSubCategorySelected(null);
-            if (subSubCategorySelected) setSubSubCategorySelected(null);
+            if (subCategorySelected) setSubCategorySelected([]);
+            if (subSubCategorySelected) setSubSubCategorySelected([]);
             if (search) setSearch('');
           }}
         >
@@ -203,8 +207,7 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
             bg={' #B82C67'}
             onClick={open}
             rightIcon={<img src="/plus.svg" alt="icon" />}
-            sx={{ fontWeight: 500, fontSize: 16 }}
-            w={211}
+            className="w-[200px] font-medium text-base"
             h={42}
           >
             Add new product
@@ -216,7 +219,7 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
           onCreateNew={open}
           onSelectSubCategories={(v) => {
             setSubCategorySelected(v);
-            setSubSubCategorySelected(null);
+            setSubSubCategorySelected([]);
             getProduct({
               category: categorySelected,
               subCategory: v,
@@ -242,6 +245,9 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
           handleSearch={handleSearch}
           searchValue={search}
         />
+        <div className="text-[#B82C67] font-medium text-xl pt-5">
+          Total product ({total})
+        </div>
         {isLoading ? (
           <div
             style={{
@@ -270,7 +276,7 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
           <Modal.Content>
             <Modal.Header>
               <Modal.Title>
-                <Title c={'#B82C67'} order={1} mt={32} ml={64}>
+                <Title c={'#B82C67'} size={24} order={1} mt={16} ml={48}>
                   Add new product
                 </Title>
               </Modal.Title>
@@ -326,12 +332,18 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
           opened={deleteModal}
           onClose={() => setState((prev) => ({ ...prev, deleteModal: false }))}
           withCloseButton={false}
+          w={400}
           centered
           radius={'md'}
+          sx={{
+            '.mantine-iewzhb': {
+              maxWidth: 420,
+            },
+          }}
         >
-          <Paper pt={'1rem'}>
-            <Text align={'center'} sx={{ fontSize: '16px', fontWeight: 600 }}>
-              Are you sure want to delete product?
+          <Paper pt={'1rem'} px={16}>
+            <Text align={'left'} sx={{ fontSize: '16px', fontWeight: 600 }}>
+              Do you really want to delete product?
             </Text>
             <Group sx={{ float: 'right' }} my={32}>
               <Button
