@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { ordersListType } from '../utils/utilsInterface';
 import { GET, PATCH } from '../utils/fetch';
 import dayjs from 'dayjs';
-import { twMerge } from 'tailwind-merge';
+import ReactPaginate from 'react-paginate';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -85,10 +85,17 @@ export default function ListOrder() {
     totalOrder: 0,
     orderId: -1,
     page: 1,
+    count: 1,
     searchText: '',
     rejectModal: false,
     checkChangeStatus: false,
   });
+  const onchangePage = ({ selected: selectedPage }: { selected: number }) => {
+    setState((pre) => ({
+      ...pre,
+      page: selectedPage + 1,
+    }));
+  };
   const {
     status,
     tab,
@@ -144,7 +151,7 @@ export default function ListOrder() {
         style={{
           marginTop: '10px',
           fontSize: '24px',
-          fontWeight: '600px',
+          fontWeight: '600',
           color: '#374151',
         }}
       >
@@ -170,12 +177,16 @@ export default function ListOrder() {
                 alignItems: 'center',
                 backgroundColor: item.value === status ? '#FFD9E2' : '#fff',
                 cursor: 'pointer',
+                color: item.value === status ? '#970024' : '#374151',
+                fontWeight: item.value === status ? '600' : '400',
+                borderRadius: '4px',
               }}
               onClick={() => {
                 setState((pre) => ({
                   ...pre,
                   status: item.value,
                   page: 1,
+                  searchText: '',
                 }));
               }}
             >
@@ -199,6 +210,7 @@ export default function ListOrder() {
               page: 1,
             }));
           }}
+          value={searchText}
           style={{
             border: '0.5px solid #D9D9D9',
             borderRadius: '4px',
@@ -206,30 +218,43 @@ export default function ListOrder() {
         />
       </div>
 
-      <Paper shadow="md" radius="md" sx={{ border: '1px solid #B82C67' }}>
+      <Paper
+        shadow="md"
+        radius="md"
+        className="list_order_admin"
+        sx={{ border: '1px solid #B82C67', color: '#970024' }}
+      >
         <Table
-          sx={{ borderRadius: '0.65em', overflow: 'hidden' }}
+          sx={{
+            borderTopLeftRadius: '10px',
+            borderTopRightRadius: '10px',
+            overflow: 'hidden',
+          }}
           highlightOnHover
           withColumnBorders
         >
           <thead className={cx(classes.header)}>
             <tr
               style={{
-                //   textAlign: 'center',
-                color: '#B82C67',
+                textAlign: 'center',
+                color: '#970024',
                 backgroundColor: '#FFE2EC',
                 height: '60px',
                 fontWeight: 600,
+                fontSize: '14px',
               }}
+              className="font-semibold"
             >
-              <th>Number</th>
-              <th>Order ID</th>
-              <th>Date order</th>
-              <th>Quantity</th>
-              <th>Customer</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th></th>
+              <th className="w-1/12">Number</th>
+              <th className="w-1/12">Order ID</th>
+              <th className="w-1/6">Date order</th>
+              <th className="w-1/12">Quantity</th>
+              <th className="whitespace-nowrap  text-ellipsis  truncate max-w-10">
+                Customer
+              </th>
+              <th className="w-1/12">Total</th>
+              <th className="w-1/12">Status</th>
+              <th className="w-1/6"></th>
             </tr>
           </thead>
           <tbody>
@@ -239,27 +264,37 @@ export default function ListOrder() {
                   key={index}
                   style={{
                     backgroundColor: index % 2 === 0 ? '#fff' : '#FFF1F6',
+                    color: '#374151',
                   }}
                 >
                   <td className="h-[60px]">{index + 1}</td>
                   <td>{item.id}</td>
                   <td>
                     {' '}
-                    {dayjs(item.paid_at)?.format('YYYY-MM-DD')}
+                    {dayjs(item.paid_at || item.created_at)?.format(
+                      'YYYY-MM-DD',
+                    )}
                     {'    '}
                     <span className="ml-2"></span>
-                    {dayjs(item.paid_at)?.format('HH:mm')}
+                    {dayjs(item.paid_at || item.created_at)?.format('HH:mm')}
                   </td>
                   <td>
                     {item.quantity === 1
                       ? item.quantity + ' item'
                       : item.quantity + ' items'}
                   </td>
-                  <td>{`${item.first_name} ${item.last_name}`}</td>
-                  <td>{Number(item.total).toFixed(2) + ' $'}</td>
+                  <td
+                    style={{ fontWeight: '500' }}
+                    className="whitespace-nowrap  text-ellipsis  truncate max-w-10"
+                  >{`${item.first_name} ${item.last_name}`}</td>
+                  <td style={{ fontWeight: '500' }}>
+                    {Number(item.total).toFixed(2)}
+                    <span style={{ fontWeight: '700' }}>{' $'}</span>
+                  </td>
 
                   <td
                     style={{
+                      fontWeight: '500',
                       color:
                         String(item.status) === '8'
                           ? '#00DD16'
@@ -307,58 +342,16 @@ export default function ListOrder() {
           </tbody>
         </Table>
         {data && data?.results?.length > 0 && (
-          <div
-            className=" flex justify-center py-8 "
-            style={{
-              borderTop: '0.0625rem solid #dee2e6',
-            }}
-          >
-            <div className="flex gap-x-5">
-              <button
-                className={twMerge(
-                  ' text-xs font-medium',
-                  data?.previous_page === null
-                    ? 'cursor-not-allowed text-[#B3B3B3]'
-                    : 'text-[#000]',
-                )}
-                onClick={() =>
-                  setState((p) => ({ ...p, page: state.page - 1 }))
-                }
-                disabled={data?.previous_page === null}
-              >
-                Previous
-              </button>
-              <div className="flex gap-x-2">
-                {Array.from({ length: data?.num_pages }, (_, index) => (
-                  <button
-                    className={` ${
-                      page === index + 1 && 'bg-[#603813] text-white'
-                    }  w-5 h-5 px-1  rounded text-sm`}
-                    onClick={() => {
-                      setState((p) => ({ ...p, page: index + 1 }));
-                    }}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-              </div>
-
-              <button
-                className={twMerge(
-                  ' text-xs font-medium',
-                  data?.next_page === null
-                    ? 'cursor-not-allowed text-[#B3B3B3]'
-                    : 'text-[#000]',
-                )}
-                onClick={() =>
-                  setState((p) => ({ ...p, page: state.page + 1 }))
-                }
-                disabled={data?.next_page === null}
-              >
-                Next
-              </button>
-            </div>
-          </div>
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="Next"
+            className="flex items-center custom-pagination justify-center gap-2 text-sm py-5"
+            onPageChange={onchangePage}
+            forcePage={page - 1 > 0 ? page - 1 : 0}
+            pageRangeDisplayed={3}
+            pageCount={data?.num_pages || 1}
+            previousLabel="Previous"
+          />
         )}
       </Paper>
     </div>
@@ -399,7 +392,7 @@ export default function ListOrder() {
             <div className="text-[16px] text-[#374151] font-medium">
               Order ID:
             </div>
-            <div className="text-[#603813] text-[16px] font-semibold">
+            <div className="text-[#970024] text-[16px] font-semibold">
               #{orderDetail.id}
             </div>
           </div>
@@ -407,16 +400,16 @@ export default function ListOrder() {
             <div className="text-[16px] text-[#374151] font-medium">
               Date order:
             </div>
-            <div className="text-[#603813] text-[16px] font-semibold text-right">
+            <div className="text-[#970024] text-[16px] font-semibold text-right">
               <span className="mr-2">
-                {dayjs(orderDetail?.updated_at).format('HH:mm')}
+                {dayjs(orderDetail?.paid_at).format('HH:mm')}
               </span>
-              {dayjs(orderDetail?.updated_at).format('YYYY-MM-DD')}
+              {dayjs(orderDetail?.paid_at).format('YYYY-MM-DD')}
             </div>
           </div>
           <div className="flex justify-between mt-3 gap-2">
             <div className="text-[16px] text-[#374151] font-medium">Name:</div>
-            <div className="text-[#603813] text-[16px] font-semibold text-right">
+            <div className="text-[#970024] text-[16px] font-semibold text-right">
               {orderDetail.first_name + ' ' + orderDetail.last_name}
             </div>
           </div>
@@ -424,13 +417,13 @@ export default function ListOrder() {
             <div className="text-[16px] text-[#374151] font-medium">
               Name of company (optional):
             </div>
-            <div className="text-[#603813] text-[16px] font-semibold text-right">
+            <div className="text-[#970024] text-[16px] font-semibold text-right">
               {orderDetail.company_name}
             </div>
           </div>
           <div className="flex justify-between mt-3 gap-2">
             <div className="text-[16px] text-[#374151] font-medium">Email:</div>
-            <div className="text-[#603813] text-[16px] font-semibold text-right">
+            <div className="text-[#970024] text-[16px] font-semibold text-right">
               {orderDetail.email}
             </div>
           </div>
@@ -438,13 +431,13 @@ export default function ListOrder() {
             <div className="text-[16px] text-[#374151] font-medium">
               Address:
             </div>
-            <div className="text-[#603813] text-[16px] font-semibold text-right">
+            <div className="text-[#970024] text-[16px] font-semibold text-right">
               {orderDetail.address}
             </div>
           </div>
           <div className="flex justify-between mt-3 gap-2">
             <div className="text-[16px] text-[#374151] font-medium">City:</div>
-            <div className="text-[#603813] text-[16px] font-semibold text-right">
+            <div className="text-[#970024] text-[16px] font-semibold text-right">
               {orderDetail.city}
             </div>
           </div>
@@ -452,7 +445,7 @@ export default function ListOrder() {
             <div className="text-[16px] text-[#374151] font-medium">
               Code Post:
             </div>
-            <div className="text-[#603813] text-[16px] font-semibold text-right">
+            <div className="text-[#970024] text-[16px] font-semibold text-right">
               {orderDetail.postal_code}
             </div>
           </div>
@@ -460,7 +453,7 @@ export default function ListOrder() {
             <div className="text-[16px] text-[#374151] font-medium">
               Phone Number:
             </div>
-            <div className="text-[#603813] text-[16px] font-semibold text-right">
+            <div className="text-[#970024] text-[16px] font-semibold text-right">
               {orderDetail.phone_number}
             </div>
           </div>
@@ -501,7 +494,7 @@ export default function ListOrder() {
                   <div className="flex flex-col ml-3">
                     <div className="flex flex-row gap-5 text-[16px] text-[#374151] font-medium mb-2">
                       <div>{item.product?.name}</div>{' '}
-                      <div>{'x' + item.quantity}</div>
+                      <div>{'x ' + item.quantity}</div>
                     </div>
                     <div className="text-[#ABABAB] text-[14px] font-medium">
                       {item.item_product_color?.length > 0
@@ -525,7 +518,7 @@ export default function ListOrder() {
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <div className="text-[#603813] text-[16px] font-bold mb-1">
+                  <div className="text-[#970024] text-[16px] font-semibold mb-1">
                     {'$ '}
                     {Number(item.total).toFixed(2)}
                   </div>
@@ -543,6 +536,17 @@ export default function ListOrder() {
               $ {Number(orderDetail?.total_price_items).toFixed(2)}
             </div>
           </div>
+          <div className="flex justify-between pb-3 ">
+            <div className="text-[16px] text-[#374151] font-medium">
+              Discount
+            </div>
+            <div className="text-[#603813] text-[16px] font-semibold">
+              ${' '}
+              {orderDetail.discount !== null
+                ? Number(orderDetail.discount).toFixed(2)
+                : 0.0}
+            </div>
+          </div>
           <div className="flex justify-between mb-1">
             <div className="text-[16px] text-[#374151] font-medium">
               Shipping
@@ -555,20 +559,7 @@ export default function ListOrder() {
             Not included in the price but need to include in the final invoice
             (payment)
           </div>
-          <div
-            className="flex justify-between pb-6 mb-4 "
-            style={{ borderBottom: '1px solid #E9E9E9' }}
-          >
-            <div className="text-[16px] text-[#374151] font-medium">
-              Discount
-            </div>
-            <div className="text-[#603813] text-[16px] font-semibold">
-              ${' '}
-              {orderDetail.discount !== null
-                ? Number(orderDetail.discount).toFixed(2)
-                : 0.0}
-            </div>
-          </div>
+
           <div
             className="flex justify-between pb-6 mb-4 "
             style={{ borderBottom: '1px solid #E9E9E9' }}
@@ -593,7 +584,7 @@ export default function ListOrder() {
                 onClick={() => {
                   setState((prev) => ({ ...prev, rejectModal: true }));
                 }}
-                className="bg-[#DB1818] w-[184px] h-[48px] text-[16px] text-white font-bold rounded-lg "
+                className="bg-[#DB1818] w-[164px] h-[48px] text-[16px] text-white font-bold rounded-lg "
               >
                 REJECT
               </button>
@@ -601,7 +592,7 @@ export default function ListOrder() {
                 onClick={() => {
                   changeStatusOrder(4);
                 }}
-                className="bg-[#18DB4E] w-[184px] h-[48px] text-[16px] text-white font-bold rounded-lg "
+                className="bg-[#18DB4E] w-[164px] h-[48px] text-[16px] text-white font-bold rounded-lg "
               >
                 ACCEPT
               </button>

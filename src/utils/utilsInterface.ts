@@ -130,6 +130,7 @@ export type ordersListType = {
   id: number;
   id_order: string;
   paid_at: string | DateValue | any;
+  created_at: string | DateValue | any;
   payment_id: string;
   status: string;
   user_name: string;
