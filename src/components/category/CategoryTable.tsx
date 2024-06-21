@@ -18,7 +18,9 @@ const CategoryTable = ({
     <div>
       <ScrollArea h={500} mt={'3rem'}>
         <Paper shadow="md" radius="md" sx={{ border: '1px solid #B82C67' }}>
-          <Table sx={{ borderRadius: '0.65em', overflow: 'hidden' }}>
+          <Table
+            sx={{ borderRadius: '0.65em', overflow: 'hidden', fontSize: 14 }}
+          >
             <thead>
               <tr
                 style={{

@@ -83,12 +83,12 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
       setState((prev) => ({ ...prev, deleteModal: false }));
       handleSearch();
       notifications.show({
-        message: 'Deleted successfully',
+        message: 'Deleted successfully!',
         color: 'green',
       });
     } else {
       notifications.show({
-        message: 'Delete fail',
+        message: 'Delete unsuccessfully!',
         color: 'red',
       });
     }
@@ -350,9 +350,11 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
                 variant={'subtle'}
                 onClick={() => setState((p) => ({ ...p, deleteModal: false }))}
               >
-                <span style={{ color: '#333' }}>No</span>
+                <span style={{ color: '#333' }}>Cancel</span>
               </Button>
-              <Button onClick={handleDeleteProduct}>Yes</Button>
+              <Button onClick={handleDeleteProduct} bg={'#E13434'} radius={6}>
+                Delete
+              </Button>
             </Group>
           </Paper>
         </Modal>

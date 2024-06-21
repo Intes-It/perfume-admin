@@ -295,12 +295,12 @@ const ProductForm = ({
       if (res.status === 201) {
         onSuccess();
         notifications.show({
-          message: 'Added successfully',
+          message: 'Added successfully!',
           color: 'green',
         });
       } else {
         notifications.show({
-          message: 'Something went wrong',
+          message: 'Add unsuccessfully!',
           color: 'red',
         });
       }

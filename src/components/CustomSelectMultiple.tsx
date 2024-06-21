@@ -68,7 +68,7 @@ export const CustomSelectMultiple = ({
             fontWeight: 500,
           }}
         >
-          {value?.length} elements selected
+          {value?.length} {value?.length > 1 ? 'elements' : 'element'} selected
         </div>
       );
   }

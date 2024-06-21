@@ -151,7 +151,7 @@ const ModalContent = ({
 
       if (res.status === 201) {
         notifications.show({
-          message: `Added successfully`,
+          message: `Added successfully!`,
           color: 'green',
         });
         onSuccess();
@@ -159,7 +159,7 @@ const ModalContent = ({
         form.reset();
       } else {
         notifications.show({
-          message: `Add fail`,
+          message: `Add unsuccessfully!`,
           color: 'red',
         });
       }
@@ -199,7 +199,7 @@ const ModalContent = ({
 
       if (res.status === 200) {
         notifications.show({
-          message: `Updated successfully`,
+          message: `Updated successfully!`,
           color: 'green',
         });
         onSuccess();
@@ -207,7 +207,7 @@ const ModalContent = ({
         form.reset();
       } else {
         notifications.show({
-          message: `Update fail`,
+          message: `Update unsuccessfully!`,
           color: 'red',
         });
       }
@@ -230,7 +230,7 @@ const ModalContent = ({
 
       if (res.status === 204) {
         notifications.show({
-          message: `Deleted successfully`,
+          message: `Deleted successfully!`,
           color: 'green',
         });
         onSuccess();
@@ -238,7 +238,7 @@ const ModalContent = ({
         form.reset();
       } else {
         notifications.show({
-          message: `Delete fail`,
+          message: `Delete unsuccessfully!`,
           color: 'red',
         });
       }
@@ -277,6 +277,7 @@ const ModalContent = ({
           className="text-sm font-medium"
           bg="#E13434"
           color="white"
+          radius={6}
         >
           Delete
         </Button>
