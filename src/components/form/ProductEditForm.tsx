@@ -321,7 +321,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
       if (res.status === 200) {
         onSuccess();
         notifications.show({
-          message: 'Add new product successfully',
+          message: 'Update product successfully',
           color: 'green',
         });
       } else {

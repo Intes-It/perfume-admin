@@ -45,11 +45,11 @@ const schema = yup.object().shape({
   price: yup
     .string()
     .min(1, 'Price must be greater than 0 or equal to 1')
-    .required('Price is required')
     .test({
       name: 'greaterThanZero',
       message: 'Price must be greater than 0',
       test: function (value) {
+        if (!value) return false;
         const priceNumber = parseFloat(value);
         return !isNaN(priceNumber) && priceNumber > 0;
       },
@@ -67,6 +67,7 @@ const schema = yup.object().shape({
         return decimalPlaces <= 2;
       },
     })
+    .required('Price is required')
     .typeError('Invalid number'),
   current_price: yup.string().when('price', (_price, schema) => {
     return schema

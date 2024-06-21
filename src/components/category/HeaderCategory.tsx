@@ -30,7 +30,13 @@ const HeaderCategory = ({
 }: HeaderCategoryPropsType) => {
   return (
     <div style={{ marginTop: 30 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginBottom: 60,
+        }}
+      >
         <Title c="pink" order={3} mb={4}>
           Category
         </Title>

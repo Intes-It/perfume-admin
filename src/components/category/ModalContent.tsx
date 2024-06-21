@@ -340,6 +340,7 @@ const ModalContent = ({
                         maxWidth: '347px',
                         fontSize: 14,
                       }}
+                      maxLength={30}
                       h={38}
                       {...form.getInputProps('name')}
                     />
