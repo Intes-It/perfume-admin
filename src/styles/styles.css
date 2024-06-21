@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root body {
   line-height: 1.5;
   font-weight: 400;
@@ -169,12 +170,58 @@ tbody tr td {
   font-weight: 500;
 }
 
+.mantine-17ts0d3 .mantine-bkyer9 {
+  padding-left: 12px;
+}
+
 .mantine-j3jbtx {
   top: 50%;
   transform: translate(0, -50%);
   height: fit-content;
 }
 
+.mantine-1laou7w[data-active] {
+  border-color: #b62a65;
+}
+
 thead td {
   padding: 0.4375rem 0.625rem;
+}
+
+.list_order_admin .mantine-Table-root > thead > tr > th {
+  font-weight: 600 !important;
+  color: #970024 !important;
+  border: none !important;
+}
+
+.custom-pagination .selected {
+  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: #970024;
+  color: white;
+}
+
+.custom-pagination li {
+  color: #374151;
+  font-weight: 500;
+  padding: 0 4px;
+  height: 20px;
+  text-align: center;
+}
+
+.custom-pagination .previous,
+.next {
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.custom-pagination .disabled {
+  cursor: none;
+  color: #b3b3b3;
 }
