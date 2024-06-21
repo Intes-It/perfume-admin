@@ -259,7 +259,6 @@ const Voucher = () => {
             >
               <tr
                 style={{
-                  textAlign: 'center',
                   color: '#B82C67',
                   backgroundColor: '#FFE2EC',
                   height: '60px',
@@ -311,12 +310,12 @@ const Voucher = () => {
                             item.active === false ? '#FFC978' : '#87FF74',
                           textAlign: 'center',
                           textTransform: 'capitalize',
-                          padding: '0.1875rem 0.75rem',
+                          padding:
+                            item.active === true ? '6px 26px' : '6px 20px',
                           border: '1px solid #333',
                           borderRadius: '5px',
                           fontWeight: 500,
-                          fontSize: '0.875rem',
-                          height: '30px',
+                          fontSize: '14px',
                           width: '97px',
                         }}
                       >
