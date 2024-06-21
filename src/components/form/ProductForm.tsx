@@ -295,7 +295,7 @@ const ProductForm = ({
       if (res.status === 201) {
         onSuccess();
         notifications.show({
-          message: 'Add new product successfully',
+          message: 'Added successfully',
           color: 'green',
         });
       } else {

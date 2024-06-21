@@ -83,12 +83,12 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
       setState((prev) => ({ ...prev, deleteModal: false }));
       handleSearch();
       notifications.show({
-        message: 'Delete product successfully',
+        message: 'Deleted successfully',
         color: 'green',
       });
     } else {
       notifications.show({
-        message: 'Delete product Fail',
+        message: 'Delete fail',
         color: 'red',
       });
     }

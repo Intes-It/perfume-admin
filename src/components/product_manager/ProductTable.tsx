@@ -123,7 +123,7 @@ const ProductTable = ({
                       />
                     </td>
                     <td>{item.name}</td>
-                    <td>€{item.price}</td>
+                    <td>${item.price}</td>
                     <td>{item?.subcategory?.name}</td>
                     <td>{item?.sub_subcategory?.name}</td>
                     <td className="text-center">
@@ -168,7 +168,7 @@ const ProductTable = ({
                   </tr>
                 ))
               ) : (
-                <tr className="">
+                <tr>
                   <td
                     className="font-medium text-center align-middle"
                     scope="row"

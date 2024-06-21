@@ -151,7 +151,7 @@ const ModalContent = ({
 
       if (res.status === 201) {
         notifications.show({
-          message: `Add new ${nameType} successfully`,
+          message: `Added successfully`,
           color: 'green',
         });
         onSuccess();
@@ -159,7 +159,7 @@ const ModalContent = ({
         form.reset();
       } else {
         notifications.show({
-          message: `Add new ${nameType} fail`,
+          message: `Add fail`,
           color: 'red',
         });
       }
@@ -199,7 +199,7 @@ const ModalContent = ({
 
       if (res.status === 200) {
         notifications.show({
-          message: `Update ${nameType} successfully`,
+          message: `Updated successfully`,
           color: 'green',
         });
         onSuccess();
@@ -207,7 +207,7 @@ const ModalContent = ({
         form.reset();
       } else {
         notifications.show({
-          message: `Update ${nameType} fail`,
+          message: `Update fail`,
           color: 'red',
         });
       }
@@ -230,7 +230,7 @@ const ModalContent = ({
 
       if (res.status === 204) {
         notifications.show({
-          message: `Delete ${nameType} successfully`,
+          message: `Deleted successfully`,
           color: 'green',
         });
         onSuccess();
@@ -238,7 +238,7 @@ const ModalContent = ({
         form.reset();
       } else {
         notifications.show({
-          message: `Delete ${nameType} fail`,
+          message: `Delete fail`,
           color: 'red',
         });
       }
