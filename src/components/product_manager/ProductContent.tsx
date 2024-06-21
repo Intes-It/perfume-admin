@@ -1,9 +1,9 @@
 import { Button, Group, Modal, Paper, Tabs, Text, Title } from '@mantine/core';
-import FunctionHeader from '../common/FunctionHeader';
+import FunctionHeader from '../common/FunctionHeader.tsx';
 
 import { useEffect, useMemo, useState } from 'react';
-import { CategoryType, productType } from '../../utils/utilsInterface';
-import ProductForm from '../form/ProductForm';
+import { CategoryType, productType } from '../../utils/utilsInterface.ts';
+import ProductForm from '../form/ProductForm.tsx';
 
 import { useDisclosure } from '@mantine/hooks';
 import { apiRoute } from '../../utils/apiRoute.ts';
@@ -17,7 +17,7 @@ interface CategoryContentProps {
   listCategory: CategoryType[];
 }
 
-const CategoryContent = ({ listCategory }: CategoryContentProps) => {
+const ProductContent = ({ listCategory }: CategoryContentProps) => {
   const [state, setState] = useState({
     productID: 0,
     editModal: false,
@@ -276,9 +276,9 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
           <Modal.Content>
             <Modal.Header>
               <Modal.Title>
-                <Title c={'#B82C67'} size={24} order={1} mt={16} ml={48}>
+                <div className="text-[#B82C67] mt-8 ml-12 text-2xl font-semibold">
                   Add new product
-                </Title>
+                </div>
               </Modal.Title>
               <Modal.CloseButton>
                 <img src={'/close.svg'} alt={'icon'} />
@@ -307,9 +307,9 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
           <Modal.Content>
             <Modal.Header>
               <Modal.Title>
-                <Title c={'#B82C67'} order={1} mt={32} ml={64}>
+                <div className="text-[#B82C67] mt-8 ml-16 text-2xl font-semibold">
                   Edit product
-                </Title>
+                </div>
               </Modal.Title>
               <Modal.CloseButton>
                 <img src={'/close.svg'} alt={'icon'} />
@@ -361,4 +361,4 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
   );
 };
 
-export default CategoryContent;
+export default ProductContent;

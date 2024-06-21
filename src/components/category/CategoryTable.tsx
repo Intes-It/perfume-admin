@@ -52,6 +52,7 @@ const CategoryTable = ({
                       background: index % 2 !== 0 ? '#FFE2EC80' : '',
                     }}
                     className="h-[60px] "
+                    key={item.id}
                   >
                     <td
                       style={{

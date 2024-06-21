@@ -1,4 +1,4 @@
-import { Button, Modal, Select, TextInput, Title } from '@mantine/core';
+import { Button, Modal, Select, TextInput } from '@mantine/core';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -131,7 +131,7 @@ const ModalContent = ({
       name: value?.name,
     } as any;
 
-    payload = { ...payload, image: value?.image?.id };
+    payload = { ...payload, image: value?.image?.id || null };
 
     if (optionSelected === 'subcategory') {
       payload = { ...payload, category: value?.category_id };
@@ -302,11 +302,11 @@ const ModalContent = ({
         {typeModal !== 'DELETE' && (
           <Modal.Header>
             <Modal.Title>
-              <Title c={'#B82C67'} order={1} mt={32} ml={64}>
+              <div className="text-[#B82C67] mt-8 ml-16 text-2xl font-semibold">
                 {typeModal === 'ADD'
                   ? `Add new ${nameType}`
                   : `Update ${nameType}`}
-              </Title>
+              </div>
             </Modal.Title>
             <Modal.CloseButton style={{ marginRight: 24 }}>
               <img src={'/close.svg'} alt={'icon'} />
