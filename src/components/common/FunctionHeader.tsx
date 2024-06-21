@@ -81,8 +81,11 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
               '.mantine-1fzet7j': {
                 fontSize: 12,
                 color: '#858585',
-                paddingLeft: 16,
+                paddingLeft: 12,
                 paddingTop: 8,
+              },
+              '.mantine-hclwis': {
+                height: 14,
               },
             }}
           />
@@ -108,13 +111,8 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
               padding: '0 5px',
               borderRadius: '5px',
               width: '347px',
-              height: 32,
-              minHeight: 32,
-              fontSize: 14,
-              '.mantine-1v7s5f8, .mantine-nilrrg': {
-                height: 32,
-              },
             }}
+            height={32}
             onKeyDown={(e) => {
               if (e.key === 'Enter') props.handleSearch();
             }}

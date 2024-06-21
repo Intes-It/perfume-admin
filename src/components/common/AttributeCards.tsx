@@ -10,6 +10,7 @@ import {
 } from '@mantine/core';
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import React from 'react';
+import { stripBaseUrl } from '../../hooks/convertImage';
 import ImagePreview from './ImagePreview';
 type attributeCardProps = {
   onAddImage: (file: FileWithPath[]) => void;
@@ -57,7 +58,7 @@ const AttributeCards: React.FC<attributeCardProps> = ({
       {productImage ? (
         <ImagePreview
           remove
-          image={productImage}
+          image={stripBaseUrl(productImage)}
           onRemove={onRemoveImage}
           onReplace={onReplaceImage}
           imageWidth={'14.4375rem'}
@@ -94,18 +95,14 @@ const AttributeCards: React.FC<attributeCardProps> = ({
                 border: '1px solid #B82C67',
                 borderRadius: '5px',
                 fontSize: 12,
-                '.mantine-1v7s5f8': {
-                  minHeight: 24,
-                  height: 20,
-                  '.mantine-qrbs6p': {
-                    height: 20,
-                    minHeight: 24,
-                    padding: '2px 0',
-                  },
+                '.mantine-8tictr': {
+                  minHeight: 0,
+                  height: 24,
+                  paddingLeft: 6,
                 },
               }}
               h={24}
-              mb={8}
+              pb={8}
               bg="white"
               maxLength={20}
               variant={'unstyled'}
@@ -122,8 +119,8 @@ const AttributeCards: React.FC<attributeCardProps> = ({
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
             justifyContent: 'space-between',
+            marginTop: 10,
           }}
         >
           <Box>

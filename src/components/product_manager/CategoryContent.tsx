@@ -207,8 +207,7 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
             bg={' #B82C67'}
             onClick={open}
             rightIcon={<img src="/plus.svg" alt="icon" />}
-            sx={{ fontWeight: 500, fontSize: 16 }}
-            w={211}
+            className="w-[200px] font-medium text-base"
             h={42}
           >
             Add new product
@@ -277,7 +276,7 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
           <Modal.Content>
             <Modal.Header>
               <Modal.Title>
-                <Title c={'#B82C67'} order={1} mt={32} ml={64}>
+                <Title c={'#B82C67'} size={24} order={1} mt={16} ml={48}>
                   Add new product
                 </Title>
               </Modal.Title>
@@ -333,12 +332,18 @@ const CategoryContent = ({ listCategory }: CategoryContentProps) => {
           opened={deleteModal}
           onClose={() => setState((prev) => ({ ...prev, deleteModal: false }))}
           withCloseButton={false}
+          w={400}
           centered
           radius={'md'}
+          sx={{
+            '.mantine-iewzhb': {
+              maxWidth: 420,
+            },
+          }}
         >
-          <Paper pt={'1rem'}>
-            <Text align={'center'} sx={{ fontSize: '16px', fontWeight: 600 }}>
-              Are you sure want to delete product?
+          <Paper pt={'1rem'} px={16}>
+            <Text align={'left'} sx={{ fontSize: '16px', fontWeight: 600 }}>
+              Do you really want to delete product?
             </Text>
             <Group sx={{ float: 'right' }} my={32}>
               <Button

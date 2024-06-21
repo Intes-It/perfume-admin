@@ -41,7 +41,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
             padding: '12px 16px',
           }}
         >
-          <Checkbox checked={others?.selected} />
+          <Checkbox checked={others?.selected} color="pink" />
           <Text>{label}</Text>
         </Group>
       </div>
@@ -87,7 +87,7 @@ export const CustomSelectMultiple = ({
       onChange={(value) => onChange(value)}
       w={'320px'}
       bg={'#FFE7EF'}
-      h={'3.625rem'}
+      h={'58px'}
       sx={{
         borderRadius: '5px',
         whiteSpace: 'normal',
@@ -103,8 +103,10 @@ export const CustomSelectMultiple = ({
           paddingLeft: 16,
           paddingTop: 8,
         },
+
         '.mantine-1n7zxp': {
           marginLeft: 16,
+          paddingBottom: 6,
         },
       }}
     />
