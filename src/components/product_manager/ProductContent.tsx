@@ -350,7 +350,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
                 variant={'subtle'}
                 onClick={() => setState((p) => ({ ...p, deleteModal: false }))}
               >
-                <span style={{ color: '#333' }}>Cancel</span>
+                <span style={{ color: '#000' }}>Cancel</span>
               </Button>
               <Button onClick={handleDeleteProduct} bg={'#E13434'} radius={6}>
                 Delete

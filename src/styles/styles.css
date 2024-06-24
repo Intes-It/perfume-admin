@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root body {
   line-height: 1.5;
   font-weight: 400;
@@ -224,4 +223,16 @@ thead td {
 .custom-pagination .disabled {
   cursor: none;
   color: #b3b3b3;
+}
+
+.mantine-86bg6z {
+  width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mantine-Notification-description {
+  margin-top: 2px;
+  font-size: 12px !important;
 }
