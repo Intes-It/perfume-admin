@@ -229,10 +229,12 @@ const CategoryPage = () => {
               <Title
                 c={'pink'}
                 order={4}
+                size={16}
                 style={{
-                  width: '100%',
-                  display: 'block',
-                  textAlign: 'center',
+                  color:
+                    item?.value && optionSelected === item?.value
+                      ? '#B72C68'
+                      : '#909090',
                 }}
               >
                 {item.label}

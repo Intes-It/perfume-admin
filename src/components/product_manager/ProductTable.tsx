@@ -1,11 +1,4 @@
-import {
-  Pagination,
-  Paper,
-  ScrollArea,
-  Space,
-  Table,
-  UnstyledButton,
-} from '@mantine/core';
+import { Pagination, UnstyledButton } from '@mantine/core';
 
 import { stripBaseUrl } from '../../hooks/convertImage';
 import { productType } from '../../utils/utilsInterface';
@@ -34,12 +27,10 @@ const ProductTable = ({
 }: CategoryTableProps) => {
   return (
     <div>
-      <ScrollArea h={500} mt={'3rem'}>
-        <Paper shadow="md" radius="md" sx={{ border: '1px solid #B82C67' }}>
-          <Table
-            sx={{ borderRadius: '0.65em', overflow: 'hidden', fontSize: 14 }}
-          >
-            <thead>
+      <div className="my-10 border border-[#B82C67] rounded-lg overflow-hidden">
+        <div className=" max-h-[500px] overflow-auto thin-scroll">
+          <table className="w-full ">
+            <thead className="sticky top-0">
               <tr
                 style={{
                   color: '#B82C67',
@@ -147,10 +138,10 @@ const ProductTable = ({
                 </tr>
               )}
             </tbody>
-          </Table>
-        </Paper>
-      </ScrollArea>
-      <Space h="md" />
+          </table>
+        </div>
+      </div>
+
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Pagination
           total={total}

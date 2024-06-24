@@ -186,6 +186,9 @@ tbody tr td {
 thead td {
   padding: 0.4375rem 0.625rem;
 }
+tbody td {
+  padding: 0.4375rem 0.625rem;
+}
 
 .list_order_admin .mantine-Table-root > thead > tr > th {
   font-weight: 600 !important;
@@ -235,4 +238,18 @@ thead td {
 .mantine-Notification-description {
   margin-top: 2px;
   font-size: 12px !important;
+}
+
+.thin-scroll::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
+  height: 8px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(22, 24, 35, 0.06);
+}
+.thin-scroll::-webkit-scrollbar-track {
+  border-radius: 0;
+  background-color: #eaeefb;
 }

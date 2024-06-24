@@ -37,13 +37,19 @@ const HeaderCategory = ({
           marginBottom: 60,
         }}
       >
-        <Title c="pink" order={3} mb={4}>
-          Category
+        <Title order={3} mb={4} size={24} weight={700} color="#B82C67">
+          {optionSelected === 'category'
+            ? 'Category'
+            : optionSelected === 'subcategory'
+            ? 'Sub-category'
+            : 'Sub-sub-category'}
         </Title>
         <Button
           radius="md"
           bg={' #B82C67'}
-          rightIcon={<img src="/plus.svg" alt="icon" />}
+          w={120}
+          h={42}
+          rightIcon={<img className="ml-8" src="/plus.svg" alt="icon" />}
           sx={{ fontWeight: 500 }}
           onClick={() => handleOpenModal('ADD')}
         >
@@ -103,7 +109,7 @@ const HeaderCategory = ({
               height: 32,
               minHeight: 32,
               fontSize: 14,
-              '.mantine-1v7s5f8, .mantine-nilrrg': {
+              '.mantine-Input-input': {
                 height: 32,
               },
             }}
