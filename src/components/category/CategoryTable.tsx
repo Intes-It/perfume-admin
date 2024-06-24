@@ -72,10 +72,10 @@ const CategoryTable = ({
                       />
                     </td>
                   )}
-                  {optionSelected === 'sub-subcategory' && (
-                    <td>Sub-sub-category</td>
-                  )}
                   <td>{item.name}</td>
+                  {optionSelected === 'sub-subcategory' && (
+                    <td>{item?.subcategory?.name}</td>
+                  )}
 
                   {optionSelected !== 'category' && (
                     <td>{item?.category?.name}</td>

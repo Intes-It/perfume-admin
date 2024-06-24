@@ -152,7 +152,7 @@ const CategoryPage = () => {
     setSearchValue(e.target.value);
     if (e.target.value === '') {
       getListData(
-        '',
+        optionSelected,
         {
           category: categorySelected,
           subcategory: subCategorySelected,

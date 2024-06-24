@@ -256,6 +256,8 @@ const ModalContent = ({
         category_id: itemSelected?.category?.id,
         subcategory_id: itemSelected?.subcategory?.id,
       });
+      optionSelected === 'sub-subcategory' &&
+        getListOptions(itemSelected?.category?.id as string);
     }
   }, [itemSelected]);
 
