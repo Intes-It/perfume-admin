@@ -524,7 +524,7 @@ export default function ListOrder() {
                     <div className="flex flex-col ml-3">
                       <div className="flex flex-row gap-5 text-[16px] text-[#374151] font-medium mb-2">
                         <div>{item.product?.name}</div>{' '}
-                        <div>{'x' + item.quantity}</div>
+                        <div>{'x ' + item.quantity}</div>
                       </div>
                       <div className="text-[#ABABAB] text-[14px] font-medium">
                         {item.color !== null ? item.color?.name : ''}
@@ -538,7 +538,7 @@ export default function ListOrder() {
                     </div>
                   </div>
                   <div className="flex flex-col">
-                    <div className="text-[#603813] text-[16px] font-bold mb-1">
+                    <div className="text-[#970024] text-[16px] font-semibold mb-1">
                       {'$ '}
                       {Number(item.total).toFixed(2)}
                     </div>
