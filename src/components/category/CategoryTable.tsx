@@ -37,8 +37,7 @@ const CategoryTable = ({
                 <td className="text-left">Sub-category</td>
               )}
               <td className="text-left">Category</td>
-              <td>Status</td>
-              <td>Update</td>
+              <td>Modify</td>
               <td>Delete</td>
             </tr>
           </thead>
@@ -80,7 +79,6 @@ const CategoryTable = ({
                   {optionSelected !== 'category' && (
                     <td>{item?.category?.name}</td>
                   )}
-                  <td className="text-center">123</td>
                   <td className="text-center">
                     <UnstyledButton
                       onClick={() => handleOpenModal('EDIT', item || null)}

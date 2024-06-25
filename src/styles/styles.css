@@ -229,7 +229,9 @@ tbody td {
 }
 
 .mantine-86bg6z {
-  width: 280px;
+  min-width: 280px;
+  width: fit-content;
+  max-width: 350px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -252,4 +254,8 @@ tbody td {
 .thin-scroll::-webkit-scrollbar-track {
   border-radius: 0;
   background-color: #eaeefb;
+}
+
+.mantine-InputWrapper-error {
+  color: #d72525 !important;
 }

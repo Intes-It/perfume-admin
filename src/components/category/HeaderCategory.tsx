@@ -45,12 +45,13 @@ const HeaderCategory = ({
             : 'Sub-sub-category'}
         </Title>
         <Button
-          radius="md"
+          radius="10px"
           bg={' #B82C67'}
           w={120}
           h={42}
           rightIcon={<img className="ml-8" src="/plus.svg" alt="icon" />}
           sx={{ fontWeight: 500 }}
+          size="16px"
           onClick={() => handleOpenModal('ADD')}
         >
           Add

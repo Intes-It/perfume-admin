@@ -157,6 +157,14 @@ const ModalContent = ({
         onSuccess();
         handleCloseModal();
         form.reset();
+
+        return;
+      }
+      if (res?.data?.detail?.non_field_errors?.length > 0) {
+        notifications.show({
+          message: res?.data?.detail?.non_field_errors[0],
+          color: 'red',
+        });
       } else {
         notifications.show({
           message: `Add unsuccessfully!`,
@@ -461,7 +469,7 @@ const ModalContent = ({
               </div>
               <Button
                 type="submit"
-                className="block mx-auto mt-14"
+                className="block mx-auto text-base font-medium mt-14"
                 bg={'#B82C67'}
                 radius={'md'}
                 w={120}

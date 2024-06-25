@@ -563,7 +563,7 @@ const ProductForm = ({
           {form.errors?.image && (
             <span
               style={{
-                color: '#ff0000',
+                color: '#D72525',
               }}
             >
               {form.errors?.image}
