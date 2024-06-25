@@ -120,7 +120,7 @@ const AttributeCards: React.FC<attributeCardProps> = ({
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            marginTop: 10,
+            paddingTop: onColorChange ? 10 : 32,
           }}
         >
           <Box>
@@ -183,7 +183,7 @@ const AttributeCards: React.FC<attributeCardProps> = ({
             <NumberInput
               rightSection={'$'}
               h={'24px'}
-              w={attributeTitle === 'color' ? '7rem' : '5rem'}
+              w={onColorChange ? '7rem' : '5rem'}
               radius={2}
               precision={2}
               sx={{
@@ -209,9 +209,9 @@ const AttributeCards: React.FC<attributeCardProps> = ({
 
         <Box sx={{ float: 'right' }} mt={'5px'}>
           <Button
-            h={32}
+            h={22}
             size="10px"
-            w={50}
+            w={56}
             color="white"
             bg={'#B82C67'}
             radius={10}
