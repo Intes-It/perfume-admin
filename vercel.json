@@ -5,6 +5,10 @@
             "destination": "http://171.244.64.245:8010/api/:path"
         },
         {
+            "source": "media/:path(.*)",
+            "destination": "http://171.244.64.245:8010/media/:path"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
