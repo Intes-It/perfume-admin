@@ -25,6 +25,7 @@ import { KeyboardEvent, useState } from 'react';
 import * as yup from 'yup';
 import { apiRoute } from '../../utils/apiRoute';
 import { POST, instance } from '../../utils/fetch';
+import { listStatus } from '../../utils/mockData';
 import {
   CategoryType,
   IAttribute,
@@ -161,7 +162,7 @@ const ProductForm = ({
     validateInputOnBlur: true,
     initialValues: {
       name: '',
-      status: 'Active',
+      status: 1,
       price: '',
       current_price: '',
       url_image: '',
@@ -384,9 +385,23 @@ const ProductForm = ({
             </div>{' '}
             <div className={'badge'}>
               <span style={{ color: '#707070' }}>Status</span>
-              <div className={'badge_child'}>
-                <p>Active</p>
-              </div>
+              <Select
+                width="19.5625rem"
+                height="2.25rem"
+                data={listStatus as any}
+                variant="unstyled"
+                value={form.values?.status as any}
+                rightSection={<img alt="icon" src="/down_arrow.svg" />}
+                bg={'#FFE7EF'}
+                sx={{
+                  borderRadius: 4,
+                  marginTop: 8,
+                  '.mantine-Input-input': { fontSize: 12 },
+                }}
+                onChange={(v) => {
+                  form.setFieldValue('status', v as any);
+                }}
+              />
             </div>{' '}
           </div>
           <div

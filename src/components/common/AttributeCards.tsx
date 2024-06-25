@@ -172,7 +172,6 @@ const AttributeCards: React.FC<attributeCardProps> = ({
                 onChange={onAttributeChange}
                 required
                 defaultValue={attributeName}
-                value={attributeName}
               />
             )}
           </Box>

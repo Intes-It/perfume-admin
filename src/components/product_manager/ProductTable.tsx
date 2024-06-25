@@ -11,12 +11,12 @@ type CategoryTableProps = {
 };
 
 const statusOption = {
-  active: {
+  1: {
     name: 'Active',
     color: '#87FF74',
   },
-  inactive: { name: 'Inactive', color: '#FFC978' },
-  stockOut: { name: 'Stockout', color: '#FF9090' },
+  2: { name: 'Inactive', color: '#FFC978' },
+  3: { name: 'Stockout', color: '#FF9090' },
 } as any;
 
 const ProductTable = ({
@@ -74,18 +74,11 @@ const ProductTable = ({
                     <td>
                       {item?.status && (
                         <div
+                          className="border border-black rounded-md w-[100px] h-[30px] flex items-center justify-center"
                           style={{
                             background:
                               item?.status &&
                               statusOption?.[item?.status]?.color,
-                            width: 97,
-                            height: 30,
-                            padding: '6px 0',
-                            border: '1px solid #333',
-                            borderRadius: '5px',
-                            fontWeight: 500,
-                            fontSize: '0.875rem',
-                            margin: 'auto',
                           }}
                         >
                           {item?.status && statusOption?.[item?.status]?.name}

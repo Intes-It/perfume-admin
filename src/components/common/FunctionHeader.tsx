@@ -1,6 +1,7 @@
-import { Select, Space, TextInput, Title } from '@mantine/core';
+import { Space, TextInput, Title } from '@mantine/core';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { listStatus } from '../../utils/mockData';
 import { CustomSelectMultiple } from '../CustomSelectMultiple';
 
 interface FuntionHeaderProps {
@@ -8,7 +9,7 @@ interface FuntionHeaderProps {
   title: string;
   onSelectSubCategories: (v: string[]) => void;
   onSelectSubSubCategories?: (v: string[]) => void;
-  onSelectStatus: (v: string) => void;
+  onSelectStatus: (v: string[]) => void;
   onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   subCategory: { value: string; label: string }[];
   subSubCategory: { value: string; label: string }[];
@@ -16,6 +17,7 @@ interface FuntionHeaderProps {
   subSubCategorySelected?: string[];
   handleSearch: () => void;
   searchValue: string;
+  statusValue: string[] | [];
 }
 const FunctionHeader = (props: FuntionHeaderProps) => {
   const location = useLocation();
@@ -53,41 +55,12 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
               )}
             </>
           )}
-          <Select
-            data={[
-              { value: 'all', label: 'All' },
-              { value: 'Active', label: 'Active' },
-              { value: 'Inactive', label: 'Inactive' },
-              { value: 'Stockout', label: 'Stockout' },
-            ]}
+          <CustomSelectMultiple
+            data={listStatus as any}
             onChange={props.onSelectStatus}
-            rightSection={<img alt="icon" src="/down_arrow.svg" />}
-            variant="unstyled"
             label="Status"
-            placeholder="Select an element"
-            bg={'#FFE7EF'}
-            w={'200px'}
-            h={'3.625rem'}
-            sx={{
-              borderRadius: '5px',
-              marginRight: '20px',
-              whiteSpace: 'normal',
-              '.mantine-bkyer9': {
-                fontWeight: 500,
-                height: 20,
-                paddingLeft: 16,
-                minHeight: 0,
-              },
-              '.mantine-1fzet7j': {
-                fontSize: 12,
-                color: '#858585',
-                paddingLeft: 12,
-                paddingTop: 8,
-              },
-              '.mantine-hclwis': {
-                height: 14,
-              },
-            }}
+            value={props.statusValue}
+            className="w-[200px]"
           />
         </div>
 

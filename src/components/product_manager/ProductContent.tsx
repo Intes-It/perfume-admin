@@ -39,6 +39,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
   const [subSubCategorySelected, setSubSubCategorySelected] =
     useState<any>(null);
   const [productData, setProductData] = useState<productType[] | null>(null);
+  const [status, setStatus] = useState<string[] | []>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getProduct = async (value?: any) => {
@@ -54,6 +55,9 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
       }),
       ...(value?.subSubCategory && {
         sub_subcategory_ids: value?.subSubCategory,
+      }),
+      ...(value?.status && {
+        statuses: value?.status,
       }),
     };
     const queryString = new URLSearchParams(queryParams as any).toString();
@@ -99,6 +103,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
       category: categorySelected,
       subCategory: subCategorySelected,
       subSubCategory: subSubCategorySelected,
+      status: status,
     });
   };
 
@@ -161,6 +166,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
             if (subCategorySelected) setSubCategorySelected([]);
             if (subSubCategorySelected) setSubSubCategorySelected([]);
             if (search) setSearch('');
+            if (status) setStatus([]);
           }}
         >
           <Tabs.List grow>
@@ -236,7 +242,16 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
               subSubCategory: v,
             });
           }}
-          onSelectStatus={function (_v): void {}}
+          onSelectStatus={(value) => {
+            setStatus(value);
+            getProduct({
+              category: categorySelected,
+              subCategory: subCategorySelected,
+              subSubCategory: subSubCategorySelected,
+              status: value,
+            });
+          }}
+          statusValue={status}
           onSearch={function (e) {
             setSearch(e.target.value?.trim());
           }}

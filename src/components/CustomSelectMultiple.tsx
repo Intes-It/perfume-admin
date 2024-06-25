@@ -13,6 +13,7 @@ type CustomSelectMultiple = {
   value: string[];
   label?: string;
   onChange: (v: string[]) => void;
+  className?: string;
 };
 
 interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -54,6 +55,7 @@ export const CustomSelectMultiple = ({
   value,
   label,
   onChange,
+  className,
 }: CustomSelectMultiple) => {
   function Value({
     label,
@@ -82,6 +84,7 @@ export const CustomSelectMultiple = ({
       rightSection={<img alt="icon" src="/down_arrow.svg" />}
       data={data}
       label={label}
+      className={className}
       placeholder="Select an element"
       maxDropdownHeight={400}
       onChange={(value) => onChange(value)}

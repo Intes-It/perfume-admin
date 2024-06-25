@@ -20,12 +20,14 @@ import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import dayjs from 'dayjs';
 import { GetColorName } from 'hex-color-to-color-name';
 import { KeyboardEvent, useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { stripBaseUrl } from '../../hooks/convertImage';
 import { apiRoute } from '../../utils/apiRoute';
 import { GET, PATCH, instance } from '../../utils/fetch';
+import { listStatus } from '../../utils/mockData';
 import {
   CategoryType,
   IAttribute,
@@ -146,7 +148,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
     validateInputOnBlur: true,
     initialValues: {
       name: '',
-      status: 'Active',
+      status: 1,
       price: '',
       current_price: '',
       url_image: '',
@@ -218,12 +220,13 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
           name: res.data?.name,
           mass: res.data?.mass,
           category_id: res.data?.category?.id,
-          subcategory_id: res.data?.sub_subcategory?.id || '',
+          subcategory_id: res.data?.subcategory?.id || '',
           sub_subcategory_id: res.data?.sub_subcategory?.id || '',
           current_price: res.data?.current_price || '',
           image: res.data?.images?.[0]?.url,
           price: res.data?.price,
           id: res.data?.id,
+          status: res.data?.status,
         });
 
         const listSubCategoryCurr = listCategory
@@ -250,7 +253,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
           url_image: stripBaseUrl(res.data?.images?.[0]?.url || ''),
           subCategory: listSubCategoryCurr || [],
           subsubCategory: listSubSubCate || [],
-          createdDay: res.data?.created_ad,
+          createdDay: dayjs(res.data?.created_ad).format('DD-MM-YYYY'),
         }));
       }
     } catch (error) {
@@ -414,9 +417,23 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
             </div>{' '}
             <div className={'badge'}>
               <span style={{ color: '#707070' }}>Status</span>
-              <div className={'badge_child'}>
-                <p>Active</p>
-              </div>
+              <Select
+                width="19.5625rem"
+                height="2.25rem"
+                data={listStatus as any}
+                variant="unstyled"
+                value={form.values?.status as any}
+                rightSection={<img alt="icon" src="/down_arrow.svg" />}
+                bg={'#FFE7EF'}
+                sx={{
+                  borderRadius: 4,
+                  marginTop: 8,
+                  '.mantine-Input-input': { fontSize: 12 },
+                }}
+                onChange={(v) => {
+                  form.setFieldValue('status', v as any);
+                }}
+              />
             </div>{' '}
           </div>
           <div
@@ -1022,7 +1039,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                             }}
                             attributeName={item.name}
                             attributePrice={item.price}
-                            productImage={item.image?.url}
+                            productImage={item?.image?.url}
                             attributeTitle={'Capacity name'}
                             onAddImage={async (file) => {
                               const currentIndex = capacityAttribute.findIndex(
@@ -1178,7 +1195,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                             }}
                             attributeName={item.name}
                             attributePrice={item.price}
-                            productImage={item.image?.url || item?.image}
+                            productImage={item?.image?.url || item?.image}
                             attributeTitle={'Package name'}
                             onAddImage={async (file) => {
                               const currentIndex = packageAttribute.findIndex(
