@@ -601,6 +601,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
               align={'center'}
               size={24}
               order={2}
+              weight={600}
               c={'#B82C67'}
               my={'2rem'}
             >
@@ -1247,7 +1248,14 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
               </div>
             )}
           </div>
-          <Title order={2} c={'#B82C67'} align="center">
+          <Title
+            order={2}
+            c={'#B82C67'}
+            py={16}
+            size={24}
+            weight={600}
+            align="center"
+          >
             Product description{' '}
           </Title>
           <Container
@@ -1260,22 +1268,22 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
             <Tabs defaultValue={'1'}>
               <Tabs.List grow>
                 <Tabs.Tab value="1">
-                  <Title order={4} c={'#B82C67'}>
+                  <Title order={4} size={16} weight={600} c={'#B82C67'}>
                     Description
                   </Title>
                 </Tabs.Tab>
                 <Tabs.Tab value="2">
-                  <Title order={4} c={'#B82C67'}>
+                  <Title order={4} size={16} weight={600} c={'#B82C67'}>
                     Characteristics
                   </Title>
                 </Tabs.Tab>
                 <Tabs.Tab value="3">
-                  <Title order={4} c={'#B82C67'}>
+                  <Title order={4} size={16} weight={600} c={'#B82C67'}>
                     Use
                   </Title>
                 </Tabs.Tab>
                 <Tabs.Tab value="4">
-                  <Title order={4} c={'#B82C67'}>
+                  <Title order={4} size={16} weight={600} c={'#B82C67'}>
                     Composition
                   </Title>
                 </Tabs.Tab>

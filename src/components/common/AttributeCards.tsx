@@ -30,7 +30,6 @@ type attributeCardProps = {
 };
 
 const AttributeCards: React.FC<attributeCardProps> = ({
-  attributeType,
   attributePrice,
   onAddImage,
   onCancel,
@@ -87,24 +86,25 @@ const AttributeCards: React.FC<attributeCardProps> = ({
       <Box p={'0.5rem 1rem'}>
         {onColorChange && (
           <div>
-            <span style={{ color: '#707070', fontSize: 12 }}>
+            <span style={{ color: '#707070', fontSize: 10 }}>
               Name <span style={{ color: '#FF0000' }}>*</span>{' '}
             </span>
             <TextInput
               sx={{
                 border: '1px solid #B82C67',
-                borderRadius: '5px',
-                fontSize: 12,
-                '.mantine-8tictr': {
+                fontSize: 10,
+                borderRadius: '2px',
+                '.mantine-Input-input': {
                   minHeight: 0,
                   height: 24,
-                  paddingLeft: 6,
+                  paddingLeft: 8,
                 },
               }}
               h={24}
               pb={8}
               bg="white"
               maxLength={20}
+              size="10px"
               variant={'unstyled'}
               type={'text'}
               onChange={(e) =>
@@ -124,7 +124,7 @@ const AttributeCards: React.FC<attributeCardProps> = ({
           }}
         >
           <Box>
-            <span style={{ color: '#7C7C7C', fontSize: '12px' }}>
+            <span style={{ color: '#7C7C7C', fontSize: '10px' }}>
               {attributeTitle}
               <span style={{ color: '#ff0000' }}> *</span>
             </span>
@@ -156,8 +156,17 @@ const AttributeCards: React.FC<attributeCardProps> = ({
             ) : (
               <TextInput
                 type="text"
-                h={'1.5rem'}
-                w={'6.8125rem'}
+                sx={{
+                  '.mantine-Input-input': {
+                    height: 24,
+                    minHeight: 0,
+                    paddingLeft: 8,
+                    borderColor: '#B82C67',
+                  },
+                }}
+                w={'100px'}
+                size="10px"
+                radius={2}
                 maxLength={20}
                 mb={'0.85rem'}
                 onChange={onAttributeChange}
@@ -168,14 +177,27 @@ const AttributeCards: React.FC<attributeCardProps> = ({
             )}
           </Box>
           <Box ml={'1rem'} mb={'0.85rem'}>
-            <span style={{ color: '#7C7C7C', fontSize: '12px' }}>
+            <span style={{ color: '#7C7C7C', fontSize: '10px' }}>
               Price plus ($)
             </span>
             <NumberInput
               rightSection={'$'}
-              h={'1.5rem'}
-              w={'5rem'}
+              h={'24px'}
+              w={attributeTitle === 'color' ? '7rem' : '5rem'}
+              radius={2}
               precision={2}
+              sx={{
+                '.mantine-Input-input': {
+                  height: 24,
+                  minHeight: 0,
+                  paddingLeft: 8,
+                  borderColor: '#B82C67',
+                },
+                '.mantine-Input-rightSection': {
+                  marginRight: 6,
+                },
+              }}
+              size="10px"
               decimalSeparator="."
               maxLength={9}
               onChange={onPriceChange}
@@ -184,19 +206,20 @@ const AttributeCards: React.FC<attributeCardProps> = ({
             />
           </Box>
         </div>
-        {attributeType === 'edit' ? (
-          <div style={{ float: 'right' }}>
-            <Button variant={'subtle'} onClick={onCancel}>
-              <span style={{ color: '#333' }}>Delete</span>
-            </Button>
-          </div>
-        ) : (
-          <Box sx={{ float: 'right' }} mt={'5px'}>
-            <Button variant={'subtle'} onClick={onCancel}>
-              <span style={{ color: '#333' }}>Delete</span>
-            </Button>
-          </Box>
-        )}
+
+        <Box sx={{ float: 'right' }} mt={'5px'}>
+          <Button
+            h={32}
+            size="10px"
+            w={50}
+            color="white"
+            bg={'#B82C67'}
+            radius={10}
+            onClick={onCancel}
+          >
+            Delete
+          </Button>
+        </Box>
       </Box>
     </Paper>
   );
