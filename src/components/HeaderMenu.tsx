@@ -1,9 +1,6 @@
 import {
   UnstyledButton,
   BackgroundImage,
-  Text,
-  Button,
-  Paper,
   Indicator,
   Box,
   Menu,
@@ -152,6 +149,7 @@ const HeaderMenu = () => {
                     <div className="font-semibold">Notifications</div>{' '}
                     <div className="font-medium">Mark all as read</div>
                   </div>
+                  <div className="flex flex-row "></div>
                 </div>
               </Dropdown>
             </Menu>
