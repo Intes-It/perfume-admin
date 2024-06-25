@@ -79,6 +79,8 @@ export default function ListOrder() {
   const { classes, cx } = useStyles();
   const [orderDetail, setOrderDetail] = useState<any>({});
   const [data, setData] = useState<any>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [state, setState] = React.useState({
     status: 'all',
     tab: '1',
@@ -107,6 +109,7 @@ export default function ListOrder() {
     checkChangeStatus,
   } = state;
   async function getListOrder() {
+    setIsLoading(true);
     const res = await GET(
       `/api/admin/order?page=${page}${
         status === 'all' ? '' : '&statuses=' + status
@@ -115,9 +118,11 @@ export default function ListOrder() {
       }`,
     );
     setData(res?.data);
+    setIsLoading(false);
   }
   async function changeStatusOrder(status: number) {
     try {
+      setIsLoading(true);
       const res = await PATCH(`/api/admin/order/${orderId}/patch/`, {
         status: status,
       });
@@ -125,6 +130,7 @@ export default function ListOrder() {
         ...pre,
         checkChangeStatus: !checkChangeStatus,
       }));
+      setIsLoading(false);
       console.log(res);
     } catch (e) {
       console.log(e);
@@ -135,8 +141,10 @@ export default function ListOrder() {
     getListOrder();
   }, [status, page, searchText, checkChangeStatus]);
   async function getOrderDetail() {
+    setIsLoading(true);
     const res = await GET(`/api/admin/order/${orderId}/`);
     setOrderDetail(res?.data);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -224,123 +232,130 @@ export default function ListOrder() {
         className="list_order_admin"
         sx={{ border: '1px solid #B82C67', color: '#970024' }}
       >
-        <Table
-          sx={{
-            borderTopLeftRadius: '10px',
-            borderTopRightRadius: '10px',
-            overflow: 'hidden',
-          }}
-          highlightOnHover
-          withColumnBorders
-        >
-          <thead className={cx(classes.header)}>
-            <tr
-              style={{
-                textAlign: 'center',
-                color: '#970024',
-                backgroundColor: '#FFE2EC',
-                height: '60px',
-                fontWeight: 600,
-                fontSize: '14px',
-              }}
-              className="font-semibold"
-            >
-              <th className="w-1/12">Number</th>
-              <th className="w-1/12">Order ID</th>
-              <th className="w-1/6">Date order</th>
-              <th className="w-1/12">Quantity</th>
-              <th className="whitespace-nowrap  text-ellipsis  truncate max-w-10">
-                Customer
-              </th>
-              <th className="w-1/12">Total</th>
-              <th className="w-1/6 ">Status</th>
-              <th className="w-1/12"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {data &&
-              data?.results?.map((item: ordersListType, index: number) => (
-                <tr
-                  key={index}
-                  style={{
-                    backgroundColor: index % 2 === 0 ? '#fff' : '#FFF1F6',
-                    color: '#374151',
-                  }}
-                >
-                  <td className="h-[60px]">{index + 1}</td>
-                  <td>{item.id}</td>
-                  <td>
-                    {' '}
-                    {dayjs(item.paid_at || item.created_at)?.format(
-                      'YYYY-MM-DD',
-                    )}
-                    {'    '}
-                    <span className="ml-2"></span>
-                    {dayjs(item.paid_at || item.created_at)?.format('HH:mm')}
-                  </td>
-                  <td>
-                    {item.quantity === 1
-                      ? item.quantity + ' item'
-                      : item.quantity + ' items'}
-                  </td>
-                  <td
-                    style={{ fontWeight: '500' }}
-                    className="whitespace-nowrap  text-ellipsis  truncate max-w-10"
-                  >{`${item.first_name} ${item.last_name}`}</td>
-                  <td style={{ fontWeight: '500' }}>
-                    {Number(item.total).toFixed(2)}
-                    <span style={{ fontWeight: '700' }}>{' $'}</span>
-                  </td>
-
-                  <td
+        {isLoading ? (
+          <div className="flex justify-center py-72">
+            <span className="loader" />
+          </div>
+        ) : (
+          <Table
+            sx={{
+              borderTopLeftRadius: '10px',
+              borderTopRightRadius: '10px',
+              overflow: 'hidden',
+            }}
+            highlightOnHover
+            withColumnBorders
+          >
+            <thead className={cx(classes.header)}>
+              <tr
+                style={{
+                  textAlign: 'center',
+                  color: '#970024',
+                  backgroundColor: '#FFE2EC',
+                  height: '60px',
+                  fontWeight: 600,
+                  fontSize: '14px',
+                }}
+                className="font-semibold"
+              >
+                <th className="w-1/12">Number</th>
+                <th className="w-1/12">Order ID</th>
+                <th className="w-1/6">Date order</th>
+                <th className="w-1/12">Quantity</th>
+                <th className="whitespace-nowrap  text-ellipsis  truncate max-w-10">
+                  Customer
+                </th>
+                <th className="w-1/12">Total</th>
+                <th className="w-1/6 ">Status</th>
+                <th className="w-1/12"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {data &&
+                data?.results?.map((item: ordersListType, index: number) => (
+                  <tr
+                    key={index}
                     style={{
-                      fontWeight: '500',
-                      color:
-                        String(item.status) === '8'
-                          ? '#00DD16'
-                          : String(item.status) === '5'
-                          ? '#FF2626'
-                          : '#0047FF',
+                      backgroundColor: index % 2 === 0 ? '#fff' : '#FFF1F6',
+                      color: '#374151',
                     }}
                   >
-                    {listStatus[item.status.toString()]}
-                  </td>
-                  <td>
-                    <div
-                      onClick={() => {
-                        setState((pre) => ({
-                          ...pre,
-                          tab: '2',
-                          orderId: item.id,
-                          totalOrder: item.quantity,
-                        }));
+                    <td className="h-[60px]">{index + 1}</td>
+                    <td>{item.id}</td>
+                    <td>
+                      {' '}
+                      {dayjs(item.paid_at || item.created_at)?.format(
+                        'YYYY-MM-DD',
+                      )}
+                      {'    '}
+                      <span className="ml-2"></span>
+                      {dayjs(item.paid_at || item.created_at)?.format('HH:mm')}
+                    </td>
+                    <td>
+                      {item.quantity === 1
+                        ? item.quantity + ' item'
+                        : item.quantity + ' items'}
+                    </td>
+                    <td
+                      style={{ fontWeight: '500' }}
+                      className="whitespace-nowrap  text-ellipsis  truncate max-w-10"
+                    >{`${item.first_name} ${item.last_name}`}</td>
+                    <td style={{ fontWeight: '500' }}>
+                      {Number(item.total).toFixed(2)}
+                      <span style={{ fontWeight: '700' }}>{' $'}</span>
+                    </td>
+
+                    <td
+                      style={{
+                        fontWeight: '500',
+                        color:
+                          String(item.status) === '8'
+                            ? '#00DD16'
+                            : String(item.status) === '5'
+                            ? '#FF2626'
+                            : '#0047FF',
                       }}
                     >
-                      <div className="flex items-center gap-x-2 cursor-pointer">
-                        <span className="text-[#005AEA] font-normal text-xs">
-                          Detail
-                        </span>
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 12 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M4.25596 2.21529C4.41321 2.0805 4.64994 2.09871 4.78473 2.25596L7.78473 5.75596C7.9051 5.89639 7.9051 6.10362 7.78473 6.24405L4.78473 9.74405C4.64994 9.9013 4.41321 9.91951 4.25596 9.78473C4.09871 9.64994 4.0805 9.41321 4.21529 9.25596L7.0061 6.00001L4.21529 2.74405C4.0805 2.58681 4.09871 2.35007 4.25596 2.21529Z"
-                            fill="#575757"
-                          />
-                        </svg>
+                      {listStatus[item.status.toString()]}
+                    </td>
+                    <td>
+                      <div
+                        onClick={() => {
+                          setState((pre) => ({
+                            ...pre,
+                            tab: '2',
+                            orderId: item.id,
+                            totalOrder: item.quantity,
+                          }));
+                        }}
+                      >
+                        <div className="flex items-center gap-x-2 cursor-pointer">
+                          <span className="text-[#005AEA] font-normal text-xs">
+                            Detail
+                          </span>
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M4.25596 2.21529C4.41321 2.0805 4.64994 2.09871 4.78473 2.25596L7.78473 5.75596C7.9051 5.89639 7.9051 6.10362 7.78473 6.24405L4.78473 9.74405C4.64994 9.9013 4.41321 9.91951 4.25596 9.78473C4.09871 9.64994 4.0805 9.41321 4.21529 9.25596L7.0061 6.00001L4.21529 2.74405C4.0805 2.58681 4.09871 2.35007 4.25596 2.21529Z"
+                              fill="#575757"
+                            />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        )}
+
         {data && data?.results?.length > 0 && (
           <ReactPaginate
             breakLabel="..."
@@ -386,78 +401,93 @@ export default function ListOrder() {
         </svg>
         Order Detail
       </h1>
-      <div className="mt-[42px] flex flex-wrap">
-        <div className="w-3/5 border border-[#E9E9E9]  mr-8 p-6 h-fit">
-          <div className="flex justify-between">
-            <div className="text-[16px] text-[#374151] font-medium">
-              Order ID:
+      {isLoading ? (
+        <div className="flex justify-center py-72">
+          <span className="loader" />
+        </div>
+      ) : (
+        <div className="mt-[42px] flex flex-wrap">
+          <div className="w-3/5 border border-[#E9E9E9]  mr-8 p-6 h-fit">
+            <div className="flex justify-between">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Order ID:
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold">
+                #{orderDetail.id}
+              </div>
             </div>
-            <div className="text-[#970024] text-[16px] font-semibold">
-              #{orderDetail.id}
+            <div className="flex justify-between mt-3 gap-2">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Date order:
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold text-right">
+                <span className="mr-2">
+                  {dayjs(
+                    orderDetail?.paid_at || orderDetail?.created_at,
+                  ).format('HH:mm')}
+                </span>
+                {dayjs(orderDetail?.paid_at || orderDetail?.created_at).format(
+                  'YYYY-MM-DD',
+                )}
+              </div>
             </div>
-          </div>
-          <div className="flex justify-between mt-3 gap-2">
-            <div className="text-[16px] text-[#374151] font-medium">
-              Date order:
+            <div className="flex justify-between mt-3 gap-2">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Name:
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold text-right">
+                {orderDetail.first_name + ' ' + orderDetail.last_name}
+              </div>
             </div>
-            <div className="text-[#970024] text-[16px] font-semibold text-right">
-              <span className="mr-2">
-                {dayjs(orderDetail?.paid_at).format('HH:mm')}
-              </span>
-              {dayjs(orderDetail?.paid_at).format('YYYY-MM-DD')}
+            <div className="flex justify-between mt-3 gap-2">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Name of company (optional):
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold text-right">
+                {orderDetail.company_name}
+              </div>
             </div>
-          </div>
-          <div className="flex justify-between mt-3 gap-2">
-            <div className="text-[16px] text-[#374151] font-medium">Name:</div>
-            <div className="text-[#970024] text-[16px] font-semibold text-right">
-              {orderDetail.first_name + ' ' + orderDetail.last_name}
+            <div className="flex justify-between mt-3 gap-2">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Email:
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold text-right">
+                {orderDetail.email}
+              </div>
             </div>
-          </div>
-          <div className="flex justify-between mt-3 gap-2">
-            <div className="text-[16px] text-[#374151] font-medium">
-              Name of company (optional):
+            <div className="flex justify-between mt-3 gap-2">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Address:
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold text-right">
+                {orderDetail.address}
+              </div>
             </div>
-            <div className="text-[#970024] text-[16px] font-semibold text-right">
-              {orderDetail.company_name}
+            <div className="flex justify-between mt-3 gap-2">
+              <div className="text-[16px] text-[#374151] font-medium">
+                City:
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold text-right">
+                {orderDetail.city}
+              </div>
             </div>
-          </div>
-          <div className="flex justify-between mt-3 gap-2">
-            <div className="text-[16px] text-[#374151] font-medium">Email:</div>
-            <div className="text-[#970024] text-[16px] font-semibold text-right">
-              {orderDetail.email}
+            <div className="flex justify-between mt-3 gap-2">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Code Post:
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold text-right">
+                {orderDetail.postal_code}
+              </div>
             </div>
-          </div>
-          <div className="flex justify-between mt-3 gap-2">
-            <div className="text-[16px] text-[#374151] font-medium">
-              Address:
+            <div className="flex justify-between mt-3 gap-2">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Phone Number:
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold text-right">
+                {orderDetail.phone_number}
+              </div>
             </div>
-            <div className="text-[#970024] text-[16px] font-semibold text-right">
-              {orderDetail.address}
-            </div>
-          </div>
-          <div className="flex justify-between mt-3 gap-2">
-            <div className="text-[16px] text-[#374151] font-medium">City:</div>
-            <div className="text-[#970024] text-[16px] font-semibold text-right">
-              {orderDetail.city}
-            </div>
-          </div>
-          <div className="flex justify-between mt-3 gap-2">
-            <div className="text-[16px] text-[#374151] font-medium">
-              Code Post:
-            </div>
-            <div className="text-[#970024] text-[16px] font-semibold text-right">
-              {orderDetail.postal_code}
-            </div>
-          </div>
-          <div className="flex justify-between mt-3 gap-2">
-            <div className="text-[16px] text-[#374151] font-medium">
-              Phone Number:
-            </div>
-            <div className="text-[#970024] text-[16px] font-semibold text-right">
-              {orderDetail.phone_number}
-            </div>
-          </div>
-          {/* <div className="flex justify-between mt-3">
+            {/* <div className="flex justify-between mt-3">
             <div className="text-[16px] text-[#374151] font-medium">
               Estimate time:
             </div>
@@ -469,163 +499,154 @@ export default function ListOrder() {
             </div>
           </div> */}
 
-          <div className="text-[16px] text-[#374151] font-semibold my-8">
-            Orders ({totalOrder})
+            <div className="text-[16px] text-[#374151] font-semibold my-8">
+              Orders ({totalOrder})
+            </div>
+            <div className="">
+              {orderDetail?.items?.map((item: any, index: number) => (
+                <div
+                  key={index}
+                  className="flex flex-row justify-between pb-5 pt-4"
+                  style={{
+                    borderBottom:
+                      index !== orderDetail?.items?.length - 1
+                        ? '1px solid #E9E9E9'
+                        : 'none',
+                  }}
+                >
+                  <div className="flex flex-row">
+                    <Image
+                      src={item.image ? item.image : item.product.thumbnail.url}
+                      alt="item"
+                      width={'60px'}
+                      height={'60px'}
+                    />
+                    <div className="flex flex-col ml-3">
+                      <div className="flex flex-row gap-5 text-[16px] text-[#374151] font-medium mb-2">
+                        <div>{item.product?.name}</div>{' '}
+                        <div>{'x' + item.quantity}</div>
+                      </div>
+                      <div className="text-[#ABABAB] text-[14px] font-medium">
+                        {item.color !== null ? item.color?.name : ''}
+                        {item.color !== null && item.capacity !== null && ', '}
+                        {item.capacity !== null ? item.capacity?.name : ''}
+                        {((item.package !== null && item.capacity !== null) ||
+                          (item.color !== null && item.package !== null)) &&
+                          ', '}
+                        {item.package !== null ? item.package?.name : ''}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="text-[#603813] text-[16px] font-bold mb-1">
+                      {'$ '}
+                      {Number(item.total).toFixed(2)}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="">
-            {orderDetail?.items?.map((item: any, index: number) => (
-              <div
-                key={index}
-                className="flex flex-row justify-between pb-5 pt-4"
-                style={{
-                  borderBottom:
-                    index !== orderDetail?.items?.length - 1
-                      ? '1px solid #E9E9E9'
-                      : 'none',
-                }}
-              >
-                <div className="flex flex-row">
-                  <Image
-                    src={item.image ? item.image : item.product.thumbnail.url}
-                    alt="item"
-                    width={'60px'}
-                    height={'60px'}
-                  />
-                  <div className="flex flex-col ml-3">
-                    <div className="flex flex-row gap-5 text-[16px] text-[#374151] font-medium mb-2">
-                      <div>{item.product?.name}</div>{' '}
-                      <div>{'x ' + item.quantity}</div>
-                    </div>
-                    <div className="text-[#ABABAB] text-[14px] font-medium">
-                      {item.item_product_color?.length > 0
-                        ? item.item_product_color[0]?.product_color?.name
-                        : ''}
-                      {item.item_product_color?.length > 0 &&
-                        item.item_product_capacity?.length > 0 &&
-                        ', '}
-                      {item.item_product_capacity?.length > 0
-                        ? item.item_product_capacity[0]?.product_capacity?.name
-                        : ''}
-                      {((item.item_product_package?.length > 0 &&
-                        item.item_product_capacity?.length > 0) ||
-                        (item.item_product_color?.length > 0 &&
-                          item.item_product_package?.length > 0)) &&
-                        ', '}
-                      {item.item_product_package?.length > 0
-                        ? item.item_product_package[0]?.product_package?.name
-                        : ''}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <div className="text-[#970024] text-[16px] font-semibold mb-1">
-                    {'$ '}
-                    {Number(item.total).toFixed(2)}
-                  </div>
-                </div>
+          <div className="w-1/3 border border-[#E9E9E9] p-6 flex flex-col h-fit ">
+            <div className="flex justify-between mb-3">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Sub-total
               </div>
-            ))}
-          </div>
-        </div>
-        <div className="w-1/3 border border-[#E9E9E9] p-6 flex flex-col h-fit ">
-          <div className="flex justify-between mb-3">
-            <div className="text-[16px] text-[#374151] font-medium">
-              Sub-total
+              <div className="text-[#970024] text-[16px] font-semibold">
+                $ {Number(orderDetail?.total_price_items).toFixed(2)}
+              </div>
             </div>
-            <div className="text-[#970024] text-[16px] font-semibold">
-              $ {Number(orderDetail?.total_price_items).toFixed(2)}
+            <div className="flex justify-between pb-3 ">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Discount
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold">
+                ${' '}
+                {orderDetail.discount !== null
+                  ? Number(orderDetail.discount).toFixed(2)
+                  : 0.0}
+              </div>
             </div>
-          </div>
-          <div className="flex justify-between pb-3 ">
-            <div className="text-[16px] text-[#374151] font-medium">
-              Discount
+            <div className="flex justify-between mb-1">
+              <div className="text-[16px] text-[#374151] font-medium">
+                Shipping
+              </div>
+              <div className="text-[#970024] text-[16px] font-semibold">
+                $ {Number(orderDetail.shipping_fee).toFixed(2)}
+              </div>
             </div>
-            <div className="text-[#970024] text-[16px] font-semibold">
-              ${' '}
-              {orderDetail.discount !== null
-                ? Number(orderDetail.discount).toFixed(2)
-                : 0.0}
+            <div className="text-[12px] font-normal text-[#ABABAB] mb-6">
+              Not included in the price but need to include in the final invoice
+              (payment)
             </div>
-          </div>
-          <div className="flex justify-between mb-1">
-            <div className="text-[16px] text-[#374151] font-medium">
-              Shipping
-            </div>
-            <div className="text-[#970024] text-[16px] font-semibold">
-              $ {Number(orderDetail.shipping_fee).toFixed(2)}
-            </div>
-          </div>
-          <div className="text-[12px] font-normal text-[#ABABAB] mb-6">
-            Not included in the price but need to include in the final invoice
-            (payment)
-          </div>
 
-          <div
-            className="flex justify-between pb-6 mb-4 "
-            style={{ borderBottom: '1px solid #E9E9E9' }}
-          >
-            <div className="text-[16px] text-[#374151] font-medium">VAT</div>
-            <div className="text-[#970024] text-[16px] font-semibold">
-              <span className="mr-3 font-semibold">(5%)</span>${' '}
-              {Number(orderDetail?.tax_fee).toFixed(2)}
-            </div>
-          </div>
-          <div className="flex justify-between mb-8">
-            <div className="text-[16px] text-[#374151] font-bold">Total</div>
-            <div className="flex flex-row gap-8">
-              <div className="text-[#970024] text-[20px] font-bold">
-                $ {Number(orderDetail?.total).toFixed(2)}
+            <div
+              className="flex justify-between pb-6 mb-4 "
+              style={{ borderBottom: '1px solid #E9E9E9' }}
+            >
+              <div className="text-[16px] text-[#374151] font-medium">VAT</div>
+              <div className="text-[#970024] text-[16px] font-semibold">
+                <span className="mr-3 font-semibold">(5%)</span>${' '}
+                {Number(orderDetail?.tax_fee).toFixed(2)}
               </div>
             </div>
+            <div className="flex justify-between mb-8">
+              <div className="text-[16px] text-[#374151] font-bold">Total</div>
+              <div className="flex flex-row gap-8">
+                <div className="text-[#970024] text-[20px] font-bold">
+                  $ {Number(orderDetail?.total).toFixed(2)}
+                </div>
+              </div>
+            </div>
+            {orderDetail?.status === 3 ? (
+              <div className="flex flex-row justify-between">
+                <button
+                  onClick={() => {
+                    setState((prev) => ({ ...prev, rejectModal: true }));
+                  }}
+                  className="bg-[#DB1818] w-[164px] h-[48px] text-[16px] text-white font-bold rounded-lg "
+                >
+                  REJECT
+                </button>
+                <button
+                  onClick={() => {
+                    changeStatusOrder(4);
+                  }}
+                  className="bg-[#18DB4E] w-[164px] h-[48px] text-[16px] text-white font-bold rounded-lg "
+                >
+                  ACCEPT
+                </button>
+              </div>
+            ) : orderDetail?.status === 4 ? (
+              <button
+                onClick={() => {
+                  changeStatusOrder(7);
+                }}
+                className="bg-[#1871DB] w-[291px] h-[48px] text-[16px] text-white font-bold rounded-lg mx-auto "
+              >
+                SWITCH TO DELIVERY
+              </button>
+            ) : orderDetail?.status === 5 ? (
+              <div className="text-[#DB1818] text-xl font-normal ml-auto">
+                Rejected
+              </div>
+            ) : orderDetail?.status === 7 ? (
+              <button
+                onClick={() => {
+                  changeStatusOrder(8);
+                }}
+                className="bg-[#18DB4E] w-full h-[48px] text-[16px] text-white font-bold rounded-lg  "
+              >
+                DONE
+              </button>
+            ) : (
+              <div className="text-[#18DB4E] text-xl font-normal ml-auto">
+                Done
+              </div>
+            )}
           </div>
-          {orderDetail?.status === 3 ? (
-            <div className="flex flex-row justify-between">
-              <button
-                onClick={() => {
-                  setState((prev) => ({ ...prev, rejectModal: true }));
-                }}
-                className="bg-[#DB1818] w-[164px] h-[48px] text-[16px] text-white font-bold rounded-lg "
-              >
-                REJECT
-              </button>
-              <button
-                onClick={() => {
-                  changeStatusOrder(4);
-                }}
-                className="bg-[#18DB4E] w-[164px] h-[48px] text-[16px] text-white font-bold rounded-lg "
-              >
-                ACCEPT
-              </button>
-            </div>
-          ) : orderDetail?.status === 4 ? (
-            <button
-              onClick={() => {
-                changeStatusOrder(7);
-              }}
-              className="bg-[#1871DB] w-[291px] h-[48px] text-[16px] text-white font-bold rounded-lg mx-auto "
-            >
-              SWITCH TO DELIVERY
-            </button>
-          ) : orderDetail?.status === 5 ? (
-            <div className="text-[#DB1818] text-xl font-normal ml-auto">
-              Rejected
-            </div>
-          ) : orderDetail?.status === 7 ? (
-            <button
-              onClick={() => {
-                changeStatusOrder(8);
-              }}
-              className="bg-[#18DB4E] w-full h-[48px] text-[16px] text-white font-bold rounded-lg  "
-            >
-              DONE
-            </button>
-          ) : (
-            <div className="text-[#18DB4E] text-xl font-normal ml-auto">
-              Done
-            </div>
-          )}
         </div>
-      </div>
+      )}
       <Modal
         opened={rejectModal}
         onClose={() => setState((prev) => ({ ...prev, rejectModal: false }))}
