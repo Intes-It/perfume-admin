@@ -21,7 +21,7 @@ import Underline from '@tiptap/extension-underline';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { GetColorName } from 'hex-color-to-color-name';
-import { useState } from 'react';
+import { KeyboardEvent, useState } from 'react';
 import * as yup from 'yup';
 import { apiRoute } from '../../utils/apiRoute';
 import { POST, instance } from '../../utils/fetch';
@@ -369,10 +369,14 @@ const ProductForm = ({
                 maxLength={100}
                 mt={'8px'}
                 {...form.getInputProps('name')}
-                sx={{ border: '1px solid #B82C67', borderRadius: '5px' }}
+                sx={{
+                  border: '1px solid #B82C67',
+                  borderRadius: '5px',
+                  '.mantine-Input-input': { fontSize: 12 },
+                }}
               />
             </div>
-            <div className={'badge'}>
+            <div className={'badge text-xs'}>
               <span style={{ color: '#707070' }}>Creation date</span>
               <div className={'badge_child'}>
                 <p>{createdDay}</p>
@@ -407,9 +411,7 @@ const ProductForm = ({
                 sx={{
                   borderRadius: 4,
                   marginTop: 8,
-                  '.mantine-bkyer9': {
-                    fontSize: 12,
-                  },
+                  '.mantine-Input-input': { fontSize: 12 },
                 }}
                 onChange={(v) => {
                   form.setFieldValue('category_id', (v && +v) as any);
@@ -451,9 +453,7 @@ const ProductForm = ({
                 sx={{
                   borderRadius: 4,
                   marginTop: 8,
-                  '.mantine-bkyer9': {
-                    fontSize: 12,
-                  },
+                  '.mantine-Input-input': { fontSize: 12 },
                 }}
                 onChange={(v) => {
                   form.setFieldValue('subcategory_id', v as any);
@@ -487,9 +487,7 @@ const ProductForm = ({
                 sx={{
                   borderRadius: 4,
                   marginTop: 8,
-                  '.mantine-bkyer9': {
-                    fontSize: 12,
-                  },
+                  '.mantine-Input-input': { fontSize: 12 },
                 }}
                 onChange={(v) => {
                   form.setFieldValue('sub_subcategory_id', v as any);
@@ -554,7 +552,9 @@ const ProductForm = ({
                       }}
                       alt={'img'}
                     />
-                    <p style={{ fontSize: '13px' }}>Add image</p>
+                    <p style={{ fontSize: '10px', fontWeight: 400 }}>
+                      Add image
+                    </p>
                   </div>
                 </Dropzone>
               )}
@@ -598,7 +598,11 @@ const ProductForm = ({
                       <span style={{ color: '#FF0000' }}>*</span>
                     </span>
                     <NumberInput
-                      sx={{ border: '1px solid #B82C67', borderRadius: '5px' }}
+                      sx={{
+                        border: '1px solid #B82C67',
+                        borderRadius: '5px',
+                        '.mantine-Input-input': { fontSize: 12 },
+                      }}
                       w={472}
                       h={36}
                       pl={10}
@@ -616,7 +620,11 @@ const ProductForm = ({
                     <span style={{ color: '#707070' }}>Sale price ($) </span>
                     <NumberInput
                       min={0}
-                      sx={{ border: '1px solid #B82C67', borderRadius: '5px' }}
+                      sx={{
+                        border: '1px solid #B82C67',
+                        borderRadius: '5px',
+                        '.mantine-Input-input': { fontSize: 12 },
+                      }}
                       w={472}
                       h={36}
                       pl={10}
@@ -646,7 +654,11 @@ const ProductForm = ({
                       Mass (g) <span style={{ color: '#FF0000' }}>*</span>{' '}
                     </span>
                     <NumberInput
-                      sx={{ border: '1px solid #B82C67', borderRadius: '5px' }}
+                      sx={{
+                        border: '1px solid #B82C67',
+                        borderRadius: '5px',
+                        '.mantine-Input-input': { fontSize: 12 },
+                      }}
                       w={228}
                       h={36}
                       pl={10}
@@ -664,9 +676,18 @@ const ProductForm = ({
                       Quantity <span style={{ color: '#FF0000' }}>*</span>{' '}
                     </span>
                     <NumberInput
-                      sx={{ border: '1px solid #B82C67', borderRadius: '5px' }}
+                      sx={{
+                        border: '1px solid #B82C67',
+                        borderRadius: '5px',
+                        '.mantine-Input-input': { fontSize: 12 },
+                      }}
                       w={228}
                       h={36}
+                      onKeyDown={(event: KeyboardEvent) => {
+                        if (event.key === '.') {
+                          event.preventDefault();
+                        }
+                      }}
                       pl={10}
                       mt={8}
                       type="number"

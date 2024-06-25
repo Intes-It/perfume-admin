@@ -460,7 +460,9 @@ const ModalContent = ({
                             height={32}
                             alt={'img'}
                           />
-                          <p className="text-xs">Add image</p>
+                          <p style={{ fontSize: '10px', fontWeight: 400 }}>
+                            Add image
+                          </p>
                         </div>
                       </Dropzone>
                     )}

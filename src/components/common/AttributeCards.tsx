@@ -79,7 +79,7 @@ const AttributeCards: React.FC<attributeCardProps> = ({
               height={32}
               alt={'img'}
             />
-            <p style={{ fontSize: '13px' }}>Add image</p>
+            <p style={{ fontSize: '10px', fontWeight: 400 }}>Add image</p>
           </div>
         </Dropzone>
       )}
