@@ -46,7 +46,7 @@ const schema = yup.object().shape({
   price: yup
     .string()
     .min(1, 'Price must be greater than 0 or equal to 1')
-    .required('Price is required')
+    .required('Price of product is required')
     .test({
       name: 'greaterThanZero',
       message: 'Price must be greater than 0',
@@ -597,7 +597,13 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
             </span>
           )}
           <div>
-            <Title align={'center'} order={2} c={'#B82C67'} mt={'4rem'}>
+            <Title
+              align={'center'}
+              size={24}
+              order={2}
+              c={'#B82C67'}
+              my={'2rem'}
+            >
               Product detail
             </Title>
 

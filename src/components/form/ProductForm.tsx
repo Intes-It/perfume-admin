@@ -67,7 +67,7 @@ const schema = yup.object().shape({
         return decimalPlaces <= 2;
       },
     })
-    .required('Price is required')
+    .required('Price of product is required')
     .typeError('Invalid number'),
   current_price: yup.string().when('price', (_price, schema) => {
     return schema
@@ -572,10 +572,10 @@ const ProductForm = ({
           <div>
             <Title
               align={'center'}
+              size={24}
               order={2}
               c={'#B82C67'}
-              mt={'4rem'}
-              mb={'2rem'}
+              my={'2rem'}
             >
               Product detail
             </Title>

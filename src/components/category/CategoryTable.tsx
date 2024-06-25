@@ -15,9 +15,9 @@ const CategoryTable = ({
   optionSelected,
 }: CategoryTableProps) => {
   return (
-    <div className="mt-10 border border-[#B82C67] rounded-lg overflow-hidden">
+    <div className="mt-10 border border-[#B82C67] rounded-lg overflow-hidden ">
       <div className=" max-h-[500px] overflow-auto thin-scroll">
-        <table className="w-full ">
+        <table className="w-full">
           <thead className="sticky top-0">
             <tr
               style={{
