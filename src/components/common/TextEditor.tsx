@@ -1,11 +1,38 @@
 import { RichTextEditor } from '@mantine/tiptap';
-import { Editor } from '@tiptap/react';
+import Link from '@tiptap/extension-link';
+import TextAlign from '@tiptap/extension-text-align';
+import Underline from '@tiptap/extension-underline';
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { useEffect } from 'react';
 
 interface textEditorProps {
-  editor: Editor | null;
+  content?: string;
+  onChangeValue?: (value: string) => void;
 }
-export default function TextEditor({ editor }: textEditorProps) {
-  if (!editor) return null;
+export default function TextEditor({
+  content,
+  onChangeValue,
+}: textEditorProps) {
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline,
+      Link,
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+    ],
+    onUpdate: ({ editor }) => {
+      const content = editor.getHTML();
+      onChangeValue && onChangeValue(content);
+    },
+    content: content,
+    editable: true,
+  });
+
+  useEffect(() => {
+    if (content) editor?.commands?.setContent(content);
+  }, [content]);
+
   return (
     <RichTextEditor
       editor={editor}

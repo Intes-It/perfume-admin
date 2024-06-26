@@ -15,11 +15,6 @@ import {
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useForm, yupResolver } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import Link from '@tiptap/extension-link';
-import TextAlign from '@tiptap/extension-text-align';
-import Underline from '@tiptap/extension-underline';
-import { useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
 import { GetColorName } from 'hex-color-to-color-name';
 import { KeyboardEvent, useState } from 'react';
 import * as yup from 'yup';
@@ -174,54 +169,10 @@ const ProductForm = ({
       },
       category_id: (categorySelected && +categorySelected) as any,
       quantity: '',
-    },
-  });
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Link,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-    ],
-    onUpdate: ({ editor }) => {
-      const content = editor.getHTML();
-      form.setFieldValue('note.description', content);
-    },
-  });
-  const editor1 = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Link,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-    ],
-    onUpdate: ({ editor }) => {
-      const content = editor.getHTML();
-      form.setFieldValue('note.characteristics', content);
-    },
-  });
-  const editor2 = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Link,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-    ],
-    onUpdate: ({ editor }) => {
-      const content = editor.getHTML();
-      form.setFieldValue('note.use', content);
-    },
-  });
-  const editor3 = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Link,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-    ],
-    onUpdate: ({ editor }) => {
-      const content = editor.getHTML();
-      form.setFieldValue('note.composition', content);
+      description: '',
+      use: '',
+      composition: '',
+      characteristics: '',
     },
   });
 
@@ -232,7 +183,6 @@ const ProductForm = ({
       formData.append('name', image?.name);
       formData.append('source ', 'product');
       formData.append('file', image);
-
       const resFile = await instance.post(apiRoute.upload_image, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -1292,16 +1242,34 @@ const ProductForm = ({
               </Tabs.List>
 
               <Tabs.Panel value="1" pt={'md'}>
-                <TextEditor editor={editor2} />
+                <TextEditor
+                  content={form.values?.description}
+                  onChangeValue={(value) =>
+                    form.setFieldValue('description', value)
+                  }
+                />
               </Tabs.Panel>
               <Tabs.Panel value="2" pt={'md'}>
-                <TextEditor editor={editor} />
+                <TextEditor
+                  content={form.values?.characteristics}
+                  onChangeValue={(value) =>
+                    form.setFieldValue('characteristics', value)
+                  }
+                />
               </Tabs.Panel>
               <Tabs.Panel value="3" pt={'md'}>
-                <TextEditor editor={editor3} />
+                <TextEditor
+                  content={form.values?.use}
+                  onChangeValue={(value) => form.setFieldValue('use', value)}
+                />
               </Tabs.Panel>
               <Tabs.Panel value="4" pt={'md'}>
-                <TextEditor editor={editor1} />
+                <TextEditor
+                  content={form.values?.composition}
+                  onChangeValue={(value) =>
+                    form.setFieldValue('composition', value)
+                  }
+                />
               </Tabs.Panel>
             </Tabs>
           </Container>

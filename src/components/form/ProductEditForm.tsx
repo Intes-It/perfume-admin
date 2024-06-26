@@ -15,11 +15,6 @@ import {
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useForm, yupResolver } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import Link from '@tiptap/extension-link';
-import TextAlign from '@tiptap/extension-text-align';
-import Underline from '@tiptap/extension-underline';
-import { useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
 import dayjs from 'dayjs';
 import { GetColorName } from 'hex-color-to-color-name';
 import { KeyboardEvent, useEffect, useState } from 'react';
@@ -128,6 +123,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
     tabSelected: '1' as string,
     messageError: '' as string,
     createdDay: '',
+    description: '',
   });
   const {
     isLoading,
@@ -162,54 +158,6 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
       quantity: 1,
     },
   });
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Link,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-    ],
-    onUpdate: ({ editor }) => {
-      const content = editor.getHTML();
-      form.setFieldValue('note.description', content);
-    },
-  });
-  const editor1 = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Link,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-    ],
-    onUpdate: ({ editor }) => {
-      const content = editor.getHTML();
-      form.setFieldValue('note.characteristics', content);
-    },
-  });
-  const editor2 = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Link,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-    ],
-    onUpdate: ({ editor }) => {
-      const content = editor.getHTML();
-      form.setFieldValue('note.use', content);
-    },
-  });
-  const editor3 = useEditor({
-    extensions: [
-      StarterKit,
-      Underline,
-      Link,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-    ],
-    onUpdate: ({ editor }) => {
-      const content = editor.getHTML();
-      form.setFieldValue('note.composition', content);
-    },
-  });
 
   const getDetailProduct = async () => {
     try {
@@ -227,6 +175,10 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
           price: res.data?.price,
           id: res.data?.id,
           status: res.data?.status,
+          use: res.data?.use,
+          description: res.data?.description,
+          composition: res.data?.composition,
+          characteristics: res.data?.characteristics,
         });
 
         const listSubCategoryCurr = listCategory
@@ -1328,16 +1280,34 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
               </Tabs.List>
 
               <Tabs.Panel value="1" pt={'md'}>
-                <TextEditor editor={editor2} />
+                <TextEditor
+                  content={form.values?.description}
+                  onChangeValue={(value) =>
+                    form.setFieldValue('description', value)
+                  }
+                />
               </Tabs.Panel>
               <Tabs.Panel value="2" pt={'md'}>
-                <TextEditor editor={editor} />
+                <TextEditor
+                  content={form.values?.characteristics}
+                  onChangeValue={(value) =>
+                    form.setFieldValue('characteristics', value)
+                  }
+                />
               </Tabs.Panel>
               <Tabs.Panel value="3" pt={'md'}>
-                <TextEditor editor={editor3} />
+                <TextEditor
+                  content={form.values?.use}
+                  onChangeValue={(value) => form.setFieldValue('use', value)}
+                />
               </Tabs.Panel>
               <Tabs.Panel value="4" pt={'md'}>
-                <TextEditor editor={editor1} />
+                <TextEditor
+                  content={form.values?.composition}
+                  onChangeValue={(value) =>
+                    form.setFieldValue('composition', value)
+                  }
+                />
               </Tabs.Panel>
             </Tabs>
           </Container>
