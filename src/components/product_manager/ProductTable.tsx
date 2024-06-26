@@ -68,7 +68,7 @@ const ProductTable = ({
                       />
                     </td>
                     <td>{item.name}</td>
-                    <td>${item.price}</td>
+                    <td>${item.price.toFixed(2)}</td>
                     <td>{item?.sub_subcategory?.name}</td>
                     <td>{item?.subcategory?.name}</td>
                     <td>

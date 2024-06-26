@@ -124,6 +124,9 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
     messageError: '' as string,
     createdDay: '',
     description: '',
+    composition: '',
+    characteristics: '',
+    use: '',
   });
   const {
     isLoading,
@@ -137,6 +140,10 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
     tabSelected,
     messageError,
     createdDay,
+    description,
+    composition,
+    characteristics,
+    use,
   } = state;
 
   const form = useForm<IProductForm | any>({
@@ -206,6 +213,10 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
           subCategory: listSubCategoryCurr || [],
           subsubCategory: listSubSubCate || [],
           createdDay: dayjs(res.data?.created_ad).format('DD-MM-YYYY'),
+          use: res.data?.use,
+          description: res.data?.description,
+          composition: res.data?.composition,
+          characteristics: res.data?.characteristics,
         }));
       }
     } catch (error) {
@@ -1281,7 +1292,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
 
               <Tabs.Panel value="1" pt={'md'}>
                 <TextEditor
-                  content={form.values?.description}
+                  content={description}
                   onChangeValue={(value) =>
                     form.setFieldValue('description', value)
                   }
@@ -1289,7 +1300,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
               </Tabs.Panel>
               <Tabs.Panel value="2" pt={'md'}>
                 <TextEditor
-                  content={form.values?.characteristics}
+                  content={characteristics}
                   onChangeValue={(value) =>
                     form.setFieldValue('characteristics', value)
                   }
@@ -1297,13 +1308,13 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
               </Tabs.Panel>
               <Tabs.Panel value="3" pt={'md'}>
                 <TextEditor
-                  content={form.values?.use}
+                  content={use}
                   onChangeValue={(value) => form.setFieldValue('use', value)}
                 />
               </Tabs.Panel>
               <Tabs.Panel value="4" pt={'md'}>
                 <TextEditor
-                  content={form.values?.composition}
+                  content={composition}
                   onChangeValue={(value) =>
                     form.setFieldValue('composition', value)
                   }
