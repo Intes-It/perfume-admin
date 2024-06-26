@@ -157,6 +157,7 @@ const ModalContent = ({
         onSuccess();
         handleCloseModal();
         form.reset();
+        setIsLoading(false);
 
         return;
       }
@@ -213,6 +214,7 @@ const ModalContent = ({
         onSuccess();
         handleCloseModal();
         form.reset();
+        setIsLoading(false);
       } else {
         notifications.show({
           message: `Update unsuccessfully!`,

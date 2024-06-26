@@ -42,7 +42,7 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
             padding: '12px 16px',
           }}
         >
-          <Checkbox checked={others?.selected} color="pink" />
+          <Checkbox checked={others?.selected} readOnly color="pink" />
           <Text>{label}</Text>
         </Group>
       </div>
@@ -106,10 +106,12 @@ export const CustomSelectMultiple = ({
           paddingLeft: 16,
           paddingTop: 8,
         },
-
         '.mantine-1n7zxp': {
           marginLeft: 16,
           paddingBottom: 6,
+        },
+        '.mantine-Input-rightSection': {
+          top: -20,
         },
       }}
     />

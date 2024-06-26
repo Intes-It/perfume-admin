@@ -145,7 +145,11 @@ const CategoryPage = () => {
   };
 
   const handleSearch = () => {
-    getListData();
+    getListData(optionSelected, {
+      category: categorySelected,
+      subcategory: subCategorySelected,
+      search: searchValue,
+    });
   };
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

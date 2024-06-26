@@ -20,7 +20,6 @@ const webRouter = createBrowserRouter([
   { path: '/category', element: <CategoryPage /> },
 ]);
 function App() {
-  console.log('object :>> ', getCookie('refresh_token'));
   return (
     <>
       {getCookie('refresh_token') ? (
