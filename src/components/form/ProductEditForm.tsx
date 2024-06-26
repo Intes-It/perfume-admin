@@ -753,7 +753,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       ...p,
                       colorAttribute: [
                         ...colorAttribute,
-                        { image: '', name: '', price: 0 },
+                        { image: '', name: '', price: 0, color: 'white' },
                       ],
                     }))
                   }
@@ -766,7 +766,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                     {colorAttribute?.map((item: IAttribute, index: number) => (
                       <div key={index}>
                         <AttributeCards
-                          defaultColor={item?.color}
+                          defaultColor={item?.color || ''}
                           onReplaceImage={async (file) => {
                             const currentIndex = colorAttribute.findIndex(
                               (i) => i === colorAttribute[index],

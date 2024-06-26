@@ -729,7 +729,7 @@ const ProductForm = ({
                       ...p,
                       colorAttribute: [
                         ...colorAttribute,
-                        { image: '', name: '', price: 0 },
+                        { image: '', name: '', price: 0, color: 'white' },
                       ],
                     }))
                   }
