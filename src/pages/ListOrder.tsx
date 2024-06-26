@@ -89,6 +89,7 @@ export default function ListOrder() {
     page: 1,
     count: 1,
     searchText: '',
+    search: '',
     rejectModal: false,
     checkChangeStatus: false,
   });
@@ -98,6 +99,19 @@ export default function ListOrder() {
       page: selectedPage + 1,
     }));
   };
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState((pre) => ({
+      ...pre,
+      search: e.target.value,
+    }));
+  };
+  const handleSearch = () => {
+    setState((pre) => ({
+      ...pre,
+      searchText: search,
+      page: 1,
+    }));
+  };
   const {
     status,
     tab,
@@ -105,6 +119,7 @@ export default function ListOrder() {
     totalOrder,
     orderId,
     searchText,
+    search,
     rejectModal,
     checkChangeStatus,
   } = state;
@@ -204,24 +219,63 @@ export default function ListOrder() {
         })}
       </div>
       <div className="flex w-full justify-end">
+        {/* <span style={{ color: '#B82C67', marginBottom: '4px', fontSize: 12 }}>
+          Search
+        </span>
+
         <TextInput
-          icon={<img src="/search.svg" alt="icon" />}
+          rightSection={
+            <img
+              src="/search.svg"
+              alt="icon"
+              style={{ zIndex: 100, cursor: 'pointer' }}
+              onClick={handleSearch}
+            />
+          }
+          w={'320px'}
+          variant="unstyled"
+          sx={{
+            border: '1px solid #B82C67',
+            padding: '0 5px',
+            borderRadius: '5px',
+            maxWidth: '347px',
+            height: 32,
+            minHeight: 32,
+            fontSize: 14,
+            '.mantine-Input-input': {
+              height: 32,
+            },
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSearch();
+          }}
+          value={search}
+          onChange={onSearch}
+        /> */}
+        <TextInput
+          rightSection={
+            <img
+              src="/search.svg"
+              alt="icon"
+              style={{ zIndex: 100, cursor: 'pointer' }}
+              onClick={handleSearch}
+            />
+          }
           placeholder="Search"
           w={240}
           h={40}
           variant="unstyled"
           className="mt-6 mb-4 "
-          onChange={(e) => {
-            setState((p) => ({
-              ...p,
-              searchText: e.target.value,
-              page: 1,
-            }));
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSearch();
           }}
-          value={searchText}
+          value={search}
+          onChange={onSearch}
           style={{
             border: '0.5px solid #D9D9D9',
             borderRadius: '4px',
+            fontSize: '12px',
+            paddingLeft: '16px',
           }}
         />
       </div>
