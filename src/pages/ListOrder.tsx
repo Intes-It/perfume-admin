@@ -100,10 +100,19 @@ export default function ListOrder() {
     }));
   };
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState((pre) => ({
-      ...pre,
-      search: e.target.value,
-    }));
+    if (e.target.value === '') {
+      setState((pre) => ({
+        ...pre,
+        search: e.target.value,
+        searchText: e.target.value,
+        page: 1,
+      }));
+    } else {
+      setState((pre) => ({
+        ...pre,
+        search: e.target.value,
+      }));
+    }
   };
   const handleSearch = () => {
     setState((pre) => ({
@@ -210,6 +219,7 @@ export default function ListOrder() {
                   status: item.value,
                   page: 1,
                   searchText: '',
+                  search: '',
                 }));
               }}
             >
