@@ -5,6 +5,7 @@ import CategoryPage from './pages/CategoryPage.tsx';
 import DataAnalytics from './pages/DataAnalytics.tsx';
 import DeliveryCost from './pages/DeliveryCost.tsx';
 import ListOrder from './pages/ListOrder.tsx';
+import OrderDetail from './pages/OrderDetail.tsx';
 import ProductManager from './pages/ProductManager.tsx';
 import VoucherManager from './pages/VoucherManager.tsx';
 import { getCookie } from './utils/cookies.ts';
@@ -17,6 +18,7 @@ const webRouter = createBrowserRouter([
   { path: '/delivery_cost', element: <DeliveryCost /> },
   { path: '/data_analytics', element: <DataAnalytics /> },
   { path: '/list_order', element: <ListOrder /> },
+  { path: '/order_detail/:id', element: <OrderDetail /> },
   { path: '/category', element: <CategoryPage /> },
 ]);
 function App() {
