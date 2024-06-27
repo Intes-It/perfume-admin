@@ -338,8 +338,8 @@ export default function ListOrder() {
                       className="whitespace-nowrap  text-ellipsis  truncate max-w-10"
                     >{`${item.first_name} ${item.last_name}`}</td>
                     <td style={{ fontWeight: '500' }}>
+                      <span style={{ fontWeight: '700' }}>{'$ '}</span>
                       {Number(item.total).toFixed(2)}
-                      <span style={{ fontWeight: '700' }}>{' $'}</span>
                     </td>
 
                     <td
