@@ -50,6 +50,8 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
       name: (v) => (v.length > 100 ? 'error' : null),
     },
   });
+  console.log(form.values.apply_to == '1');
+
   useEffect(() => {
     getVoucherData();
   }, []);
@@ -168,8 +170,10 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
                 type={'number'}
                 min={0}
                 maxLength={9}
-                // defaultValue={voucherData?.total}
-                // onChange={(e) => form.setFieldValue('total', +e.target.value)}
+                defaultValue={voucherData?.total_quantity}
+                onChange={(e) =>
+                  form.setFieldValue('total_quantity', +e.target.value)
+                }
                 sx={{
                   resize: 'none',
                   border: '1px solid #b82c67',
@@ -177,7 +181,12 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
                   padding: '0px 10px',
                 }}
                 variant={'unstyled'}
-                // required
+                error={
+                  Object.hasOwn(form.errors, 'total_quantity')
+                    ? 'invalid number'
+                    : null
+                }
+                required
               />
             </div>
           </Group>
@@ -249,23 +258,21 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
             Apply to
           </Title>
           <Radio.Group
-            {...form.getInputProps('discount_target')}
-            // defaultValue={data?.discount_target}
+            value={'1'}
+            onChange={(value) => form.setFieldValue('apply_to', value)}
             required
           >
             <Group>
               <Radio
-                // value={'product'}
-                label={<span style={{ color: '#E7639A' }}>Produit</span>}
-                // disabled={data?.discount_target === 'shipping_fee'}
-                checked
+                value={'1'}
+                checked={form.values.apply_to == '1'}
+                label={<span style={{ color: '#E7639A' }}>Product</span>}
+                disabled={true}
               />
               <Radio
-                // checked={
-                //   data?.discount_target?.toLowerCase() === 'shipping_fee'
-                // }
-                // disabled={data?.discount_target === 'product'}
-                value={'shipping_fee'}
+                value={'2'}
+                checked={form.values.apply_to == '2'}
+                disabled={true}
                 label={
                   <span style={{ color: '#E7639A', fontSize: '12px' }}>
                     Delivery
@@ -309,7 +316,7 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
               maxLength={8}
               onChange={(e) => form.setFieldValue('discount', +e.target.value)}
             />
-            <span>{form.values.discount_type === '1' ? '%' : '$'}</span>
+            <span>{String(form.values.discount_type) === '1' ? '%' : '$'}</span>
           </Group>
         </Stack>
         <Button

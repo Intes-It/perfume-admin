@@ -169,7 +169,7 @@ const OrderDetail = () => {
           </div> */}
 
             <div className="text-[16px] text-[#374151] font-semibold my-8">
-              Orders ({})
+              Orders ({orderDetail?.quantity})
             </div>
             <div className="">
               {orderDetail?.items?.map((item: any, index: number) => (
