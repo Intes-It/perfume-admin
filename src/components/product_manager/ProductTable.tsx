@@ -1,8 +1,7 @@
 import { Pagination, UnstyledButton } from '@mantine/core';
 
-import { stripBaseUrl } from '../../hooks/convertImage';
+import { Img } from 'react-image';
 import { productType } from '../../utils/utilsInterface';
-
 type CategoryTableProps = {
   productData: productType[] | null;
   openEditModal: (value: number) => void;
@@ -60,12 +59,17 @@ const ProductTable = ({
                     }}
                   >
                     <td>
-                      <img
+                      <Img
+                        src={item?.thumbnail?.url || ''}
+                        loader={<div>Loading...</div>}
+                        unloader={<div>Failed to load image</div>}
+                      />
+                      {/* <img
                         src={stripBaseUrl(item?.thumbnail?.url || '')}
                         alt="image"
                         className="mx-auto h-[40px]"
                         loading="lazy"
-                      />
+                      /> */}
                     </td>
                     <td>{item.name}</td>
                     <td>${item.price.toFixed(2)}</td>

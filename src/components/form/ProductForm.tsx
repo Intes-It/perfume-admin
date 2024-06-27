@@ -677,7 +677,7 @@ const ProductForm = ({
                 handleChangeTab(tab);
               }}
             >
-              <Tabs.List className="grid grid-cols-3 font-semibold">
+              <Tabs.List className="grid grid-cols-3 font-semibold max-w-[250px]">
                 <Tabs.Tab
                   value={'1'}
                   style={{

@@ -39,12 +39,6 @@ export default defineConfig({
           });
           proxy.on('proxyRes', (proxyRes, req) => {
             proxyRes.headers['content-type'] = 'image/jpeg';
-
-            console.log(
-              'Received Response from the Target:',
-              proxyRes.statusCode,
-              req.url,
-            );
           });
         },
       },
