@@ -55,6 +55,7 @@ const HeaderMenu = () => {
                   fontSize: '16px',
                   fontWeight: 400,
                   cursor: 'pointer',
+                  display: 'block',
                 }}
               >
                 Category
@@ -68,6 +69,7 @@ const HeaderMenu = () => {
                   fontSize: '16px',
                   fontWeight: 400,
                   cursor: 'pointer',
+                  display: 'block',
                 }}
               >
                 Product management
@@ -81,6 +83,7 @@ const HeaderMenu = () => {
                   color: '#fff',
                   fontSize: '16px',
                   fontWeight: 400,
+                  display: 'block',
                 }}
               >
                 List order
@@ -94,6 +97,7 @@ const HeaderMenu = () => {
                   fontSize: '16px',
                   fontWeight: 400,
                   cursor: 'pointer',
+                  display: 'block',
                 }}
               >
                 Voucher management
@@ -107,6 +111,7 @@ const HeaderMenu = () => {
                   color: '#fff',
                   fontSize: '16px',
                   fontWeight: 400,
+                  display: 'block',
                 }}
               >
                 Delivery cost
