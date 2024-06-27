@@ -32,7 +32,9 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
     initialValues: {
       name: '',
       discount_type: '1',
+      total_quantity: 0,
       discount: 0,
+      apply_to: '1',
       start_date: '',
       end_date: '',
       active: true,
@@ -168,15 +170,20 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                   borderRadius: '4px',
                   padding: '0px 10px',
                 }}
+                maxLength={9}
                 variant={'unstyled'}
                 onKeyDown={(e) =>
                   e.key === '.' || e.key === 'e' ? e.preventDefault() : null
                 }
                 required
-                // onChange={(e) => form.setFieldValue('total', +e.target.value)}
-                // error={
-                //   Object.hasOwn(form.errors, 'total') ? 'invalid number' : null
-                // }
+                onChange={(e) =>
+                  form.setFieldValue('total_quantity', +e.target.value)
+                }
+                error={
+                  Object.hasOwn(form.errors, 'total_quantity')
+                    ? 'invalid number'
+                    : null
+                }
               />
             </div>
           </Group>
@@ -254,11 +261,16 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
             Apply to
           </Title>
           {/* <Radio.Group {...form.getInputProps('discount_target')} required> */}
-          <Radio.Group required>
+          <Radio.Group
+            required
+            value={form.values.apply_to}
+            onChange={(value) => form.setFieldValue('apply_to', value)}
+          >
             <Group>
               <Radio
-                checked
-                value={'product'}
+                value={'1'}
+                checked={form.values.apply_to === '1'}
+                disabled={true}
                 // onClick={() => setState((p) => ({ ...p, isShip: false }))}
                 label={
                   <span style={{ color: '#E7639A', fontSize: '12px' }}>
@@ -267,13 +279,15 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                 }
               />
               <Radio
-                value={'shipping_fee'}
+                value={'2'}
+                checked={form.values.apply_to === '2'}
                 // onClick={() => setState((p) => ({ ...p, isShip: true }))}
                 label={
                   <span style={{ color: '#E7639A', fontSize: '12px' }}>
                     Delivery
                   </span>
                 }
+                disabled={true}
               />
             </Group>
           </Radio.Group>

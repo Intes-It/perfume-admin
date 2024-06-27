@@ -93,7 +93,6 @@ const Voucher = () => {
   } = state;
   const { classes, cx } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
-  console.log(start_date);
 
   async function getVoucher() {
     const res = await GET(
@@ -298,9 +297,9 @@ const Voucher = () => {
                         : `% Discount - ${item.discount}%`}
                     </td>
                     <td>
-                      {0}/{0}
+                      {item.used_quantity}/{item.total_quantity}
                     </td>
-                    <td>{'All'}</td>
+                    <td>{item.apply_to == '1' ? 'Product' : 'Delivery'}</td>
                     <td>{formatDay(item.start_date)}</td>
                     <td>{formatDay(item.end_date)}</td>
                     <td>
