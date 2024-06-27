@@ -1,12 +1,16 @@
-import { Pagination, UnstyledButton } from '@mantine/core';
+import { UnstyledButton } from '@mantine/core';
 
-import { Img } from 'react-image';
+import ReactPaginate from 'react-paginate';
+import { stripBaseUrl } from '../../hooks/convertImage';
 import { productType } from '../../utils/utilsInterface';
 type CategoryTableProps = {
   productData: productType[] | null;
   openEditModal: (value: number) => void;
   setState: (value: any) => void;
   total?: number;
+  totalPage: number;
+  page: number;
+  onchangePage: (selectedItem: { selected: number }) => void;
 };
 
 const statusOption = {
@@ -22,7 +26,9 @@ const ProductTable = ({
   productData,
   openEditModal,
   setState,
-  total = 0,
+  page,
+  onchangePage,
+  totalPage,
 }: CategoryTableProps) => {
   return (
     <div>
@@ -59,17 +65,12 @@ const ProductTable = ({
                     }}
                   >
                     <td>
-                      <Img
-                        src={item?.thumbnail?.url || ''}
-                        loader={<div>Loading...</div>}
-                        unloader={<div>Failed to load image</div>}
-                      />
-                      {/* <img
+                      <img
                         src={stripBaseUrl(item?.thumbnail?.url || '')}
                         alt="image"
                         className="mx-auto h-[40px]"
                         loading="lazy"
-                      /> */}
+                      />
                     </td>
                     <td>{item.name}</td>
                     <td>${item.price.toFixed(2)}</td>
@@ -140,14 +141,15 @@ const ProductTable = ({
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Pagination
-          total={total}
-          onChange={(page) =>
-            setState((p: any) => ({
-              ...p,
-              page: page,
-            }))
-          }
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="Next"
+          className="flex items-center justify-center gap-2 py-5 text-sm custom-pagination"
+          onPageChange={onchangePage}
+          forcePage={page - 1 > 0 ? page - 1 : 0}
+          pageRangeDisplayed={3}
+          pageCount={totalPage}
+          previousLabel="Previous"
         />
       </div>
     </div>

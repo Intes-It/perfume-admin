@@ -98,7 +98,7 @@ const schema = yup.object().shape({
       .max(999999.99, 'Sale price must be less than 999999.99');
   }),
   mass: yup.string().required('Mass is required'),
-  quantity: yup.string().required('Quantity is required'),
+  total_quantity: yup.string().required('Quantity is required'),
   image: yup.mixed().required('Image is required'),
 });
 
@@ -161,14 +161,8 @@ const ProductForm = ({
       price: '',
       current_price: '',
       url_image: '',
-      note: {
-        characteristics: '',
-        use: '',
-        description: '',
-        composition: '',
-      },
       category_id: (categorySelected && +categorySelected) as any,
-      quantity: '',
+      total_quantity: '',
       description: '',
       use: '',
       composition: '',
@@ -659,7 +653,7 @@ const ProductForm = ({
                       maxLength={9}
                       variant={'unstyled'}
                       min={1}
-                      {...form.getInputProps('quantity')}
+                      {...form.getInputProps('total_quantity')}
                     />
                   </div>
                 </div>

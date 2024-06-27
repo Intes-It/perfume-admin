@@ -371,11 +371,15 @@ const ModalContent = ({
                         bg={'#FFE7EF'}
                         dropdownPosition="bottom"
                         maxDropdownHeight={130}
+                        h={38}
                         sx={{
                           borderRadius: 4,
                           height: 38,
                           '.mantine-bkyer9': {
                             fontSize: 12,
+                          },
+                          '.mantine-Select-root, .mantine-Input-input': {
+                            height: 38,
                           },
                         }}
                         {...form.getInputProps('category_id')}
@@ -406,6 +410,9 @@ const ModalContent = ({
                           height: 38,
                           '.mantine-bkyer9': {
                             fontSize: 12,
+                          },
+                          '.mantine-Select-root, .mantine-Input-input': {
+                            height: 38,
                           },
                         }}
                         {...form.getInputProps('subcategory_id')}

@@ -26,8 +26,10 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
     deleteID: 0,
     reversed: false,
     total: 0,
+    totalPage: 1,
   });
-  const { productID, editModal, deleteModal, deleteID, total } = state;
+  const { productID, editModal, deleteModal, deleteID, total, totalPage } =
+    state;
   const [opened, { open, close }] = useDisclosure(false);
 
   const [search, setSearch] = useState('');
@@ -41,6 +43,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
   const [productData, setProductData] = useState<productType[] | null>(null);
   const [status, setStatus] = useState<string[] | []>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
 
   const getProduct = async (value?: any) => {
     const queryParams = {
@@ -59,6 +62,10 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
       ...(value?.status && {
         statuses: value?.status,
       }),
+      ...(value?.page && {
+        page: value?.page,
+      }),
+      page_size: 50,
     };
     const queryString = new URLSearchParams(queryParams as any).toString();
     const url = 'api/admin/product/' + `?${queryString}`;
@@ -71,7 +78,11 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
 
       if (res.status === 200) {
         setProductData(res.data?.results);
-        setState((prev) => ({ ...prev, total: res.data?.results?.length }));
+        setState((prev) => ({
+          ...prev,
+          total: res.data?.results?.length,
+          totalPage: res.data?.num_pages,
+        }));
       }
       setIsLoading(false);
     } catch (error) {
@@ -104,7 +115,9 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
       subCategory: subCategorySelected,
       subSubCategory: subSubCategorySelected,
       status: status,
+      page: 1,
     });
+    if (page !== 1) setPage(1);
   };
 
   function openEditModal(id: number) {
@@ -146,6 +159,17 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
     return [];
   }, [subCategory, categorySelected, subCategorySelected]) as any;
 
+  const onchangePage = (selectedItem: { selected: number }) => {
+    setPage(selectedItem.selected + 1);
+    getProduct({
+      category: categorySelected,
+      subCategory: subCategorySelected,
+      subSubCategory: subSubCategorySelected,
+      page: selectedItem.selected + 1,
+      search: search,
+    });
+  };
+
   useEffect(() => {
     categorySelected && getProduct();
   }, []);
@@ -167,6 +191,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
             if (subSubCategorySelected) setSubSubCategorySelected([]);
             if (search) setSearch('');
             if (status) setStatus([]);
+            page !== 1 && setPage(1);
           }}
         >
           <Tabs.List grow>
@@ -278,8 +303,12 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
             productData={productData}
             total={total}
             setState={setState}
+            onchangePage={onchangePage}
+            totalPage={totalPage}
+            page={page}
           />
         )}
+
         {/*create modal*/}
         <Modal.Root
           opened={opened}
