@@ -1243,7 +1243,6 @@ const ProductForm = ({
 
               <Tabs.Panel value="1" pt={'md'}>
                 <TextEditor
-                  content={form.values?.description}
                   onChangeValue={(value) =>
                     form.setFieldValue('description', value)
                   }
@@ -1251,7 +1250,6 @@ const ProductForm = ({
               </Tabs.Panel>
               <Tabs.Panel value="2" pt={'md'}>
                 <TextEditor
-                  content={form.values?.characteristics}
                   onChangeValue={(value) =>
                     form.setFieldValue('characteristics', value)
                   }
@@ -1259,13 +1257,11 @@ const ProductForm = ({
               </Tabs.Panel>
               <Tabs.Panel value="3" pt={'md'}>
                 <TextEditor
-                  content={form.values?.use}
                   onChangeValue={(value) => form.setFieldValue('use', value)}
                 />
               </Tabs.Panel>
               <Tabs.Panel value="4" pt={'md'}>
                 <TextEditor
-                  content={form.values?.composition}
                   onChangeValue={(value) =>
                     form.setFieldValue('composition', value)
                   }

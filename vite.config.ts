@@ -29,9 +29,6 @@ export default defineConfig({
       },
       '/media': {
         target: 'http://171.244.64.245:8010',
-        changeOrigin: true,
-        secure: true,
-        ws: false,
         configure: (proxy) => {
           proxy.on('error', (err) => {
             console.log('proxy error', err);
