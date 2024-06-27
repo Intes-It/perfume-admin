@@ -39,9 +39,10 @@ type ProductFormProps = {
 };
 
 const schema = yup.object().shape({
-  name: yup.string().required('Name of product is required'),
+  name: yup.string().trim().required('Name of product is required'),
   price: yup
     .string()
+    .trim()
     .min(1, 'Price must be greater than 0 or equal to 1')
     .required('Price of product is required')
     .test({
@@ -66,40 +67,43 @@ const schema = yup.object().shape({
       },
     })
     .typeError('Invalid number'),
-  current_price: yup.string().when('price', (_price, schema) => {
-    return schema
-      .test({
-        name: 'currentPriceLessThanPrice',
-        exclusive: false,
-        message: 'Sale price must be less than price',
-        test: function (currentPrice) {
-          const { parent } = this;
-          const priceValue = parent.price;
-          if (!currentPrice || !priceValue) {
-            return true; // Skip validation if either value is missing
-          }
-          return parseFloat(currentPrice) < parseFloat(priceValue);
-        },
-      })
-      .test({
-        name: 'decimalPlaces',
-        exclusive: false,
-        message: 'Sale price must have at most 2 decimal places',
-        test: function (currentPrice) {
-          if (!currentPrice) {
-            return true; // Skip validation if value is missing
-          }
-          const decimalPlaces =
-            currentPrice.toString().split('.')[2]?.length || 0;
+  current_price: yup
+    .string()
+    .trim()
+    .when('price', (_price, schema) => {
+      return schema
+        .test({
+          name: 'currentPriceLessThanPrice',
+          exclusive: false,
+          message: 'Sale price must be less than price',
+          test: function (currentPrice) {
+            const { parent } = this;
+            const priceValue = parent.price;
+            if (!currentPrice || !priceValue) {
+              return true; // Skip validation if either value is missing
+            }
+            return parseFloat(currentPrice) < parseFloat(priceValue);
+          },
+        })
+        .test({
+          name: 'decimalPlaces',
+          exclusive: false,
+          message: 'Sale price must have at most 2 decimal places',
+          test: function (currentPrice) {
+            if (!currentPrice) {
+              return true; // Skip validation if value is missing
+            }
+            const decimalPlaces =
+              currentPrice.toString().split('.')[2]?.length || 0;
 
-          return decimalPlaces <= 2;
-        },
-      })
-      .typeError('Invalid number')
-      .max(999999.99, 'Sale price must be less than 999999.99');
-  }),
-  mass: yup.string().required('Mass is required'),
-  total_quantity: yup.string().required('Quantity is required'),
+            return decimalPlaces <= 2;
+          },
+        })
+        .typeError('Invalid number')
+        .max(999999.99, 'Sale price must be less than 999999.99');
+    }),
+  mass: yup.string().trim().required('Mass is required'),
+  total_quantity: yup.string().trim().required('Quantity is required'),
   image: yup.mixed().required('Image is required'),
 });
 

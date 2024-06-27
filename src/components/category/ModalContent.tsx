@@ -37,7 +37,7 @@ const ModalContent = ({
 
   const form = useForm({
     validate: {
-      name: (value) => (value.length < 2 ? 'Name is required' : null),
+      name: (value) => (value.trim().length < 2 ? 'Name is required' : null),
       category_id: (value) =>
         optionSelected !== 'category' && value.length < 1
           ? 'Category is required'
