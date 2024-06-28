@@ -78,6 +78,7 @@ const Voucher = () => {
     status: 'all',
     page: 1,
     count: 1,
+    total: 0,
     search: '',
   });
   const {
@@ -93,6 +94,7 @@ const Voucher = () => {
     page,
     search,
     count,
+    total,
   } = state;
   const { classes, cx } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
@@ -113,8 +115,12 @@ const Voucher = () => {
         end_date ? '&end_date=' + dayjs(end_date).format('YYYY-MM-DD') : ''
       }${'&page_size=10'}${'&page=' + page}`,
     );
-    setState((p) => ({ ...p, voucherData: res?.data?.results }));
-    setState((p) => ({ ...p, count: res?.data?.num_pages }));
+    setState((p) => ({
+      ...p,
+      count: res?.data?.num_pages,
+      total: res?.data?.count,
+      voucherData: res?.data?.results,
+    }));
   }
   const onchangePage = ({ selected: selectedPage }: { selected: number }) => {
     setState((pre) => ({
@@ -237,7 +243,6 @@ const Voucher = () => {
                 page: 1,
               }))
             }
-            minDate={new Date()}
             maxDate={end_date ? new Date(end_date) : undefined}
           />
           <DateInput
@@ -269,7 +274,7 @@ const Voucher = () => {
                 page: 1,
               }))
             }
-            minDate={start_date ? new Date(start_date) : new Date()}
+            minDate={start_date ? new Date(start_date) : undefined}
           />
           {/* <Button
             bg={'#B82C67'}
@@ -312,11 +317,17 @@ const Voucher = () => {
 
       <br />
       <Title c={'#B82C67'} className="font-medium text-xl mb-8">
-        Discount voucher ({voucherData?.length})
+        Discount voucher ({total})
       </Title>
 
       <Paper shadow="md" radius="md" sx={{ border: '1px solid #B82C67' }}>
-        <Table sx={{ borderRadius: '0.65em', overflow: 'hidden' }}>
+        <Table
+          sx={{
+            borderTopLeftRadius: '0.65em',
+            borderTopRightRadius: '0.65em',
+            overflow: 'hidden',
+          }}
+        >
           <thead className={cx(classes.header)}>
             <tr
               style={{
@@ -601,7 +612,7 @@ const Voucher = () => {
         radius={'md'}
       >
         <Paper pt={'1rem'}>
-          <Text align={'center'} sx={{ fontSize: '16px', fontWeight: 600 }}>
+          <Text align={'left'} sx={{ fontSize: '16px', fontWeight: 600 }}>
             Do you really want to delete this voucher?
           </Text>
           <Group sx={{ float: 'right' }} my={32}>
