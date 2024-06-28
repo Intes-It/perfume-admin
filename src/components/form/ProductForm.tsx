@@ -568,6 +568,12 @@ const ProductForm = ({
                       }}
                       w={472}
                       h={36}
+                      onKeyUp={(e: any) => {
+                        if (e.target?.value > 999999) {
+                          e.target.value = 999999;
+                          form.setFieldValue('price', 99999);
+                        }
+                      }}
                       pl={10}
                       mt={8}
                       maxLength={9}
@@ -594,6 +600,13 @@ const ProductForm = ({
                       mt={8}
                       maxLength={9}
                       variant={'unstyled'}
+                      onKeyUp={(e: any) => {
+                        if (e.target?.value > 999999) {
+                          e.target.value = 999999;
+                          form.setFieldValue('current_price', 99999);
+                        }
+                      }}
+                      type="number"
                       precision={2}
                       decimalSeparator="."
                       {...form.getInputProps('current_price')}
@@ -628,7 +641,14 @@ const ProductForm = ({
                       mt={8}
                       variant={'unstyled'}
                       maxLength={9}
+                      onKeyUp={(e: any) => {
+                        if (e.target?.value > 999999) {
+                          e.target.value = 999999;
+                          form.setFieldValue('mass', 99999);
+                        }
+                      }}
                       precision={2}
+                      type="number"
                       decimalSeparator="."
                       min={0}
                       {...form.getInputProps('mass')}
@@ -647,13 +667,18 @@ const ProductForm = ({
                       w={228}
                       h={36}
                       onKeyDown={(event: KeyboardEvent) => {
-                        if (event.key === '.') {
+                        if (
+                          event.key === '.' ||
+                          (form.values?.total_quantity.toString()?.length >=
+                            9 &&
+                            event.key !== 'Backspace')
+                        ) {
                           event.preventDefault();
                         }
                       }}
+                      type="number"
                       pl={10}
                       mt={8}
-                      type="number"
                       maxLength={9}
                       variant={'unstyled'}
                       min={1}

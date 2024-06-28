@@ -273,16 +273,9 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
         delete value.sub_subcategory_id;
       }
 
-      if (colorAttribute?.length > 0) {
-        value.color = colorAttribute;
-      }
-
-      if (capacityAttribute?.length > 0) {
-        value.capacity = capacityAttribute;
-      }
-      if (packageAttribute?.length > 0) {
-        value.package = packageAttribute;
-      }
+      value.color = colorAttribute;
+      value.capacity = capacityAttribute;
+      value.package = packageAttribute;
 
       const res = await PATCH(
         apiRoute.detail_product + value?.id + '/patch/',
@@ -617,10 +610,16 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       h={36}
                       pl={10}
                       mt={8}
-                      maxLength={9}
-                      max={999999999}
+                      max={999999}
                       variant={'unstyled'}
                       precision={2}
+                      type="number"
+                      onKeyUp={(e: any) => {
+                        if (e.target?.value > 999999) {
+                          e.target.value = 999999;
+                          form.setFieldValue('price', 99999);
+                        }
+                      }}
                       decimalSeparator="."
                       {...form.getInputProps('price')}
                       min={0}
@@ -640,6 +639,12 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       pl={10}
                       mt={8}
                       maxLength={9}
+                      onKeyUp={(e: any) => {
+                        if (e.target?.value > 999999) {
+                          e.target.value = 999999;
+                          form.setFieldValue('current_price', 99999);
+                        }
+                      }}
                       variant={'unstyled'}
                       precision={2}
                       decimalSeparator="."
@@ -671,9 +676,16 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       w={228}
                       h={36}
                       pl={10}
+                      onKeyUp={(e: any) => {
+                        if (e.target?.value > 999999) {
+                          e.target.value = 999999;
+                          form.setFieldValue('mass', 99999);
+                        }
+                      }}
                       mt={8}
                       variant={'unstyled'}
                       precision={2}
+                      type="number"
                       decimalSeparator="."
                       min={0}
                       {...form.getInputProps('mass')}
@@ -693,14 +705,18 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       w={228}
                       h={36}
                       onKeyDown={(event: KeyboardEvent) => {
-                        if (event.key === '.') {
+                        if (
+                          event.key === '.' ||
+                          (form.values?.total_quantity.toString()?.length >=
+                            9 &&
+                            event.key !== 'Backspace')
+                        ) {
                           event.preventDefault();
                         }
                       }}
                       pl={10}
                       mt={8}
                       type="number"
-                      maxLength={9}
                       variant={'unstyled'}
                       min={0}
                       {...form.getInputProps('total_quantity')}
