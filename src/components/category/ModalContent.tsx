@@ -37,7 +37,7 @@ const ModalContent = ({
 
   const form = useForm({
     validate: {
-      name: (value) => (value.trim().length < 2 ? 'Name is required' : null),
+      name: (value) => (value.trim().length < 1 ? 'Name is required' : null),
       category_id: (value) =>
         optionSelected !== 'category' && value.length < 1
           ? 'Category is required'
@@ -83,7 +83,7 @@ const ModalContent = ({
   const getListOptions = async (value?: string) => {
     try {
       const res = await GET(
-        apiRoute.list_subcategory + `?category_id=${value}`,
+        apiRoute.list_subcategory + `?category_id=${value}&page_size=1000`,
       );
       const newData = res.data?.results?.map((item: any) => ({
         label: item?.name,

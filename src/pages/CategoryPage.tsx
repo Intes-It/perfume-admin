@@ -102,7 +102,7 @@ const CategoryPage = () => {
           ? apiRoute.list_category
           : apiRoute.list_subcategory;
 
-      const res = await GET(url);
+      const res = await GET(url + '?page_size=1000');
       const newData = res.data?.results?.map((item: any) => ({
         label: item?.name,
         value: item?.id,
