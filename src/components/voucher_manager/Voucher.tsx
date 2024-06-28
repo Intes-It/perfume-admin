@@ -4,7 +4,6 @@ import {
   Group,
   Modal,
   Paper,
-  ScrollArea,
   Select,
   Table,
   UnstyledButton,
@@ -21,7 +20,6 @@ import { DateInput } from '@mantine/dates';
 import VoucherCreateForm from '../form/VoucherCreateForm';
 import { useDisclosure } from '@mantine/hooks';
 import { voucherType } from '../../utils/utilsInterface.ts';
-import { formatDay } from '../../utils/format.ts';
 import { DELETE, GET } from '../../utils/fetch.ts';
 import VoucherEditForm from '../form/VoucherEditForm.tsx';
 import dayjs from 'dayjs';
@@ -70,7 +68,6 @@ const useStyles = createStyles((theme) => ({
 const Voucher = () => {
   const [state, setState] = useState({
     voucherID: 0,
-    scrolled: false,
     editModal: false,
     voucherData: [] as voucherType[],
     deleteModal: false,
@@ -84,7 +81,6 @@ const Voucher = () => {
     search: '',
   });
   const {
-    scrolled,
     voucherData,
     deleteModal,
     deleteId,
