@@ -43,8 +43,16 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
     },
     validate: {
       // total: (v) => (v.toString().length >= 4 ? 'error' : null),
-      discount: (v) => (v.toString().length >= 3 ? 'error' : null),
+      discount: (v) =>
+        isPercent
+          ? v > 100
+            ? 'error'
+            : null
+          : v.toString().length > 4
+          ? 'error'
+          : null,
       name: (v) => (v.length > 100 ? 'error' : null),
+      total_quantity: (v) => (v.toString().length > 6 ? 'error' : null),
     },
   });
 
@@ -179,12 +187,12 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                 onChange={(e) =>
                   form.setFieldValue('total_quantity', +e.target.value)
                 }
-                error={
-                  Object.hasOwn(form.errors, 'total_quantity')
-                    ? 'invalid number'
-                    : null
-                }
               />
+              {Object.hasOwn(form.errors, 'total_quantity') && (
+                <div className="font-medium text-[#D72525] text-[10px] ">
+                  Maximum quantity is 999999
+                </div>
+              )}
             </div>
           </Group>
           <div>
@@ -298,12 +306,13 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
             <Select
               data={[
                 { value: '1', label: '% Discount' },
-                { value: '3', label: '$ Value' },
+                { value: '2', label: '$ Value' },
               ]}
               w={'9.125rem'}
               h={'2.25rem'}
               onChange={(e: string) => {
                 form.setFieldValue('discount_type', e);
+                form.setFieldError('discount', null);
                 if (e === '1') {
                   setState((p) => ({ ...p, isPercent: true }));
                 } else {
@@ -324,13 +333,11 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
             />
 
             <TextInput
-              w={53}
+              w={56}
               type={'number'}
               min={0}
+              maxLength={4}
               onChange={(e) => form.setFieldValue('discount', +e.target.value)}
-              error={
-                Object.hasOwn(form.errors, 'discount') ? 'invalid number' : ''
-              }
               required
               onKeyDown={(e) =>
                 e.key === '.' || e.key === 'e' ? e.preventDefault() : null
@@ -345,6 +352,11 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
             />
             {isPercent ? '%' : '$'}
           </Group>
+          {Object.hasOwn(form.errors, 'discount') && (
+            <div className="font-medium text-[#D72525] text-[10px] mt-[-20px]">
+              {isPercent ? 'Maximum amount is 100%' : 'Maximum value is $ 9999'}
+            </div>
+          )}
         </Stack>
         <Button
           type="submit"

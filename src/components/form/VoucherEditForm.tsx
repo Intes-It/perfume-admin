@@ -29,14 +29,17 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
     voucherData: {} as voucherType,
     start_date: '',
     end_date: '',
+    isPercent: true,
+    usedQuantity: 0,
   });
-  const { voucherData, start_date, end_date } = state;
+  const { voucherData, start_date, end_date, isPercent, usedQuantity } = state;
   async function getVoucherData() {
     const res = await GET(`/api/admin/voucher/${id}`);
 
     setState((p) => ({
       ...p,
       voucherData: res?.data,
+      usedQuantity: res?.data?.used_quantity,
       start_date: res?.data.start_date,
       end_date: res?.data.end_date,
     }));
@@ -45,9 +48,17 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
   const form = useForm<voucherType>({
     initialValues: voucherData,
     validate: {
-      // total: (v) => (v.toString().length >= 4 ? 'error' : null),
-      discount: (v) => (v.toString().length >= 3 ? 'error' : null),
+      discount: (v) =>
+        isPercent
+          ? v > 100
+            ? 'error'
+            : null
+          : v.toString().length > 4
+          ? 'error'
+          : null,
       name: (v) => (v.length > 100 ? 'error' : null),
+      total_quantity: (v) =>
+        v.toString().length > 6 || v < usedQuantity ? 'error' : null,
     },
   });
   console.log(form.values.apply_to == '1');
@@ -153,41 +164,72 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
               />
             </div>
             <div style={{ marginLeft: '1rem' }}>
-              <span
-                style={{
-                  color: '#7c7c7c',
-                  fontSize: '12px',
-                  marginBottom: '8px',
-                  fontWeight: '500',
-                }}
-              >
-                Quantity *
-              </span>
-              <br />
-              <TextInput
-                w={'6.375rem'}
-                h={'2.25rem'}
-                type={'number'}
-                min={0}
-                maxLength={9}
-                defaultValue={voucherData?.total_quantity}
-                onChange={(e) =>
-                  form.setFieldValue('total_quantity', +e.target.value)
-                }
-                sx={{
-                  resize: 'none',
-                  border: '1px solid #b82c67',
-                  borderRadius: '4px',
-                  padding: '0px 10px',
-                }}
-                variant={'unstyled'}
-                error={
-                  Object.hasOwn(form.errors, 'total_quantity')
-                    ? 'invalid number'
-                    : null
-                }
-                required
-              />
+              <div className="flex flex-row">
+                <div>
+                  <span
+                    style={{
+                      color: '#7c7c7c',
+                      fontSize: '12px',
+                      marginBottom: '8px',
+                      fontWeight: '500',
+                    }}
+                  >
+                    Quantity *
+                  </span>
+                  <br />
+                  <TextInput
+                    w={'6.375rem'}
+                    h={'2.25rem'}
+                    type={'number'}
+                    min={0}
+                    maxLength={9}
+                    defaultValue={voucherData?.total_quantity}
+                    onChange={(e) =>
+                      form.setFieldValue('total_quantity', +e.target.value)
+                    }
+                    sx={{
+                      resize: 'none',
+                      border: '1px solid #b82c67',
+                      borderRadius: '4px',
+                      padding: '0px 10px',
+                    }}
+                    variant={'unstyled'}
+                    required
+                  />
+                </div>
+                <div style={{ marginLeft: '1rem' }}>
+                  <span
+                    style={{
+                      color: '#7c7c7c',
+                      fontSize: '12px',
+                      marginBottom: '8px',
+                      fontWeight: '500',
+                    }}
+                  >
+                    Used
+                  </span>
+                  <br />
+                  <div
+                    style={{
+                      resize: 'none',
+                      border: '1px solid #858585',
+                      borderRadius: '4px',
+                      padding: '0px 10px',
+                      color: '#858585',
+                      width: '6.375rem',
+                      height: '2.25rem',
+                    }}
+                    className="items-center flex"
+                  >
+                    {voucherData?.used_quantity}
+                  </div>
+                </div>
+              </div>
+              {Object.hasOwn(form.errors, 'total_quantity') && (
+                <div className="font-medium text-[#D72525] text-[10px] ">
+                  Maximum quantity is 999999
+                </div>
+              )}
             </div>
           </Group>
           <div>
@@ -249,7 +291,11 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
                     );
                     setState((p) => ({ ...p, end_date: String(e) }));
                   }}
-                  minDate={start_date ? new Date(start_date) : new Date()}
+                  minDate={
+                    start_date && dayjs(start_date).isAfter(dayjs(), 'day')
+                      ? new Date(start_date)
+                      : new Date()
+                  }
                 />
               </div>
             </Group>
@@ -289,12 +335,18 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
             <Select
               data={[
                 { value: '1', label: '% Discount' },
-                { value: '3', label: '$ Value' },
+                { value: '2', label: '$ Value' },
               ]}
               w={'9.125rem'}
               h={'2.25rem'}
               onChange={(e) => {
                 form.setFieldValue('discount_type', String(e));
+                form.setFieldError('discount', null);
+                if (e === '1') {
+                  setState((p) => ({ ...p, isPercent: true }));
+                } else {
+                  setState((p) => ({ ...p, isPercent: false }));
+                }
               }}
               value={String(form.values.discount_type)}
               required={true}
@@ -309,15 +361,27 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
             />
 
             <TextInput
-              w={53}
+              w={56}
               defaultValue={voucherData?.discount}
               type={'number'}
               min={0}
-              maxLength={8}
+              sx={{
+                resize: 'none',
+                border: '1px solid #b82c67',
+                borderRadius: '4px',
+                padding: '0px 10px',
+              }}
+              variant={'unstyled'}
+              maxLength={4}
               onChange={(e) => form.setFieldValue('discount', +e.target.value)}
             />
             <span>{String(form.values.discount_type) === '1' ? '%' : '$'}</span>
           </Group>
+          {Object.hasOwn(form.errors, 'discount') && (
+            <div className="font-medium text-[#D72525] text-[10px] mt-[-20px]">
+              {isPercent ? 'Maximum amount is 100%' : 'Maximum value is $ 9999'}
+            </div>
+          )}
         </Stack>
         <Button
           type="submit"
