@@ -25,6 +25,7 @@ import { formatDay } from '../../utils/format.ts';
 import { DELETE, GET } from '../../utils/fetch.ts';
 import VoucherEditForm from '../form/VoucherEditForm.tsx';
 import dayjs from 'dayjs';
+import ReactPaginate from 'react-paginate';
 
 const statusData = [
   { value: 'all', label: 'All' },
@@ -78,6 +79,9 @@ const Voucher = () => {
     searchText: '',
     end_date: '',
     status: 'all',
+    page: 1,
+    count: 1,
+    search: '',
   });
   const {
     scrolled,
@@ -90,6 +94,9 @@ const Voucher = () => {
     start_date,
     end_date,
     status,
+    page,
+    search,
+    count,
   } = state;
   const { classes, cx } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
@@ -106,19 +113,52 @@ const Voucher = () => {
         start_date
           ? '&start_date=' + dayjs(start_date).format('YYYY-MM-DD')
           : ''
-      }${end_date ? '&end_date=' + dayjs(end_date).format('YYYY-MM-DD') : ''}`,
+      }${
+        end_date ? '&end_date=' + dayjs(end_date).format('YYYY-MM-DD') : ''
+      }${'&page_size=10'}${'&page=' + page}`,
     );
     setState((p) => ({ ...p, voucherData: res?.data?.results }));
+    setState((p) => ({ ...p, count: res?.data?.num_pages }));
   }
+  const onchangePage = ({ selected: selectedPage }: { selected: number }) => {
+    setState((pre) => ({
+      ...pre,
+      page: selectedPage + 1,
+    }));
+  };
+
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === '') {
+      setState((pre) => ({
+        ...pre,
+        search: e.target.value,
+        searchText: e.target.value,
+        page: 1,
+      }));
+    } else {
+      setState((pre) => ({
+        ...pre,
+        search: e.target.value,
+      }));
+    }
+  };
+
+  const handleSearch = () => {
+    setState((pre) => ({
+      ...pre,
+      searchText: search,
+      page: 1,
+    }));
+  };
 
   useEffect(() => {
     getVoucher();
-  }, [status, searchText, start_date, end_date]);
+  }, [status, searchText, start_date, end_date, page]);
 
   return (
     <div style={{ padding: '32px 5.44rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Title order={2} c={'#B82C67'}>
+        <Title order={2} c={'#B82C67'} sx={{ fontSize: '24px' }}>
           Voucher management
         </Title>
         <Button
@@ -129,6 +169,7 @@ const Voucher = () => {
           onClick={open}
           sx={{
             borderRadius: '10px',
+            fontSize: '16px',
           }}
         >
           Add new voucher
@@ -144,12 +185,14 @@ const Voucher = () => {
             rightSection={<img alt="icon" src="/down_arrow.svg" />}
             bg={'#FFE7EF'}
             variant={'unstyled'}
+            className="input_select_status"
             label={
               <span
                 style={{
-                  fontSize: '12px',
+                  fontSize: '10px',
                   color: '#858585',
                   display: 'flex',
+                  marginLeft: '6px',
                 }}
               >
                 Status
@@ -163,7 +206,7 @@ const Voucher = () => {
             }}
             value={status}
             onChange={(e: string) => {
-              setState((p) => ({ ...p, status: e }));
+              setState((p) => ({ ...p, status: e, page: 1 }));
             }}
             allowDeselect
           />
@@ -172,22 +215,30 @@ const Voucher = () => {
             // className="header_list_voucher"
             clearable
             label={
-              <span style={{ fontSize: '12px', color: '#858585' }}>
+              <span
+                style={{
+                  fontSize: '10px',
+                  color: '#858585',
+                  marginLeft: '6px',
+                }}
+              >
                 Start date
               </span>
             }
             h={58}
             w={190}
             rightSection={
-              <img src={'calendar.svg'} alt={'icon'} className={'mb-15'} />
+              <img src={'calendar.svg'} alt={'icon'} className={'mb-15 '} />
             }
             variant="unstyled"
             bg={'#FFE7EF'}
+            className="date-input-class"
             sx={{ borderRadius: '5px', paddingLeft: '8px' }}
             onChange={(e) =>
               setState((p) => ({
                 ...p,
                 start_date: e !== null ? String(e) : '',
+                page: 1,
               }))
             }
             minDate={new Date()}
@@ -196,7 +247,13 @@ const Voucher = () => {
           <DateInput
             clearable
             label={
-              <span style={{ fontSize: '12px', color: '#858585' }}>
+              <span
+                style={{
+                  fontSize: '10px',
+                  color: '#858585',
+                  marginLeft: '6px',
+                }}
+              >
                 End date
               </span>
             }
@@ -205,11 +262,16 @@ const Voucher = () => {
             rightSection={
               <img src={'calendar.svg'} alt={'icon'} className={'mb-15'} />
             }
+            className="date-input-class"
             variant="unstyled"
             bg={'#FFE7EF'}
             sx={{ borderRadius: '5px', paddingLeft: '8px' }}
             onChange={(e) =>
-              setState((p) => ({ ...p, end_date: e !== null ? String(e) : '' }))
+              setState((p) => ({
+                ...p,
+                end_date: e !== null ? String(e) : '',
+                page: 1,
+              }))
             }
             minDate={start_date ? new Date(start_date) : new Date()}
           />
@@ -225,103 +287,113 @@ const Voucher = () => {
           </Button> */}
         </Group>
         <TextInput
-          icon={<img src="/search.svg" alt="icon" />}
+          rightSection={
+            <img
+              src="/search.svg"
+              alt="icon"
+              style={{ zIndex: 100, cursor: 'pointer' }}
+              onClick={handleSearch}
+            />
+          }
           placeholder="Search"
           w={327}
-          h={58}
+          h={42}
           variant="unstyled"
-          className={cx(classes.input)}
-          onChange={function (e) {
-            setState((p) => ({
-              ...p,
-              searchText: e.target.value,
-            }));
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSearch();
+          }}
+          value={search}
+          onChange={onSearch}
+          className="input_search"
+          style={{
+            border: '0.5px solid #D9D9D9',
+            borderRadius: '4px',
+            fontSize: '12px',
+            paddingLeft: '16px',
           }}
         />
       </Box>
 
       <br />
-      <Title c={'#B82C67'} order={3}>
+      <Title c={'#B82C67'} className="font-medium text-xl mb-8">
         Discount voucher ({voucherData?.length})
       </Title>
-      <ScrollArea
-        h={500}
-        onScrollPositionChange={({ y }) =>
-          setState((p) => ({ ...p, scrolled: y !== 0 }))
-        }
-        mt={'2rem'}
-      >
-        <Paper shadow="md" radius="md" sx={{ border: '1px solid #B82C67' }}>
-          <Table sx={{ borderRadius: '0.65em', overflow: 'hidden' }}>
-            <thead
-              className={cx(classes.header, { [classes.scrolled]: scrolled })}
+
+      <Paper shadow="md" radius="md" sx={{ border: '1px solid #B82C67' }}>
+        <Table sx={{ borderRadius: '0.65em', overflow: 'hidden' }}>
+          <thead className={cx(classes.header)}>
+            <tr
+              style={{
+                color: '#B82C67',
+                backgroundColor: '#FFE2EC',
+                height: '60px',
+                fontWeight: 600,
+                fontSize: '16px',
+              }}
             >
-              <tr
-                style={{
-                  color: '#B82C67',
-                  backgroundColor: '#FFE2EC',
-                  height: '60px',
-                  fontWeight: 600,
-                  fontSize: '14px',
-                }}
-              >
-                <td>
-                  Name of <br />
-                  voucher
-                </td>
-                <td>Promo code</td>
-                <td>Type of discount</td>
-                <td>Quantity</td>
-                <td>Apply to</td>
-                <td>Start date</td>
-                <td>End date</td>
-                <td>Status</td>
-                {/* <td>Pendre le code</td> */}
-                {/* <td></td> */}
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              {voucherData &&
-                voucherData?.map((item: Partial<voucherType>) => (
-                  <tr
-                    key={item.id}
-                    style={{ textAlign: 'center', height: '60px' }}
-                    className={'hover_table'}
-                  >
-                    <td>{item.name}</td>
-                    <td>{item.code}</td>
-                    <td>
-                      {String(item.discount_type) === '3'
-                        ? ` Valuer - ${item.discount}$`
-                        : `% Discount - ${item.discount}%`}
-                    </td>
-                    <td>
-                      {item.used_quantity}/{item.total_quantity}
-                    </td>
-                    <td>{item.apply_to == '1' ? 'Product' : 'Delivery'}</td>
-                    <td>{formatDay(item.start_date)}</td>
-                    <td>{formatDay(item.end_date)}</td>
-                    <td>
-                      <span
-                        style={{
-                          background:
-                            item.active === false ? '#FFC978' : '#87FF74',
-                          textAlign: 'center',
-                          textTransform: 'capitalize',
-                          padding:
-                            item.active === true ? '6px 26px' : '6px 20px',
-                          border: '1px solid #333',
-                          borderRadius: '5px',
-                          fontWeight: 500,
-                          fontSize: '14px',
-                          width: '97px',
-                        }}
-                      >
-                        {item.active === true ? 'Active' : 'Inactive'}
-                      </span>
-                    </td>
-                    {/* <td>
+              <td className="w-1/6">
+                Name of <br />
+                voucher
+              </td>
+              <td className="w-[10%]">Promo code</td>
+              <td className="w-[15%]">Type of discount</td>
+              <td className="w-1/12">Quantity</td>
+              <td className="w-1/12">Apply to</td>
+              <td className="w-[13%]">Start date</td>
+              <td className="w-[13%]">End date</td>
+              <td className="w-1/12">Status</td>
+              {/* <td>Pendre le code</td> */}
+              {/* <td></td> */}
+              <td className="w-1/12"></td>
+            </tr>
+          </thead>
+          <tbody>
+            {voucherData &&
+              voucherData?.map((item: Partial<voucherType>, index: number) => (
+                <tr
+                  key={index}
+                  style={{
+                    textAlign: 'center',
+                    height: '60px',
+                    backgroundColor: index % 2 === 0 ? '#fff' : '#FFF1F6',
+                  }}
+                  className={'hover_table'}
+                >
+                  <td className="whitespace-nowrap  text-ellipsis  truncate max-w-10">
+                    {item.name}
+                  </td>
+                  <td>{item.code}</td>
+                  <td>
+                    {String(item.discount_type) === '2'
+                      ? ` Valuer - ${item.discount}$`
+                      : `% Discount - ${item.discount}%`}
+                  </td>
+                  <td>
+                    {Number(item.total_quantity) - Number(item.used_quantity)}/
+                    {item.total_quantity}
+                  </td>
+                  <td>{item.apply_to == '1' ? 'Product' : 'Delivery'}</td>
+                  <td>{dayjs(item.start_date).format('DD-MM-YYYY')}</td>
+                  <td>{dayjs(item.end_date).format('DD-MM-YYYY')}</td>
+                  <td>
+                    <span
+                      style={{
+                        background:
+                          item.active === false ? '#FFC978' : '#87FF74',
+                        textAlign: 'center',
+                        textTransform: 'capitalize',
+                        padding: item.active === true ? '6px 26px' : '6px 20px',
+                        border: '1px solid #333',
+                        borderRadius: '5px',
+                        fontWeight: 500,
+                        fontSize: '14px',
+                        width: '97px',
+                      }}
+                    >
+                      {item.active === true ? 'Active' : 'Inactive'}
+                    </span>
+                  </td>
+                  {/* <td>
                       {item.last_code ? (
                         <div
                           style={{
@@ -387,40 +459,80 @@ const Voucher = () => {
                         </UnstyledButton>
                       )}
                     </td> */}
-                    {/* <td>
+                  {/* <td>
                       
                     </td> */}
-                    <td>
-                      <UnstyledButton
-                        style={{ marginRight: '16px' }}
-                        onClick={function () {
-                          setState((p) => ({
-                            ...p,
-                            voucherID: item.id as number,
-                            editModal: true,
-                          }));
-                        }}
+                  <td>
+                    <UnstyledButton
+                      style={{ marginRight: '16px' }}
+                      onClick={function () {
+                        setState((p) => ({
+                          ...p,
+                          voucherID: item.id as number,
+                          editModal: true,
+                        }));
+                      }}
+                    >
+                      <svg
+                        width="22"
+                        height="20"
+                        viewBox="0 0 22 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <img src="/pen.svg" alt="icon" />
-                      </UnstyledButton>
-                      <UnstyledButton
-                        onClick={() =>
-                          setState((p) => ({
-                            ...p,
-                            deleteModal: true,
-                            deleteId: item.id as number,
-                          }))
-                        }
+                        <path
+                          d="M0.5 18.5H21.5V20H0.5V18.5ZM18.05 5.75C18.65 5.15 18.65 4.25 18.05 3.65L15.35 0.95C14.75 0.35 13.85 0.35 13.25 0.95L2 12.2V17H6.8L18.05 5.75ZM14.3 2L17 4.7L14.75 6.95L12.05 4.25L14.3 2ZM3.5 15.5V12.8L11 5.3L13.7 8L6.2 15.5H3.5Z"
+                          fill="#B82C67"
+                        />
+                      </svg>
+                    </UnstyledButton>
+                    <UnstyledButton
+                      onClick={() =>
+                        setState((p) => ({
+                          ...p,
+                          deleteModal: true,
+                          deleteId: item.id as number,
+                        }))
+                      }
+                    >
+                      <svg
+                        width="24"
+                        height="23"
+                        viewBox="0 0 24 23"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <img src="/delete_btn.svg" alt="icon" />
-                      </UnstyledButton>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table>
-        </Paper>
-      </ScrollArea>
+                        <g clip-path="url(#clip0_929_1477)">
+                          <path
+                            d="M20 4.79199C20.2652 4.79199 20.5196 4.89296 20.7071 5.07268C20.8946 5.2524 21 5.49616 21 5.75033C21 6.00449 20.8946 6.24825 20.7071 6.42797C20.5196 6.60769 20.2652 6.70866 20 6.70866H19L18.997 6.7767L18.064 19.3031C18.0281 19.7866 17.8023 20.2392 17.4321 20.5696C17.0619 20.9 16.5749 21.0837 16.069 21.0837H7.93C7.42414 21.0837 6.93707 20.9 6.56688 20.5696C6.1967 20.2392 5.97092 19.7866 5.935 19.3031L5.002 6.77766C5.00048 6.75469 4.99982 6.73167 5 6.70866H4C3.73478 6.70866 3.48043 6.60769 3.29289 6.42797C3.10536 6.24825 3 6.00449 3 5.75033C3 5.49616 3.10536 5.2524 3.29289 5.07268C3.48043 4.89296 3.73478 4.79199 4 4.79199H20ZM16.997 6.70866H7.003L7.931 19.167H16.069L16.997 6.70866ZM14 1.91699C14.2652 1.91699 14.5196 2.01796 14.7071 2.19768C14.8946 2.3774 15 2.62116 15 2.87533C15 3.12949 14.8946 3.37325 14.7071 3.55297C14.5196 3.73269 14.2652 3.83366 14 3.83366H10C9.73478 3.83366 9.48043 3.73269 9.29289 3.55297C9.10536 3.37325 9 3.12949 9 2.87533C9 2.62116 9.10536 2.3774 9.29289 2.19768C9.48043 2.01796 9.73478 1.91699 10 1.91699H14Z"
+                            fill="#B82C67"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_929_1477">
+                            <rect width="24" height="23" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </UnstyledButton>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+        {voucherData && voucherData?.length > 0 && (
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="Next"
+            className="flex items-center custom-pagination justify-center gap-2 text-sm py-5"
+            onPageChange={onchangePage}
+            forcePage={page - 1 > 0 ? page - 1 : 0}
+            pageRangeDisplayed={3}
+            pageCount={count || 1}
+            previousLabel="Previous"
+          />
+        )}
+      </Paper>
       <Modal.Root
         opened={opened}
         onClose={close}
