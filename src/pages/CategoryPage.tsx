@@ -87,6 +87,17 @@ const CategoryPage = () => {
       const res = await GET(url + '?' + queryString);
       if (res.status === 200) {
         setCategoryData(res.data?.results);
+        if (value !== 'sub-subcategory' && value !== 'subcategory') {
+          const newData = res.data?.results?.map((item: any) => ({
+            label: item?.name,
+            value: item?.id,
+            category_id: item?.category?.id,
+          }));
+
+          if (newData?.length > 0) {
+            setListCategory(newData);
+          }
+        }
       }
 
       setIsLoading(false);
@@ -95,25 +106,21 @@ const CategoryPage = () => {
     }
   };
 
-  const getListOptions = async () => {
+  const getListOptions = async (category?: string[]) => {
     try {
-      const url =
-        optionSelected === 'subcategory' || optionSelected === 'category'
-          ? apiRoute.list_category
-          : apiRoute.list_subcategory;
-
-      const res = await GET(url + '?page_size=1000');
+      const res = await GET(
+        apiRoute.list_subcategory +
+          '?page_size=1000' +
+          `&category_ids=${category && category?.length > 0 ? category : ''}`,
+      );
       const newData = res.data?.results?.map((item: any) => ({
         label: item?.name,
         value: item?.id,
+        category_id: item?.category?.id,
       }));
 
       if (newData?.length > 0) {
-        if (optionSelected === 'subcategory' || optionSelected === 'category') {
-          setListCategory(newData);
-        } else {
-          setListSubCategory(newData);
-        }
+        setListSubCategory(newData);
       }
     } catch (error) {
       console.log('error :>> ', error);
@@ -124,6 +131,7 @@ const CategoryPage = () => {
     if (type === 'category') {
       if (value !== categorySelected) {
         setCategorySelected(value);
+        value.length > 0 ? getListOptions(value) : setListSubCategory([]);
         getListData(optionSelected, {
           category: value,
           subcategory:
@@ -196,10 +204,6 @@ const CategoryPage = () => {
   useEffect(() => {
     getListData();
   }, []);
-
-  useEffect(() => {
-    getListOptions();
-  }, [optionSelected]);
 
   return (
     <div

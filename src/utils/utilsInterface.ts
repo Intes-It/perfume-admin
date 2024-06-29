@@ -174,4 +174,5 @@ export type ordersListType = {
 export type itemSelectType = {
   value: string;
   label: string;
+  category_id?: string;
 };
