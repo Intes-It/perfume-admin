@@ -141,6 +141,14 @@ export default function ListOrder() {
   useEffect(() => {
     getListOrder();
   }, [status, page, searchText, checkChangeStatus]);
+  useEffect(() => {
+    setState((pre) => ({
+      ...pre,
+      search: searchValue,
+      searchText: searchValue,
+      page: pageNumber,
+    }));
+  }, [pageNumber, searchValue]);
 
   return (
     <div className="w-[85%] mx-auto">
