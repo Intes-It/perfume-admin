@@ -338,20 +338,20 @@ const Voucher = () => {
                 fontSize: '16px',
               }}
             >
-              <td className="w-1/6">
+              <td className="w-[14%]">
                 Name of <br />
                 voucher
               </td>
-              <td className="w-[10%]">Promo code</td>
-              <td className="w-[15%]">Type of discount</td>
+              <td className="w-[11%]">Promo code</td>
+              <td className="w-[16%]">Type of discount</td>
               <td className="w-1/12">Quantity</td>
-              <td className="w-1/12">Apply to</td>
-              <td className="w-[13%]">Start date</td>
-              <td className="w-[13%]">End date</td>
+              <td className="w-[8%]">Apply to</td>
+              <td className="w-[12%]">Start date</td>
+              <td className="w-[12%]">End date</td>
               <td className="w-1/12">Status</td>
               {/* <td>Pendre le code</td> */}
               {/* <td></td> */}
-              <td className="w-1/12"></td>
+              <td className="w-[10%]"></td>
             </tr>
           </thead>
           <tbody>

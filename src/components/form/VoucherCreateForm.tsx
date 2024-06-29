@@ -32,8 +32,8 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
     initialValues: {
       name: '',
       discount_type: '1',
-      total_quantity: 0,
-      discount: 0,
+      total_quantity: -1,
+      discount: -1,
       apply_to: '1',
       start_date: '',
       end_date: '',
@@ -44,18 +44,23 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
     validate: {
       // total: (v) => (v.toString().length >= 4 ? 'error' : null),
       discount: (v) =>
-        isPercent
+        v === -1
+          ? 'error'
+          : isPercent
           ? v > 100
             ? 'error'
             : null
           : v.toString().length > 4
           ? 'error'
           : null,
-      name: (v) => (v.length > 100 ? 'error' : null),
-      total_quantity: (v) => (v.toString().length > 6 ? 'error' : null),
+      name: (v) => (v.length === 0 ? 'error' : null),
+      start_date: (v) => (!v ? 'error' : null),
+      end_date: (v) => (!v ? 'error' : null),
+      description: (v) => (v.length === 0 ? 'error' : null),
+      total_quantity: (v) =>
+        v.toString().length > 6 || v === -1 ? 'error' : null,
     },
   });
-
   async function createVoucher(v: voucherType) {
     try {
       const res = await POST('/api/admin/voucher/create/', v);
@@ -98,9 +103,14 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
               w={' 23.6875rem'}
               h={'2.25rem'}
               {...form.getInputProps('name')}
-              required
               maxLength={100}
+              error={null}
             />
+            {Object.hasOwn(form.errors, 'name') && (
+              <div className="font-medium text-[#D72525] text-[10px] ">
+                Name of voucher is required
+              </div>
+            )}
           </div>
           <div>
             <Title
@@ -122,9 +132,13 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                 padding: '5px 10px',
               }}
               maxLength={500}
-              required
               {...form.getInputProps('description')}
             />
+            {Object.hasOwn(form.errors, 'description') && (
+              <div className="font-medium text-[#D72525] text-[10px] ">
+                Description of voucher is required
+              </div>
+            )}
           </div>
           <Title c={'#E7639A'} order={5} mb={'-16px'}>
             Voucher details
@@ -180,7 +194,7 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                 w={'6.375rem'}
                 h={'2.25rem'}
                 type={'number'}
-                min={0}
+                min={-1}
                 sx={{
                   resize: 'none',
                   border: '1px solid #b82c67',
@@ -191,20 +205,25 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                 variant={'unstyled'}
                 onKeyDown={(e) =>
                   e.key === '.' ||
+                  e.key === ',' ||
                   e.key === 'e' ||
                   e.key === '-' ||
                   e.key === '+'
                     ? e.preventDefault()
                     : null
                 }
-                required
-                onChange={(e) =>
-                  form.setFieldValue('total_quantity', +e.target.value)
-                }
+                onChange={(e) => {
+                  form.setFieldValue(
+                    'total_quantity',
+                    !e.target.value ? -1 : +e.target.value,
+                  );
+                }}
               />
               {Object.hasOwn(form.errors, 'total_quantity') && (
                 <div className="font-medium text-[#D72525] text-[10px] ">
-                  Maximum quantity is 999999
+                  {form.values.total_quantity === -1
+                    ? 'Quantity is required'
+                    : 'Maximum quantity is 999999'}
                 </div>
               )}
             </div>
@@ -222,7 +241,7 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                         fontWeight: '500px',
                       }}
                     >
-                      Start date
+                      Start date <span style={{ color: 'red' }}>*</span>
                     </span>
                     <DateInput
                       rightSection={<img src={'calendar.svg'} alt={'icon'} />}
@@ -243,8 +262,12 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                         );
                         setState((p) => ({ ...p, start_date: String(e) }));
                       }}
-                      required
                     />
+                    {Object.hasOwn(form.errors, 'start_date') && (
+                      <div className="font-medium text-[#D72525] text-[10px] ">
+                        Start date is required
+                      </div>
+                    )}
                   </div>
                   <div style={{ marginLeft: '1rem' }}>
                     <span
@@ -255,7 +278,7 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                         fontWeight: '500px',
                       }}
                     >
-                      End date
+                      End date <span style={{ color: 'red' }}>*</span>
                     </span>
                     <DateInput
                       rightSection={<img src={'calendar.svg'} alt={'icon'} />}
@@ -280,8 +303,12 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                       }}
                       disabled={start_date === ''}
                       minDate={new Date(start_date)}
-                      required
                     />
+                    {Object.hasOwn(form.errors, 'end_date') && (
+                      <div className="font-medium text-[#D72525] text-[10px] ">
+                        End date is required
+                      </div>
+                    )}
                   </div>
                 </Group>
               </div>
@@ -342,7 +369,6 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                 }
               }}
               value={form.values.discount_type}
-              required={true}
               rightSection={<img src="/down_arrow.svg" alt="icon" />}
               withAsterisk
               className="input_select_status_create"
@@ -358,12 +384,20 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
             <TextInput
               w={56}
               type={'number'}
-              min={0}
+              min={-1}
               maxLength={4}
-              onChange={(e) => form.setFieldValue('discount', +e.target.value)}
-              required
+              onChange={(e) =>
+                form.setFieldValue(
+                  'discount',
+                  !e.target.value ? -1 : +e.target.value,
+                )
+              }
               onKeyDown={(e) =>
-                e.key === '.' || e.key === 'e' || e.key === '_' || e.key === '+'
+                e.key === '.' ||
+                e.key === 'e' ||
+                e.key === '-' ||
+                e.key === ',' ||
+                e.key === '+'
                   ? e.preventDefault()
                   : null
               }
@@ -379,7 +413,11 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
           </Group>
           {Object.hasOwn(form.errors, 'discount') && (
             <div className="font-medium text-[#D72525] text-[10px] mt-[-20px]">
-              {isPercent ? 'Maximum amount is 100%' : 'Maximum value is $ 9999'}
+              {form.values.discount === -1
+                ? 'Must enter a discount value'
+                : isPercent
+                ? 'Maximum amount is 100%'
+                : 'Maximum value is $ 9999'}
             </div>
           )}
         </Stack>
