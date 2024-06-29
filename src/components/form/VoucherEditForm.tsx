@@ -30,16 +30,14 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
     start_date: '',
     end_date: '',
     isPercent: true,
-    usedQuantity: 0,
   });
-  const { voucherData, start_date, end_date, isPercent, usedQuantity } = state;
+  const { voucherData, start_date, end_date, isPercent } = state;
   async function getVoucherData() {
     const res = await GET(`/api/admin/voucher/${id}`);
 
     setState((p) => ({
       ...p,
       voucherData: res?.data,
-      usedQuantity: res?.data?.used_quantity,
       start_date: res?.data.start_date,
       end_date: res?.data.end_date,
     }));
