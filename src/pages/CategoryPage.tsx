@@ -130,8 +130,10 @@ const CategoryPage = () => {
   const handleChange = (type: 'category' | 'sub', value: string[]) => {
     if (type === 'category') {
       if (value !== categorySelected) {
+        if (optionSelected === 'sub-subcategory') {
+          value.length > 0 ? getListOptions(value) : setListSubCategory([]);
+        }
         setCategorySelected(value);
-        value.length > 0 ? getListOptions(value) : setListSubCategory([]);
         getListData(optionSelected, {
           category: value,
           subcategory:
