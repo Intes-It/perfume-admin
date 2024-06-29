@@ -66,10 +66,10 @@ const CategoryPage = () => {
       const queryParams = {
         page_size: 1000,
         ...((categorySelected || option?.category) && {
-          category_id: option?.category ? option?.category : categorySelected,
+          category_ids: option?.category ? option?.category : categorySelected,
         }),
         ...((subCategorySelected || option?.subcategory) && {
-          subcategory_id: option?.subcategory
+          subcategory_ids: option?.subcategory
             ? option?.subcategory
             : subCategorySelected,
         }),
@@ -180,6 +180,8 @@ const CategoryPage = () => {
 
   const onSuccess = () => {
     setSearchValue('');
+    setCategorySelected([]);
+    setSubCategorySelected([]);
     getListData(
       optionSelected,
       {

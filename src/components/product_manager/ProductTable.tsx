@@ -68,7 +68,7 @@ const ProductTable = ({
                       <img
                         src={stripBaseUrl(item?.thumbnail?.url || '')}
                         alt="image"
-                        className="mx-auto h-[40px]"
+                        className="object-cover w-10 h-10 mx-auto"
                         loading="lazy"
                       />
                     </td>
