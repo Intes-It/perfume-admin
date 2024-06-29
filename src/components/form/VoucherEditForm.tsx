@@ -392,7 +392,7 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
           bg={'#B82C67'}
           radius={'md'}
         >
-          <span style={{ fontSize: '16px' }}>Confirmer</span>
+          <span style={{ fontSize: '16px' }}>Confirm</span>
         </Button>
         <div style={{ height: '60px' }}></div>
       </form>

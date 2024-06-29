@@ -372,7 +372,7 @@ const Voucher = () => {
                   <td>{item.code}</td>
                   <td>
                     {String(item.discount_type) === '2'
-                      ? ` Valuer - ${item.discount}$`
+                      ? ` Value - ${item.discount}$`
                       : `% Discount - ${item.discount}%`}
                   </td>
                   <td>

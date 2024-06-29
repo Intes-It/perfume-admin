@@ -267,9 +267,21 @@ tbody td {
 .date-input-class {
   .mantine-Input-input {
     padding-right: 0 !important;
-    margin-left: 6px;
+    padding-left: 6px;
     font-size: 12px;
     padding-bottom: 6px;
+  }
+
+  .mantine-Input-rightSection {
+    pointer-events: none;
+  }
+}
+
+.date-input-class-create {
+  .mantine-Input-input {
+    padding-right: 0 !important;
+    padding-left: 6px;
+    font-size: 12px;
   }
 
   .mantine-Input-rightSection {
@@ -282,6 +294,18 @@ tbody td {
     margin-left: 6px;
     font-size: 12px;
     padding-bottom: 6px;
+    padding-right: 0px;
+  }
+
+  .mantine-Select-rightSection {
+    pointer-events: none;
+  }
+}
+
+.input_select_status_create {
+  .mantine-Input-input {
+    margin-left: 6px;
+    font-size: 12px;
     padding-right: 0px;
   }
 
