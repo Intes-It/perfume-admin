@@ -105,6 +105,11 @@ export default function ListOrder() {
         searchText: e.target.value,
         page: 1,
       }));
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set('search', '');
+      newSearchParams.set('page', '1');
+
+      setSearchParams(newSearchParams);
     } else {
       setState((pre) => ({
         ...pre,
@@ -144,11 +149,12 @@ export default function ListOrder() {
   useEffect(() => {
     setState((pre) => ({
       ...pre,
+      page: pageNumber,
+      status: StatusValue,
       search: searchValue,
       searchText: searchValue,
-      page: pageNumber,
     }));
-  }, [pageNumber, searchValue]);
+  }, [pageNumber, StatusValue, searchValue]);
 
   return (
     <div className="w-[85%] mx-auto">
@@ -317,6 +323,7 @@ export default function ListOrder() {
             </thead>
             <tbody>
               {data &&
+                data?.results?.length > 0 &&
                 data?.results?.map((item: ordersListType, index: number) => (
                   <tr
                     key={index}
@@ -391,6 +398,27 @@ export default function ListOrder() {
             </tbody>
           </Table>
         )}
+        {!data ||
+          (data?.results?.length === 0 && (
+            <div className="flex justify-center flex-row gap-5 py-9">
+              <svg
+                width="20"
+                height="16"
+                viewBox="0 0 20 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+              >
+                <path
+                  d="M19 0.875H1C0.900544 0.875 0.805161 0.914509 0.734835 0.984835C0.664509 1.05516 0.625 1.15054 0.625 1.25V14C0.625 14.2984 0.743526 14.5845 0.954505 14.7955C1.16548 15.0065 1.45163 15.125 1.75 15.125H18.25C18.5484 15.125 18.8345 15.0065 19.0455 14.7955C19.2565 14.5845 19.375 14.2984 19.375 14V1.25C19.375 1.15054 19.3355 1.05516 19.2652 0.984835C19.1948 0.914509 19.0995 0.875 19 0.875ZM1.375 6.125H5.875V9.875H1.375V6.125ZM6.625 6.125H18.625V9.875H6.625V6.125ZM18.625 1.625V5.375H1.375V1.625H18.625ZM1.375 14V10.625H5.875V14.375H1.75C1.65054 14.375 1.55516 14.3355 1.48484 14.2652C1.41451 14.1948 1.375 14.0995 1.375 14ZM18.25 14.375H6.625V10.625H18.625V14C18.625 14.0995 18.5855 14.1948 18.5152 14.2652C18.4448 14.3355 18.3495 14.375 18.25 14.375Z"
+                  fill="#DBDBDB"
+                />
+              </svg>
+              <span className="text-[16px] text-[#DBDBDB] font-medium">
+                No data available
+              </span>
+            </div>
+          ))}
 
         {data && data?.results?.length > 0 && (
           <ReactPaginate
