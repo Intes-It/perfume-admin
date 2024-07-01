@@ -617,7 +617,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       onKeyUp={(e: any) => {
                         if (e.target?.value > 999999) {
                           e.target.value = 999999;
-                          form.setFieldValue('price', 99999);
+                          form.setFieldValue('price', 999999);
                         }
                       }}
                       decimalSeparator="."
@@ -642,7 +642,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       onKeyUp={(e: any) => {
                         if (e.target?.value > 999999) {
                           e.target.value = 999999;
-                          form.setFieldValue('current_price', 99999);
+                          form.setFieldValue('current_price', 999999);
                         }
                       }}
                       variant={'unstyled'}
@@ -679,7 +679,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       onKeyUp={(e: any) => {
                         if (e.target?.value > 999999) {
                           e.target.value = 999999;
-                          form.setFieldValue('mass', 99999);
+                          form.setFieldValue('mass', 999999);
                         }
                       }}
                       mt={8}

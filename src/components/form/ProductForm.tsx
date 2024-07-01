@@ -571,7 +571,7 @@ const ProductForm = ({
                       onKeyUp={(e: any) => {
                         if (e.target?.value > 999999) {
                           e.target.value = 999999;
-                          form.setFieldValue('price', 99999);
+                          form.setFieldValue('price', 999999);
                         }
                       }}
                       pl={10}
@@ -603,7 +603,7 @@ const ProductForm = ({
                       onKeyUp={(e: any) => {
                         if (e.target?.value > 999999) {
                           e.target.value = 999999;
-                          form.setFieldValue('current_price', 99999);
+                          form.setFieldValue('current_price', 999999);
                         }
                       }}
                       type="number"
@@ -644,7 +644,7 @@ const ProductForm = ({
                       onKeyUp={(e: any) => {
                         if (e.target?.value > 999999) {
                           e.target.value = 999999;
-                          form.setFieldValue('mass', 99999);
+                          form.setFieldValue('mass', 999999);
                         }
                       }}
                       precision={2}
