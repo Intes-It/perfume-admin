@@ -24,6 +24,7 @@ import { DELETE, GET } from '../../utils/fetch.ts';
 import VoucherEditForm from '../form/VoucherEditForm.tsx';
 import dayjs from 'dayjs';
 import ReactPaginate from 'react-paginate';
+import { notifications } from '@mantine/notifications';
 
 const statusData = [
   { value: 'all', label: 'All' },
@@ -568,6 +569,10 @@ const Voucher = () => {
               onSuccess={() => {
                 getVoucher();
                 close();
+                notifications.show({
+                  message: `Added successfully!`,
+                  color: 'green',
+                });
               }}
             />
           </Modal.Body>
@@ -597,6 +602,10 @@ const Voucher = () => {
               onSuccess={() => {
                 getVoucher();
                 setState((p) => ({ ...p, editModal: false }));
+                notifications.show({
+                  message: `Updated successfully!`,
+                  color: 'green',
+                });
               }}
               id={voucherID}
             />
