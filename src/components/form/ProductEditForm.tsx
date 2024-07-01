@@ -288,6 +288,16 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
           message: 'Updated successfully!',
           color: 'green',
         });
+
+        setState((prev) => ({ ...prev, isLoading: false }));
+        return;
+      }
+
+      if (res?.data?.detail) {
+        notifications.show({
+          message: Object.values(res?.data?.detail)[0] as string,
+          color: 'red',
+        });
       } else {
         notifications.show({
           message: 'Update unsuccessfully!',

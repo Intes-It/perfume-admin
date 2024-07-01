@@ -1,19 +1,20 @@
 import { RichTextEditor } from '@mantine/tiptap';
+import CharacterCount from '@tiptap/extension-character-count';
 import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-
 interface textEditorProps {
   content?: string;
   onChangeValue?: (value: string) => void;
 }
-
 export default function TextEditor({
   onChangeValue,
   content,
 }: textEditorProps) {
+  const limit = 500;
+
   const editor = useEditor(
     {
       extensions: [
@@ -21,6 +22,9 @@ export default function TextEditor({
         Underline,
         Link,
         TextAlign.configure({ types: ['heading', 'paragraph'] }),
+        CharacterCount.configure({
+          limit,
+        }),
       ],
       onUpdate: ({ editor }) => {
         const content = editor.getHTML();

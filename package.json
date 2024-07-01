@@ -21,6 +21,7 @@
     "@mantine/tiptap": "^6.0.13",
     "@next/font": "^14.2.4",
     "@tabler/icons-react": "^2.22.0",
+    "@tiptap/extension-character-count": "^2.4.0",
     "@tiptap/extension-link": "^2.0.3",
     "@tiptap/extension-text-align": "^2.0.3",
     "@tiptap/extension-underline": "^2.0.3",

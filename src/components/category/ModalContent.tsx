@@ -83,7 +83,7 @@ const ModalContent = ({
   const getListOptions = async (value?: string) => {
     try {
       const res = await GET(
-        apiRoute.list_subcategory + `?category_id=${value}&page_size=1000`,
+        apiRoute.list_subcategory + `?category_ids=${value}&page_size=1000`,
       );
       const newData = res.data?.results?.map((item: any) => ({
         label: item?.name,
@@ -303,6 +303,7 @@ const ModalContent = ({
       onClose={() => {
         handleCloseModal();
         form.reset();
+        setListSubCategory([]);
       }}
       size={'auto'}
     >
@@ -403,7 +404,7 @@ const ModalContent = ({
                         data={listSubCategory as any}
                         variant="unstyled"
                         rightSection={<img alt="icon" src="/down_arrow.svg" />}
-                        maxDropdownHeight={150}
+                        maxDropdownHeight={120}
                         bg={'#FFE7EF'}
                         sx={{
                           borderRadius: 4,

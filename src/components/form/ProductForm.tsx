@@ -247,6 +247,15 @@ const ProductForm = ({
           message: 'Added successfully!',
           color: 'green',
         });
+        setState((prev) => ({ ...prev, isLoading: false }));
+        return;
+      }
+
+      if (res?.data?.detail) {
+        notifications.show({
+          message: Object.values(res?.data?.detail)[0] as string,
+          color: 'red',
+        });
       } else {
         notifications.show({
           message: 'Add unsuccessfully!',
