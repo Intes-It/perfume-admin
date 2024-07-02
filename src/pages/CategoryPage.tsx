@@ -208,7 +208,7 @@ const CategoryPage = () => {
   }, []);
 
   return (
-    <div className="max-w-[1360px] mx-auto px-10 pb-6">
+    <div className="w-[85%] mx-auto">
       <Tabs
         value={optionSelected}
         onTabChange={(tab: string) => {
