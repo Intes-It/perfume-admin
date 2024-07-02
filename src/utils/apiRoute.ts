@@ -17,4 +17,8 @@ export const apiRoute = {
   list_category: '/api/admin/category/',
   list_subcategory: '/api/admin/subcategory/',
   list_sub_subcategory: '/api/admin/sub_subcategory/',
+  list_delivery_cost: '/api/admin/delivery_cost/',
+  create_delivery_cost: '/api/admin/delivery_cost/create/',
+  detail_delivery_cost: '/api/admin/delivery_cost/',
+  delete_delivery_cost: '/api/admin/delivery_cost/delete',
 };
