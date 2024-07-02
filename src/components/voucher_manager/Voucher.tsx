@@ -646,16 +646,24 @@ const Voucher = () => {
         centered
         radius={'md'}
       >
-        <Paper pt={'1rem'}>
+        <Paper px={4}>
           <Text align={'left'} sx={{ fontSize: '16px', fontWeight: 600 }}>
             Do you really want to delete this voucher?
           </Text>
-          <Group sx={{ float: 'right' }} my={32}>
+          <Group sx={{ float: 'right' }} mt={40} mb={16}>
             <Button
               variant={'subtle'}
               onClick={() => setState((p) => ({ ...p, deleteModal: false }))}
             >
-              <span style={{ color: '#333' }}>No</span>
+              <span
+                style={{
+                  color: '#374151',
+                  fontWeight: '500px',
+                  fontSize: '14px',
+                }}
+              >
+                Cancel
+              </span>
             </Button>
             <Button
               onClick={async function () {
@@ -665,9 +673,14 @@ const Voucher = () => {
                   deleteModal: false,
                 })),
                   getVoucher();
+                notifications.show({
+                  message: `Delete successfully!`,
+                  color: 'green',
+                });
               }}
+              className="bg-[#E13434] text-white font-medium text-sm"
             >
-              Yes
+              Delete
             </Button>
           </Group>
         </Paper>
