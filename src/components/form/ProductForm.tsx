@@ -300,6 +300,8 @@ const ProductForm = ({
     setState((prev) => ({ ...prev, tabSelected: tab }));
   };
 
+  console.log('form :>> ', form.values?.price);
+
   return (
     <div>
       <form
@@ -587,6 +589,7 @@ const ProductForm = ({
                       mt={8}
                       maxLength={9}
                       max={999999999}
+                      step={0.01}
                       variant={'unstyled'}
                       precision={2}
                       decimalSeparator="."
@@ -605,6 +608,7 @@ const ProductForm = ({
                       }}
                       w={472}
                       h={36}
+                      step={0.01}
                       pl={10}
                       mt={8}
                       maxLength={9}

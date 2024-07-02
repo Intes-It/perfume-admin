@@ -620,6 +620,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       h={36}
                       pl={10}
                       mt={8}
+                      step={0.01}
                       max={999999}
                       variant={'unstyled'}
                       precision={2}
@@ -648,6 +649,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       h={36}
                       pl={10}
                       mt={8}
+                      step={0.01}
                       maxLength={9}
                       onKeyUp={(e: any) => {
                         if (e.target?.value > 999999) {
