@@ -350,7 +350,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
     <div>
       <form
         onSubmit={form.onSubmit((v) => handleUpdateProduct(v))}
-        style={{ padding: '32px 64px', fontSize: 12 }}
+        style={{ padding: '32px 48px', fontSize: 12 }}
       >
         <Stack spacing={'lg'}>
           <div

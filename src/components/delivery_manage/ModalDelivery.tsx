@@ -178,11 +178,12 @@ const ModalDelivery = ({
         sx={{
           top: '50%',
         }}
+        radius={typeModal === 'DELETE' ? 6 : 10}
       >
         {typeModal !== 'DELETE' && (
           <Modal.Header>
             <Modal.Title>
-              <div className="text-[#B82C67] mt-8 ml-16 text-2xl font-semibold">
+              <div className="text-[#B82C67] mt-8 ml-12 text-2xl font-semibold">
                 {typeModal === 'ADD'
                   ? `Add new delivery cost`
                   : `Update delivery cost`}
@@ -199,11 +200,13 @@ const ModalDelivery = ({
           ) : (
             <form
               onSubmit={form.onSubmit((v) => onSubmit(v))}
-              className="w-[1100px] pt-6 px-16 pb-8"
+              className="w-[930px] pt-6 px-12 pb-8"
             >
               <div className="grid grid-cols-4 gap-10">
                 <div className="flex flex-col gap-2">
-                  <span style={{ color: '#707070', fontSize: 12 }}>
+                  <span
+                    style={{ color: '#707070', fontSize: 12, fontWeight: 500 }}
+                  >
                     Minimum weight (g)
                     <span className="text-[#FF0000]">*</span>
                   </span>
@@ -227,6 +230,9 @@ const ModalDelivery = ({
                     h={38}
                     max={999999999}
                     type="number"
+                    onKeyDown={(e) => {
+                      if (e.key === '+' || e.key === '-') e.preventDefault();
+                    }}
                     step={0.01}
                     variant={'unstyled'}
                     precision={2}
@@ -236,7 +242,9 @@ const ModalDelivery = ({
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span style={{ color: '#707070', fontSize: 12 }}>
+                  <span
+                    style={{ color: '#707070', fontSize: 12, fontWeight: 500 }}
+                  >
                     Maximum weight (g)
                     <span className="text-[#FF0000]">*</span>
                   </span>
@@ -261,6 +269,9 @@ const ModalDelivery = ({
                     h={38}
                     max={999999999}
                     step={0.01}
+                    onKeyDown={(e) => {
+                      if (e.key === '+' || e.key === '-') e.preventDefault();
+                    }}
                     variant={'unstyled'}
                     precision={2}
                     decimalSeparator="."
@@ -269,7 +280,9 @@ const ModalDelivery = ({
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span style={{ color: '#707070', fontSize: 12 }}>
+                  <span
+                    style={{ color: '#707070', fontSize: 12, fontWeight: 500 }}
+                  >
                     Delivery cost ($)
                     <span className="text-[#FF0000]">*</span>
                   </span>
@@ -293,6 +306,9 @@ const ModalDelivery = ({
                     h={38}
                     max={999999999}
                     step={0.01}
+                    onKeyDown={(e) => {
+                      if (e.key === '+' || e.key === '-') e.preventDefault();
+                    }}
                     variant={'unstyled'}
                     type="number"
                     precision={2}
@@ -302,9 +318,10 @@ const ModalDelivery = ({
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span style={{ color: '#707070', fontSize: 12 }}>
+                  <span
+                    style={{ color: '#707070', fontSize: 12, fontWeight: 500 }}
+                  >
                     Creation date
-                    <span className="text-[#FF0000]">*</span>
                   </span>
 
                   <TextInput
@@ -327,7 +344,7 @@ const ModalDelivery = ({
                 type="submit"
                 className="block mx-auto text-base font-medium mt-14"
                 bg={'#B82C67'}
-                radius={'md'}
+                radius={'6px'}
                 w={120}
                 h={42}
                 disabled={isLoading}

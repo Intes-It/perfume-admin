@@ -312,11 +312,12 @@ const ModalContent = ({
         sx={{
           top: '50%',
         }}
+        radius={typeModal === 'DELETE' ? 6 : 10}
       >
         {typeModal !== 'DELETE' && (
           <Modal.Header>
             <Modal.Title>
-              <div className="text-[#B82C67] mt-8 ml-16 text-2xl font-semibold">
+              <div className="text-[#B82C67] mt-8 ml-12 text-2xl font-semibold">
                 {typeModal === 'ADD'
                   ? `Add new ${nameType}`
                   : `Update ${nameType}`}
@@ -333,7 +334,7 @@ const ModalContent = ({
           ) : (
             <form
               onSubmit={form.onSubmit((v) => onSubmit(v))}
-              className="min-w-[1100px] pt-6 px-16 pb-8"
+              className="min-w-[1100px] pt-6 px-12 pb-8"
             >
               <div className="flex flex-col gap-5">
                 <div className="grid grid-cols-3 gap-4">
@@ -483,7 +484,7 @@ const ModalContent = ({
                 type="submit"
                 className="block mx-auto text-base font-medium mt-14"
                 bg={'#B82C67'}
-                radius={'md'}
+                radius={'6px'}
                 w={120}
                 h={42}
                 disabled={isLoading}

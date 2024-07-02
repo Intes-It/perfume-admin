@@ -88,12 +88,12 @@ const Delivery = () => {
           </div>
         ) : (
           <div className="mt-10 border border-[#B82C67] rounded-lg overflow-hidden ">
-            <div className=" max-h-[500px] overflow-auto thin-scroll">
+            <div className="overflow-auto  thin-scroll">
               <table className="w-full">
                 <thead className="sticky top-0">
                   <tr
                     style={{
-                      textAlign: 'center',
+                      textAlign: 'left',
                       color: '#B82C67',
                       backgroundColor: '#FFE2EC',
                       height: '60px',

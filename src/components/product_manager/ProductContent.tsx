@@ -351,7 +351,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
           <Modal.Content>
             <Modal.Header>
               <Modal.Title>
-                <div className="text-[#B82C67] mt-8 ml-16 text-2xl font-semibold">
+                <div className="text-[#B82C67] mt-8 ml-12 text-2xl font-semibold">
                   Edit product
                 </div>
               </Modal.Title>
