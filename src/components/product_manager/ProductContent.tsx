@@ -175,8 +175,8 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
   }, []);
 
   return (
-    <div>
-      <div style={{ padding: '0 30px' }}>
+    <div className="max-w-[1440px] mx-auto">
+      <div style={{ padding: '0 ' }}>
         <Tabs
           value={categorySelected}
           onTabChange={(tab: string) => {
@@ -222,7 +222,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
           </Tabs.List>
         </Tabs>
       </div>
-      <div style={{ marginTop: '2rem', padding: '0 80px' }}>
+      <div style={{ marginTop: '2rem' }}>
         <div
           style={{
             display: 'flex',
