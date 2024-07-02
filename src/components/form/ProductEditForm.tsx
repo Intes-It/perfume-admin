@@ -934,7 +934,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                             const addColor = {
                               ...colorAttribute[currentIndex],
                               color: color,
-                              name: GetColorName(color),
+                              name: item?.name || GetColorName(color),
                             };
                             const newColor = [
                               ...colorAttribute.slice(0, currentIndex),
