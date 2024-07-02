@@ -696,6 +696,7 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       }}
                       mt={8}
                       variant={'unstyled'}
+                      step={0.01}
                       precision={2}
                       type="number"
                       decimalSeparator="."

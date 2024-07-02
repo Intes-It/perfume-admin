@@ -661,6 +661,7 @@ const ProductForm = ({
                         }
                       }}
                       precision={2}
+                      step={0.01}
                       type="number"
                       decimalSeparator="."
                       min={0}
