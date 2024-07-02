@@ -45,7 +45,9 @@ const ModalDelivery = ({
       },
 
       cost: (value: string) =>
-        value?.toString().trim().length < 1 ? 'Cost is required' : null,
+        value?.toString().trim().length < 1
+          ? 'Delivery cost is required'
+          : null,
     },
     validateInputOnBlur: true,
     initialValues: {

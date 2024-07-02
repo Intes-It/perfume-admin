@@ -35,6 +35,7 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
           alignItems: 'center',
           justifyContent: 'space-between',
         }}
+        className="gap-10 "
       >
         <div style={{ display: 'flex', gap: 20 }}>
           {currentPath !== '/voucher_manager' && (
@@ -64,7 +65,7 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
           />
         </div>
 
-        <div>
+        <div className="flex-1 xl:max-w-[327px]">
           <span style={{ color: '#B82C67', marginBottom: '4px', fontSize: 12 }}>
             Search
           </span>
@@ -79,6 +80,7 @@ const FunctionHeader = (props: FuntionHeaderProps) => {
               />
             }
             variant="unstyled"
+            className="w-full xl:w-full"
             sx={{
               border: '1px solid #B82C67',
               padding: '0 5px',

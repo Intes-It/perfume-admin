@@ -320,3 +320,7 @@ tbody td {
     margin-top: 2px;
   }
 }
+
+button:focus {
+  outline: none !important;
+}

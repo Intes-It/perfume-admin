@@ -132,7 +132,7 @@ const Delivery = () => {
                         <td>{item.minimum_weight}</td>
 
                         <td>{item?.maximum_weight}</td>
-                        <td>{item?.cost}</td>
+                        <td>{Number(item?.cost).toFixed(2)}</td>
 
                         <td>
                           {item?.created_at
