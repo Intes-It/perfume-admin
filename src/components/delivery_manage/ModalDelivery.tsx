@@ -231,7 +231,8 @@ const ModalDelivery = ({
                     max={999999999}
                     type="number"
                     onKeyDown={(e) => {
-                      if (e.key === '+' || e.key === '-') e.preventDefault();
+                      if (e.key === '+' || e.key === '-' || e.key === ',')
+                        e.preventDefault();
                     }}
                     step={0.01}
                     variant={'unstyled'}
@@ -270,7 +271,8 @@ const ModalDelivery = ({
                     max={999999999}
                     step={0.01}
                     onKeyDown={(e) => {
-                      if (e.key === '+' || e.key === '-') e.preventDefault();
+                      if (e.key === '+' || e.key === '-' || e.key === ',')
+                        e.preventDefault();
                     }}
                     variant={'unstyled'}
                     precision={2}
@@ -307,7 +309,8 @@ const ModalDelivery = ({
                     max={999999999}
                     step={0.01}
                     onKeyDown={(e) => {
-                      if (e.key === '+' || e.key === '-') e.preventDefault();
+                      if (e.key === '+' || e.key === '-' || e.key === ',')
+                        e.preventDefault();
                     }}
                     variant={'unstyled'}
                     type="number"
