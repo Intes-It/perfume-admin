@@ -122,7 +122,7 @@ const Delivery = () => {
                       >
                         <td
                           style={{
-                            textAlign: 'center',
+                            textAlign: 'left',
                             width: 100,
                           }}
                         >

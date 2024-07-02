@@ -197,6 +197,7 @@ const AttributeCards: React.FC<attributeCardProps> = ({
                 },
               }}
               size="10px"
+              step={0.01}
               decimalSeparator="."
               maxLength={9}
               onChange={onPriceChange}
