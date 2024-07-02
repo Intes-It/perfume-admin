@@ -31,8 +31,16 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
     end_date: '',
     isPercent: true,
     statusCheck: true,
+    usedQuantity: 0,
   });
-  const { voucherData, start_date, end_date, isPercent, statusCheck } = state;
+  const {
+    voucherData,
+    start_date,
+    end_date,
+    isPercent,
+    statusCheck,
+    usedQuantity,
+  } = state;
   async function getVoucherData() {
     const res = await GET(`/api/admin/voucher/${id}`);
 
@@ -43,6 +51,7 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
       end_date: res?.data.end_date,
       isPercent: res?.data.discount_type === 1,
       statusCheck: res?.data.active,
+      usedQuantity: res?.data.used_quantity,
     }));
   }
 
@@ -68,7 +77,11 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
       end_date: (v) => (!v ? 'error' : null),
       description: (v) => (v.length === 0 ? 'error' : null),
       total_quantity: (v) =>
-        v.toString().length > 6 || v === -1 ? 'error' : null,
+        v.toString().length > 6 || v === -1
+          ? 'error'
+          : v < usedQuantity
+          ? 'error'
+          : null,
     },
   });
 
@@ -271,7 +284,7 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
                 <div className="font-medium text-[#D72525] text-[10px] ">
                   {form.values.total_quantity === -1
                     ? 'Quantity is required'
-                    : form.values.total_quantity < voucherData?.used_quantity
+                    : form.values.total_quantity < usedQuantity
                     ? 'Quantity must be bigger or equal to used amount'
                     : 'Maximum quantity is 999999'}
                 </div>

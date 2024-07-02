@@ -71,7 +71,7 @@ export interface voucherType {
   discount_type: string;
   // total: number;
   discount: number;
-  used_quantity: number;
+  used_quantity?: number;
   total_quantity: number;
   apply_to: string;
   start_date: string | DateValue | any;
