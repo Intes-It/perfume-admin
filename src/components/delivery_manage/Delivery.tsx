@@ -88,7 +88,7 @@ const Delivery = () => {
           </div>
         ) : (
           <div className="mt-10 border border-[#B82C67] rounded-lg overflow-hidden ">
-            <div className="overflow-auto  thin-scroll">
+            <div className="overflow-auto thin-scroll">
               <table className="w-full">
                 <thead className="sticky top-0">
                   <tr
@@ -105,8 +105,8 @@ const Delivery = () => {
                     <td className="text-left">Maximum weight (g) </td>
                     <td className="text-left">Delivery cost ($) </td>
                     <td className="text-left">Creation date </td>
-                    <td>Modify</td>
-                    <td>Delete</td>
+                    <td className="text-center">Modify</td>
+                    <td className="text-center">Delete</td>
                   </tr>
                 </thead>
 

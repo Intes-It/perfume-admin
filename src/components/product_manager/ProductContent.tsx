@@ -175,7 +175,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
   }, []);
 
   return (
-    <div className="max-w-[1280px] mx-auto">
+    <div className="max-w-[1360px] mx-auto px-10">
       <div style={{ padding: '0 ' }}>
         <Tabs
           value={categorySelected}

@@ -208,13 +208,7 @@ const CategoryPage = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        maxWidth: 1440,
-        margin: 'auto',
-        justifyContent: 'space-evenly',
-      }}
-    >
+    <div className="max-w-[1360px] mx-auto px-10 pb-6">
       <Tabs
         value={optionSelected}
         onTabChange={(tab: string) => {
