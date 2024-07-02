@@ -103,7 +103,7 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
               w={' 23.6875rem'}
               h={'2.25rem'}
               {...form.getInputProps('name')}
-              maxLength={100}
+              maxLength={50}
               error={null}
             />
             {Object.hasOwn(form.errors, 'name') && (
@@ -144,7 +144,7 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
             Voucher details
           </Title>
           <Group align="start">
-            <div>
+            <div className=" flex flex-col h-[70px] items-start">
               <span
                 style={{
                   color: '#707070',
@@ -179,7 +179,10 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                 variant={'unstyled'}
               />
             </div>
-            <div style={{ marginLeft: '1rem' }}>
+            <div
+              style={{ marginLeft: '1rem' }}
+              className=" flex flex-col h-[70px] items-start"
+            >
               <span
                 style={{
                   color: '#707070',
@@ -232,7 +235,7 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
             <div style={{ display: 'flex' }}>
               <div>
                 <Group>
-                  <div>
+                  <div className=" flex flex-col h-[70px] items-start">
                     <span
                       style={{
                         color: '#707070',
@@ -269,13 +272,16 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
                       </div>
                     )}
                   </div>
-                  <div style={{ marginLeft: '1rem' }}>
+                  <div
+                    style={{ marginLeft: '1rem' }}
+                    className=" flex flex-col h-[70px] items-start"
+                  >
                     <span
                       style={{
                         color: '#707070',
                         fontSize: '12px',
-                        marginBottom: '8px',
                         fontWeight: '500px',
+                        marginBottom: '8px',
                       }}
                     >
                       End date <span style={{ color: 'red' }}>*</span>
@@ -383,6 +389,7 @@ const VoucherCreateForm = ({ onSuccess }: voucherFormprops) => {
 
             <TextInput
               w={56}
+              h={36}
               type={'number'}
               min={-1}
               maxLength={4}

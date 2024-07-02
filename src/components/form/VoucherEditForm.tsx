@@ -30,8 +30,9 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
     start_date: '',
     end_date: '',
     isPercent: true,
+    statusCheck: true,
   });
-  const { voucherData, start_date, end_date, isPercent } = state;
+  const { voucherData, start_date, end_date, isPercent, statusCheck } = state;
   async function getVoucherData() {
     const res = await GET(`/api/admin/voucher/${id}`);
 
@@ -40,6 +41,8 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
       voucherData: res?.data,
       start_date: res?.data.start_date,
       end_date: res?.data.end_date,
+      isPercent: res?.data.discount_type === 1,
+      statusCheck: res?.data.active,
     }));
   }
 
@@ -57,6 +60,10 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
           ? 'error'
           : null,
       name: (v) => (v.length === 0 ? 'error' : null),
+      active: (v) =>
+        v && !statusCheck && dayjs(end_date).isBefore(dayjs(), 'day')
+          ? 'error'
+          : null,
       start_date: (v) => (!v ? 'error' : null),
       end_date: (v) => (!v ? 'error' : null),
       description: (v) => (v.length === 0 ? 'error' : null),
@@ -85,7 +92,6 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
       });
     }
   }
-
   return (
     <Box px={'4rem'}>
       <form
@@ -235,13 +241,13 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
                 <div style={{ marginLeft: '1rem' }}>
                   <span
                     style={{
-                      color: '#7c7c7c',
+                      color: '#858585',
                       fontSize: '12px',
                       marginBottom: '8px',
                       fontWeight: '500',
                     }}
                   >
-                    Used
+                    Used amount
                   </span>
                   <br />
                   <div
@@ -265,6 +271,8 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
                 <div className="font-medium text-[#D72525] text-[10px] ">
                   {form.values.total_quantity === -1
                     ? 'Quantity is required'
+                    : form.values.total_quantity < voucherData?.used_quantity
+                    ? 'Quantity must be bigger or equal to used amount'
                     : 'Maximum quantity is 999999'}
                 </div>
               )}
@@ -272,7 +280,7 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
           </Group>
           <div>
             <Group>
-              <div>
+              <div className=" flex flex-col h-[70px] items-start">
                 <span
                   style={{
                     color: '#707070',
@@ -323,7 +331,10 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
                   </div>
                 )}
               </div>
-              <div style={{ marginLeft: '1rem' }}>
+              <div
+                style={{ marginLeft: '1rem' }}
+                className=" flex flex-col h-[70px] items-start"
+              >
                 <span
                   style={{
                     color: '#707070',
@@ -357,9 +368,9 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
                       : new Date()
                   }
                 />
-                {Object.hasOwn(form.errors, 'end_date') && (
+                {Object.hasOwn(form.errors, 'active') && (
                   <div className="font-medium text-[#D72525] text-[10px] ">
-                    End date is required
+                    {'End date must be greater than the current date'}
                   </div>
                 )}
               </div>
@@ -398,6 +409,7 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
           </Title>
           <Group>
             <Select
+              className="input_select_status_create"
               data={[
                 { value: '1', label: '% Discount' },
                 { value: '2', label: '$ Value' },
@@ -427,6 +439,7 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
 
             <TextInput
               w={56}
+              h={36}
               value={form.values.discount >= 0 ? form.values.discount : ''}
               type={'number'}
               min={-1}
