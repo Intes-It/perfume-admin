@@ -15,12 +15,7 @@ const CategoryTable = ({
   optionSelected,
 }: CategoryTableProps) => {
   return (
-    <div
-      className="mt-10 border border-[#B82C67] rounded-lg overflow-hidden "
-      style={{
-        boxShadow: '0px 0px 10px 0px #00000059',
-      }}
-    >
+    <div className="mt-10 border border-[#B82C67] rounded-lg overflow-hidden ">
       <div className=" max-h-[500px] overflow-auto thin-scroll">
         <table className="w-full">
           <thead className="sticky top-0">

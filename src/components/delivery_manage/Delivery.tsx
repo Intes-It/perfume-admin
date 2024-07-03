@@ -92,12 +92,7 @@ const Delivery = () => {
             <span className="loader" />
           </div>
         ) : (
-          <div
-            className="mt-3 border border-[#B82C67] rounded-lg overflow-hidden "
-            style={{
-              boxShadow: '0px 0px 10px 0px #00000059',
-            }}
-          >
+          <div className="mt-3 border border-[#B82C67] rounded-lg overflow-hidden ">
             <div className="overflow-auto thin-scroll">
               <table className="w-full">
                 <thead className="sticky top-0">
