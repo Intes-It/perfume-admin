@@ -111,9 +111,7 @@ const ModalDelivery = ({
       if (res.status === 201 || res.status === 200) {
         notifications.show({
           message:
-            typeModal === 'ADD'
-              ? `Added successfully!`
-              : 'Edited successfully!',
+            typeModal === 'ADD' ? `Add successfully!` : 'Edit successfully!',
           color: 'green',
         });
         onSuccess();
@@ -133,8 +131,8 @@ const ModalDelivery = ({
         notifications.show({
           message:
             typeModal === 'ADD'
-              ? `Added unsuccessfully!`
-              : 'Edited unsuccessfully!',
+              ? `Add unsuccessfully!`
+              : 'Edit unsuccessfully!',
           color: 'red',
         });
       }
@@ -151,7 +149,7 @@ const ModalDelivery = ({
 
   const contentDelete = (
     <div className="w-[370px]">
-      <div className="text-sm">
+      <div className="text-sm font-medium">
         Do you really want to delete this delivery cost?
       </div>
       <div className="flex float-right gap-2 mt-10 mb-5">

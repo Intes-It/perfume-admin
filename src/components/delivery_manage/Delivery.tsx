@@ -77,7 +77,7 @@ const Delivery = () => {
           Add delivery cost
         </Button>
       </div>
-      <div className="text-[#D72525] text-xs italic mt-[5px] font-semibold font-[Montserrat]">
+      <div className="text-[#D72525] text-xs italic mt-5 font-semibold font-[Montserrat]">
         If the order weight does not fall within the created range, the default
         shipping cost will be $10.
       </div>
@@ -92,7 +92,12 @@ const Delivery = () => {
             <span className="loader" />
           </div>
         ) : (
-          <div className="mt-10 border border-[#B82C67] rounded-lg overflow-hidden ">
+          <div
+            className="mt-3 border border-[#B82C67] rounded-lg overflow-hidden "
+            style={{
+              boxShadow: '0px 0px 10px 0px #00000059',
+            }}
+          >
             <div className="overflow-auto thin-scroll">
               <table className="w-full">
                 <thead className="sticky top-0">

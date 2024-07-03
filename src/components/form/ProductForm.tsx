@@ -244,7 +244,7 @@ const ProductForm = ({
       if (res.status === 201) {
         onSuccess();
         notifications.show({
-          message: 'Added successfully!',
+          message: 'Add successfully!',
           color: 'green',
         });
         setState((prev) => ({ ...prev, isLoading: false }));

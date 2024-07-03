@@ -151,7 +151,7 @@ const ModalContent = ({
 
       if (res.status === 201) {
         notifications.show({
-          message: `Added successfully!`,
+          message: `Add successfully!`,
           color: 'green',
         });
         onSuccess();
@@ -208,7 +208,7 @@ const ModalContent = ({
 
       if (res.status === 200) {
         notifications.show({
-          message: `Updated successfully!`,
+          message: `Edit successfully!`,
           color: 'green',
         });
         onSuccess();
