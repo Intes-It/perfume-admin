@@ -194,7 +194,7 @@ const ModalDelivery = ({
             </Modal.CloseButton>
           </Modal.Header>
         )}
-        <Modal.Body w={400}>
+        <Modal.Body w={typeModal === 'DELETE' ? 400 : 'auto'}>
           {typeModal === 'DELETE' ? (
             contentDelete
           ) : (
@@ -217,7 +217,7 @@ const ModalDelivery = ({
                         ? '1px solid #FF0000'
                         : '1px solid #B82C67',
                       borderRadius: '4px',
-                      '.mantine-Input-input': { fontSize: 12 },
+                      '.mantine-Input-input': { fontSize: 12, paddingLeft: 5 },
                     }}
                     onKeyUp={(e: any) => {
                       if (+e.target?.value > 999999) {
@@ -226,7 +226,6 @@ const ModalDelivery = ({
                       }
                     }}
                     maxLength={9}
-                    pl={5}
                     h={38}
                     max={999999999}
                     type="number"
@@ -256,7 +255,7 @@ const ModalDelivery = ({
                         ? '1px solid #FF0000'
                         : '1px solid #B82C67',
                       borderRadius: '4px',
-                      '.mantine-Input-input': { fontSize: 12 },
+                      '.mantine-Input-input': { fontSize: 12, paddingLeft: 5 },
                     }}
                     onKeyUp={(e: any) => {
                       if (+e.target?.value > 999999) {
@@ -266,7 +265,6 @@ const ModalDelivery = ({
                     }}
                     maxLength={9}
                     type="number"
-                    pl={5}
                     h={38}
                     max={999999999}
                     step={0.01}
@@ -295,7 +293,7 @@ const ModalDelivery = ({
                         ? '1px solid #FF0000'
                         : '1px solid #B82C67',
                       borderRadius: '4px',
-                      '.mantine-Input-input': { fontSize: 12 },
+                      '.mantine-Input-input': { fontSize: 12, paddingLeft: 5 },
                     }}
                     onKeyUp={(e: any) => {
                       if (+e.target?.value > 999999) {
@@ -304,7 +302,6 @@ const ModalDelivery = ({
                       }
                     }}
                     maxLength={9}
-                    pl={5}
                     h={38}
                     max={999999999}
                     step={0.01}

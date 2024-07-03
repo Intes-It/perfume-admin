@@ -324,3 +324,7 @@ tbody td {
 button:focus {
   outline: none !important;
 }
+
+.mantine-InputWrapper-error {
+  font-size: 10px !important;
+}

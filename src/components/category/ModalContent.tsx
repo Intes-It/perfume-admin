@@ -328,7 +328,7 @@ const ModalContent = ({
             </Modal.CloseButton>
           </Modal.Header>
         )}
-        <Modal.Body w={400}>
+        <Modal.Body>
           {typeModal === 'DELETE' ? (
             contentDelete
           ) : (

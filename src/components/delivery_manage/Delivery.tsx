@@ -72,6 +72,7 @@ const Delivery = () => {
           sx={{ fontWeight: 500 }}
           size="16px"
           onClick={() => handleOpenModal('ADD')}
+          disabled={listDeliveryCost?.length >= 10}
         >
           Add delivery cost
         </Button>
