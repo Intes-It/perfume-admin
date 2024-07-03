@@ -254,7 +254,7 @@ const VoucherEditForm = ({ onSuccess, id }: voucherFormprops) => {
                 <div style={{ marginLeft: '1rem' }}>
                   <span
                     style={{
-                      color: '#858585',
+                      color: '#707070',
                       fontSize: '12px',
                       marginBottom: '8px',
                       fontWeight: '500',
