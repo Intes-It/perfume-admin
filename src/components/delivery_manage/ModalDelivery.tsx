@@ -23,6 +23,7 @@ const ModalDelivery = ({
   itemSelected,
 }: ModalDeliveryProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isExisted, setIsExisted] = useState(false);
 
   const form = useForm<any>({
     validate: {
@@ -98,6 +99,8 @@ const ModalDelivery = ({
     if (isLoading) return;
     setIsLoading(true);
 
+    if (isExisted) setIsExisted(false);
+
     try {
       const res = await (typeModal === 'ADD'
         ? POST(apiRoute.create_delivery_cost, value)
@@ -107,13 +110,15 @@ const ModalDelivery = ({
           ));
       if (res.status === 201 || res.status === 200) {
         notifications.show({
-          message: `Added successfully!`,
+          message:
+            typeModal === 'ADD'
+              ? `Added successfully!`
+              : 'Edited successfully!',
           color: 'green',
         });
         onSuccess();
         handleCloseModal();
         form.reset();
-        setIsLoading(false);
         return;
       }
       if (res?.data?.detail?.non_field_errors?.length > 0) {
@@ -121,9 +126,15 @@ const ModalDelivery = ({
           message: res?.data?.detail?.non_field_errors[0],
           color: 'red',
         });
+
+        res?.data?.detail?.non_field_errors[0]?.includes('already exists') &&
+          setIsExisted(true);
       } else {
         notifications.show({
-          message: `Add unsuccessfully!`,
+          message:
+            typeModal === 'ADD'
+              ? `Added unsuccessfully!`
+              : 'Edited unsuccessfully!',
           color: 'red',
         });
       }
@@ -170,6 +181,7 @@ const ModalDelivery = ({
       onClose={() => {
         handleCloseModal();
         form.reset();
+        isExisted && setIsExisted(false);
       }}
       size={'auto'}
     >
@@ -186,7 +198,7 @@ const ModalDelivery = ({
               <div className="text-[#B82C67] mt-8 ml-12 text-2xl font-semibold">
                 {typeModal === 'ADD'
                   ? `Add new delivery cost`
-                  : `Update delivery cost`}
+                  : `Edit delivery cost`}
               </div>
             </Modal.Title>
             <Modal.CloseButton style={{ marginRight: 24 }}>
@@ -335,11 +347,14 @@ const ModalDelivery = ({
                         ? dayjs(form?.values?.created_at).format('DD-MM-YYYY')
                         : dayjs().format('DD-MM-YYYY')
                     }
-                    sx={{ borderRadius: '4px' }}
-                    {...form.getInputProps('name')}
+                    sx={{
+                      borderRadius: '4px',
+                      '.mantine-Input-input': { fontSize: 12 },
+                    }}
                   />
                 </div>
               </div>
+
               <Button
                 type="submit"
                 className="block mx-auto text-base font-medium mt-14"
@@ -351,6 +366,12 @@ const ModalDelivery = ({
               >
                 Done
               </Button>
+              {isExisted && (
+                <div className="text-[10px] font-medium text-[#D72525] mt-3 text-center">
+                  The weight already exists or falls within the previously
+                  created range.
+                </div>
+              )}
             </form>
           )}
         </Modal.Body>

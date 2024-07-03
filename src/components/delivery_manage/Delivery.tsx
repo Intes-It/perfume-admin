@@ -60,7 +60,7 @@ const Delivery = () => {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <Title c="#B82C67" order={2} mb={32} mt={16} size={24} weight={700}>
+        <Title c="#B82C67" order={2} mt={16} size={24} weight={700}>
           Delivery cost
         </Title>
         <Button
@@ -76,6 +76,10 @@ const Delivery = () => {
         >
           Add delivery cost
         </Button>
+      </div>
+      <div className="text-[#D72525] text-xs italic mt-[5px] font-semibold font-[Montserrat]">
+        If the order weight does not fall within the created range, the default
+        shipping cost will be $10.
       </div>
       <div style={{ textAlign: 'center' }}>
         {isLoading ? (

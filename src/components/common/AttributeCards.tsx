@@ -44,9 +44,6 @@ const AttributeCards: React.FC<attributeCardProps> = ({
   attributeName,
   onNameColorChange,
 }) => {
-  // const [chooseColor, setChooseColor] = React.useState(false);
-  // const [color, setColor] = React.useState('');
-
   return (
     <Paper
       w={'14.4375rem'}
@@ -198,10 +195,16 @@ const AttributeCards: React.FC<attributeCardProps> = ({
               }}
               size="10px"
               step={0.01}
+              onKeyUp={(e: any) => {
+                if (e.target?.value > 999999) {
+                  e.target.value = 999999;
+                  onPriceChange && onPriceChange(999999);
+                }
+              }}
+              type="number"
               decimalSeparator="."
-              maxLength={9}
               onChange={onPriceChange}
-              defaultValue={attributePrice}
+              value={attributePrice}
               min={0}
             />
           </Box>

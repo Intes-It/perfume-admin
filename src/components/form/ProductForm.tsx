@@ -821,6 +821,7 @@ const ProductForm = ({
                             }));
                           }}
                           productImage={item.image}
+                          attributePrice={item.price}
                           attributeTitle={'Color'}
                           onAddImage={(file) => {
                             const currentIndex = colorAttribute.findIndex(
@@ -973,6 +974,7 @@ const ProductForm = ({
                                 capacityAttribute: newImage,
                               }));
                             }}
+                            attributePrice={item.price}
                             onRemoveImage={() => {
                               const currentIndex = capacityAttribute.findIndex(
                                 (i) => i === capacityAttribute[index],
@@ -1149,6 +1151,7 @@ const ProductForm = ({
                             }}
                             productImage={item.image}
                             attributeTitle={'Package name'}
+                            attributePrice={item.price}
                             onAddImage={(file) => {
                               const currentIndex = packageAttribute.findIndex(
                                 (i) => i === packageAttribute[index],
