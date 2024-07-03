@@ -596,7 +596,7 @@ const Voucher = () => {
                 getVoucher();
                 close();
                 notifications.show({
-                  message: `Added successfully!`,
+                  message: `Add successfully!`,
                   color: 'green',
                 });
               }}
@@ -650,7 +650,7 @@ const Voucher = () => {
         <Paper px={4} w={360}>
           <Text
             align={'left'}
-            sx={{ fontSize: '14px', fontWeight: 500, color: '#374151' }}
+            sx={{ fontSize: '14px', fontWeight: 500, color: '#000' }}
             w={360}
           >
             Do you really want to delete this voucher?
@@ -662,8 +662,8 @@ const Voucher = () => {
             >
               <span
                 style={{
-                  color: '#374151',
-                  fontWeight: '500px',
+                  color: '#000',
+                  fontWeight: 500,
                   fontSize: '14px',
                 }}
               >

@@ -68,7 +68,7 @@ const ModalDelivery = ({
       );
       if (res.status === 204 || res.status === 200) {
         notifications.show({
-          message: `Deleted successfully!`,
+          message: `Delete successfully!`,
           color: 'green',
         });
         onSuccess();
@@ -84,7 +84,7 @@ const ModalDelivery = ({
         });
       } else {
         notifications.show({
-          message: `Deleted unsuccessfully!`,
+          message: `Delete unsuccessfully!`,
           color: 'red',
         });
       }

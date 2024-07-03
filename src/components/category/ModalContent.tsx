@@ -240,7 +240,7 @@ const ModalContent = ({
 
       if (res.status === 204) {
         notifications.show({
-          message: `Deleted successfully!`,
+          message: `Delete successfully!`,
           color: 'green',
         });
         onSuccess();

@@ -98,7 +98,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
       setState((prev) => ({ ...prev, deleteModal: false }));
       handleSearch();
       notifications.show({
-        message: 'Deleted successfully!',
+        message: 'Delete successfully!',
         color: 'green',
       });
     } else {
