@@ -119,15 +119,22 @@ const ModalDelivery = ({
         form.reset();
         return;
       }
-      if (res?.data?.detail?.non_field_errors?.length > 0) {
+      if (
+        res?.data?.detail?.non_field_errors?.length > 0 ||
+        res?.data?.detail?.length > 0
+      ) {
         if (
-          res?.data?.detail?.non_field_errors[0]?.includes('already exists')
+          res?.data?.detail?.non_field_errors?.[0]?.includes(
+            'already exists',
+          ) ||
+          res?.data?.detail[0]?.includes('already exists')
         ) {
           setIsExisted(true);
           return;
         }
         notifications.show({
-          message: res?.data?.detail?.non_field_errors[0],
+          message:
+            res?.data?.detail?.non_field_errors?.[0] || res?.data?.detail?.[0],
           color: 'red',
         });
       } else {
