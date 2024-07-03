@@ -8,8 +8,8 @@ type HeaderCategoryPropsType = {
   categorySelected?: string[] | [];
   subCategorySelected?: string[] | [];
   handleChange: (type: 'category' | 'sub', value: string[]) => void;
-  listSubCategory: itemSelectType;
-  listCategory: itemSelectType;
+  listSubCategory: itemSelectType[];
+  listCategory: itemSelectType[];
   handleSearch: () => void;
   searchValue: string;
   onSearch: (value: React.ChangeEvent<HTMLInputElement>) => void;
@@ -51,6 +51,7 @@ const HeaderCategory = ({
           h={42}
           rightIcon={<img className="ml-8" src="/plus.svg" alt="icon" />}
           sx={{ fontWeight: 500 }}
+          disabled={listCategory?.length >= 6 && optionSelected === 'category'}
           size="16px"
           onClick={() => handleOpenModal('ADD')}
         >
@@ -67,7 +68,7 @@ const HeaderCategory = ({
         <div style={{ display: 'flex', gap: 30 }}>
           {optionSelected !== 'category' && (
             <CustomSelectMultiple
-              data={listCategory as any}
+              data={listCategory}
               value={categorySelected as string[]}
               label="Category"
               onChange={(v) => {
@@ -77,7 +78,7 @@ const HeaderCategory = ({
           )}
           {optionSelected === 'sub-subcategory' && (
             <CustomSelectMultiple
-              data={listSubCategory as any}
+              data={listSubCategory}
               value={subCategorySelected as string[]}
               label="Sub-Category"
               onChange={(v) => {

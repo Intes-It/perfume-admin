@@ -248,6 +248,10 @@ const ModalDelivery = ({
                     precision={2}
                     decimalSeparator="."
                     {...form.getInputProps('minimum_weight')}
+                    onChange={(e) => {
+                      isExisted && setIsExisted(false);
+                      form.setFieldValue('minimum_weight', e);
+                    }}
                     min={0}
                   />
                 </div>
@@ -284,8 +288,12 @@ const ModalDelivery = ({
                     }}
                     variant={'unstyled'}
                     precision={2}
-                    decimalSeparator="."
                     {...form.getInputProps('maximum_weight')}
+                    decimalSeparator="."
+                    onChange={(e) => {
+                      form.setFieldValue('maximum_weight', e);
+                      isExisted && setIsExisted(false);
+                    }}
                     min={0}
                   />
                 </div>
@@ -352,7 +360,15 @@ const ModalDelivery = ({
                   />
                 </div>
               </div>
-
+              <div
+                className="text-[10px] mt-0.5 font-medium text-[#D72525]"
+                style={{
+                  opacity: !isExisted ? 0 : 100,
+                }}
+              >
+                The weight already exists or falls within the previously created
+                range.
+              </div>
               <Button
                 type="submit"
                 className="block mx-auto text-base font-medium mt-14"
@@ -364,12 +380,6 @@ const ModalDelivery = ({
               >
                 Done
               </Button>
-              {isExisted && (
-                <div className="text-[10px] font-medium text-[#D72525] mt-3 text-center">
-                  The weight already exists or falls within the previously
-                  created range.
-                </div>
-              )}
             </form>
           )}
         </Modal.Body>
