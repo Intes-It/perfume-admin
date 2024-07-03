@@ -645,12 +645,17 @@ const Voucher = () => {
         withCloseButton={false}
         centered
         radius={'md'}
+        size={400}
       >
-        <Paper px={4}>
-          <Text align={'left'} sx={{ fontSize: '16px', fontWeight: 600 }}>
+        <Paper px={4} w={360}>
+          <Text
+            align={'left'}
+            sx={{ fontSize: '14px', fontWeight: 500, color: '#374151' }}
+            w={360}
+          >
             Do you really want to delete this voucher?
           </Text>
-          <Group sx={{ float: 'right' }} mt={40} mb={16}>
+          <Group sx={{ float: 'right' }} mt={42} mb={16}>
             <Button
               variant={'subtle'}
               onClick={() => setState((p) => ({ ...p, deleteModal: false }))}
