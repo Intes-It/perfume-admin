@@ -170,6 +170,14 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
     });
   };
 
+  const refreshFilter = () => {
+    if (subCategorySelected) setSubCategorySelected([]);
+    if (subSubCategorySelected) setSubSubCategorySelected([]);
+    if (search) setSearch('');
+    if (status) setStatus([]);
+    page !== 1 && setPage(1);
+  };
+
   useEffect(() => {
     categorySelected && getProduct();
   }, []);
@@ -187,11 +195,7 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
               subCategory: null,
               subSubCategory: null,
             });
-            if (subCategorySelected) setSubCategorySelected([]);
-            if (subSubCategorySelected) setSubSubCategorySelected([]);
-            if (search) setSearch('');
-            if (status) setStatus([]);
-            page !== 1 && setPage(1);
+            refreshFilter();
           }}
         >
           <Tabs.List grow>
@@ -331,7 +335,8 @@ const ProductContent = ({ listCategory }: CategoryContentProps) => {
             <Modal.Body>
               <ProductForm
                 onSuccess={() => {
-                  handleSearch();
+                  getProduct();
+                  refreshFilter();
                   close();
                 }}
                 listCategory={listCategory}

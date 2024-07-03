@@ -300,8 +300,6 @@ const ProductForm = ({
     setState((prev) => ({ ...prev, tabSelected: tab }));
   };
 
-  console.log('form :>> ', form.values?.price);
-
   return (
     <div>
       <form
