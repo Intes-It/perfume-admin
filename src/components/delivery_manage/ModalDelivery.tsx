@@ -120,13 +120,16 @@ const ModalDelivery = ({
         return;
       }
       if (res?.data?.detail?.non_field_errors?.length > 0) {
+        if (
+          res?.data?.detail?.non_field_errors[0]?.includes('already exists')
+        ) {
+          setIsExisted(true);
+          return;
+        }
         notifications.show({
           message: res?.data?.detail?.non_field_errors[0],
           color: 'red',
         });
-
-        res?.data?.detail?.non_field_errors[0]?.includes('already exists') &&
-          setIsExisted(true);
       } else {
         notifications.show({
           message:
