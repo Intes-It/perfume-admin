@@ -149,7 +149,7 @@ const ModalDelivery = ({
           className="text-sm font-medium"
           onClick={handleCloseModal}
         >
-          <span style={{ color: '#333' }}>Cancel</span>
+          <span style={{ color: '#000000' }}>Cancel</span>
         </Button>
         <Button
           onClick={handleDelete}
@@ -194,7 +194,7 @@ const ModalDelivery = ({
             </Modal.CloseButton>
           </Modal.Header>
         )}
-        <Modal.Body>
+        <Modal.Body w={400}>
           {typeModal === 'DELETE' ? (
             contentDelete
           ) : (
