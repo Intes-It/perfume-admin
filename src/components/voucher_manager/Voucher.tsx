@@ -629,7 +629,7 @@ const Voucher = () => {
                 getVoucher();
                 setState((p) => ({ ...p, editModal: false }));
                 notifications.show({
-                  message: `Updated successfully!`,
+                  message: `Edit successfully!`,
                   color: 'green',
                 });
               }}
