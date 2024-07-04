@@ -182,6 +182,9 @@ const AttributeCards: React.FC<attributeCardProps> = ({
               w={onColorChange ? '7rem' : '5rem'}
               radius={2}
               precision={2}
+              parser={(value) => {
+                return (Math.round(+value * 100) / 100).toString();
+              }}
               sx={{
                 '.mantine-Input-input': {
                   height: 24,

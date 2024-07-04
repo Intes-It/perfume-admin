@@ -590,6 +590,9 @@ const ProductForm = ({
                       step={0.01}
                       variant={'unstyled'}
                       precision={2}
+                      parser={(value) => {
+                        return (Math.round(+value * 100) / 100).toString();
+                      }}
                       decimalSeparator="."
                       {...form.getInputProps('price')}
                       min={0}
@@ -619,6 +622,9 @@ const ProductForm = ({
                       }}
                       type="number"
                       precision={2}
+                      parser={(value) => {
+                        return (Math.round(+value * 100) / 100).toString();
+                      }}
                       decimalSeparator="."
                       {...form.getInputProps('current_price')}
                     />
@@ -659,6 +665,9 @@ const ProductForm = ({
                         }
                       }}
                       precision={2}
+                      parser={(value) => {
+                        return (Math.round(+value * 100) / 100).toString();
+                      }}
                       step={0.01}
                       type="number"
                       decimalSeparator="."

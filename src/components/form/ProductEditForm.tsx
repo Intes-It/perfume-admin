@@ -624,6 +624,9 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       max={999999}
                       variant={'unstyled'}
                       precision={2}
+                      parser={(value) => {
+                        return (Math.round(+value * 100) / 100).toString();
+                      }}
                       type="number"
                       onKeyUp={(e: any) => {
                         if (e.target?.value > 999999) {
@@ -659,6 +662,9 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       }}
                       variant={'unstyled'}
                       precision={2}
+                      parser={(value) => {
+                        return (Math.round(+value * 100) / 100).toString();
+                      }}
                       decimalSeparator="."
                       {...form.getInputProps('current_price')}
                       value={form.values?.current_price || 0}
@@ -698,6 +704,9 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       variant={'unstyled'}
                       step={0.01}
                       precision={2}
+                      parser={(value) => {
+                        return (Math.round(+value * 100) / 100).toString();
+                      }}
                       type="number"
                       decimalSeparator="."
                       min={0}

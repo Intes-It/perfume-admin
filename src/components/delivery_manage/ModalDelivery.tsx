@@ -256,6 +256,9 @@ const ModalDelivery = ({
                     step={0.01}
                     variant={'unstyled'}
                     precision={2}
+                    parser={(value) => {
+                      return (Math.round(+value * 100) / 100).toString();
+                    }}
                     decimalSeparator="."
                     {...form.getInputProps('minimum_weight')}
                     onChange={(e) => {
@@ -297,9 +300,12 @@ const ModalDelivery = ({
                         e.preventDefault();
                     }}
                     variant={'unstyled'}
-                    precision={2}
                     {...form.getInputProps('maximum_weight')}
                     decimalSeparator="."
+                    precision={2}
+                    parser={(value) => {
+                      return (Math.round(+value * 100) / 100).toString();
+                    }}
                     onChange={(e) => {
                       form.setFieldValue('maximum_weight', e);
                       isExisted && setIsExisted(false);
@@ -340,6 +346,9 @@ const ModalDelivery = ({
                     variant={'unstyled'}
                     type="number"
                     precision={2}
+                    parser={(value) => {
+                      return (Math.round(+value * 100) / 100).toString();
+                    }}
                     decimalSeparator="."
                     {...form.getInputProps('cost')}
                     min={0}
