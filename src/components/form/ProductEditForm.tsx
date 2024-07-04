@@ -625,7 +625,9 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       variant={'unstyled'}
                       precision={2}
                       parser={(value) => {
-                        return (Math.round(+value * 100) / 100).toString();
+                        return (
+                          Math.round((+value + 0.0005) * 100) / 100
+                        ).toString();
                       }}
                       type="number"
                       onKeyUp={(e: any) => {
@@ -663,7 +665,9 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       variant={'unstyled'}
                       precision={2}
                       parser={(value) => {
-                        return (Math.round(+value * 100) / 100).toString();
+                        return (
+                          Math.round((+value + 0.0005) * 100) / 100
+                        ).toString();
                       }}
                       decimalSeparator="."
                       {...form.getInputProps('current_price')}
@@ -705,7 +709,9 @@ const ProductEditForm = ({ listCategory, onSuccess, id }: ProductFormProps) => {
                       step={0.01}
                       precision={2}
                       parser={(value) => {
-                        return (Math.round(+value * 100) / 100).toString();
+                        return (
+                          Math.round((+value + 0.0005) * 100) / 100
+                        ).toString();
                       }}
                       type="number"
                       decimalSeparator="."

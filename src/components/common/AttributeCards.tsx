@@ -183,7 +183,7 @@ const AttributeCards: React.FC<attributeCardProps> = ({
               radius={2}
               precision={2}
               parser={(value) => {
-                return (Math.round(+value * 100) / 100).toString();
+                return (Math.round((+value + 0.0005) * 100) / 100).toString();
               }}
               sx={{
                 '.mantine-Input-input': {

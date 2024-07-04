@@ -257,7 +257,9 @@ const ModalDelivery = ({
                     variant={'unstyled'}
                     precision={2}
                     parser={(value) => {
-                      return (Math.round(+value * 100) / 100).toString();
+                      return (
+                        Math.round((+value + 0.0005) * 100) / 100
+                      ).toString();
                     }}
                     decimalSeparator="."
                     {...form.getInputProps('minimum_weight')}
@@ -304,7 +306,9 @@ const ModalDelivery = ({
                     decimalSeparator="."
                     precision={2}
                     parser={(value) => {
-                      return (Math.round(+value * 100) / 100).toString();
+                      return (
+                        Math.round((+value + 0.0005) * 100) / 100
+                      ).toString();
                     }}
                     onChange={(e) => {
                       form.setFieldValue('maximum_weight', e);
@@ -347,7 +351,9 @@ const ModalDelivery = ({
                     type="number"
                     precision={2}
                     parser={(value) => {
-                      return (Math.round(+value * 100) / 100).toString();
+                      return (
+                        Math.round((+value + 0.0005) * 100) / 100
+                      ).toString();
                     }}
                     decimalSeparator="."
                     {...form.getInputProps('cost')}
